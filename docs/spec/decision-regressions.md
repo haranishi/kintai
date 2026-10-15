@@ -3,6 +3,8 @@
 - AC-16.1 [rust] Replay `tests/fixtures/contracts/decisions.json` against the actual
   binary. Each case has a stable ID, reason, public spec, arguments, exit code and
   expected JSON pointers. Failed requests have empty stdout and redact their input.
+  Reject an empty corpus, duplicate/blank IDs, blank requirements and empty
+  expectations so deleting test data cannot turn this gate green.
 
 The initial cases preserve decisions already documented by the project: favorable
 seconds, monthly rounding, no automatic break deduction, incomplete-week refusal,

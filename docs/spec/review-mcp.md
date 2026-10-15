@@ -17,6 +17,9 @@ accepts the same `--data-from` and `--employee` options as `report`.
   totals and per-employee details. Refused employees have no fabricated zero totals.
 - AC-14.5 [e2e] Search/status filters, no-match recovery and original JSON download
   work offline, at 390/768/1440px, using keyboard and dark appearance.
+- AC-14.6 [e2e] Explain all eight real punch anomaly codes in Japanese. A checklist
+  action resets filters, opens the matching employee on its page and focuses its
+  summary; anomaly records never become calculated zero-hour results.
 
 ## MCP stdio
 

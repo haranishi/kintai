@@ -1,0 +1,30 @@
+[
+  {
+    "width": 390,
+    "colorScheme": "light",
+    "overflow": false,
+    "minimumButtonHeight": 44,
+    "consoleErrors": []
+  },
+  {
+    "width": 768,
+    "colorScheme": "light",
+    "overflow": false,
+    "minimumButtonHeight": 44,
+    "consoleErrors": []
+  },
+  {
+    "width": 1440,
+    "colorScheme": "light",
+    "overflow": false,
+    "minimumButtonHeight": 44,
+    "consoleErrors": []
+  },
+  {
+    "width": 390,
+    "colorScheme": "dark",
+    "overflow": false,
+    "minimumButtonHeight": 44,
+    "consoleErrors": []
+  }
+]

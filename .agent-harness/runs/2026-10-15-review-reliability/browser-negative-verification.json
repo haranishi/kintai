@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Punch reasons: lose the real DuplicateIn mapping",
+    "exit": 1,
+    "failed_test": "all real punch anomalies",
+    "restored_sha256": "bb549e97618c710ce769fa99fd2c12e009e1bbb5e4d5bd2e06269beea24cbc22"
+  },
+  {
+    "label": "Checklist: leave the selected detail closed",
+    "exit": 1,
+    "failed_test": "checklist opens a later-page employee",
+    "restored_sha256": "bb549e97618c710ce769fa99fd2c12e009e1bbb5e4d5bd2e06269beea24cbc22"
+  }
+]

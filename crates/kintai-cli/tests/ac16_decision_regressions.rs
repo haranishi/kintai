@@ -3,6 +3,7 @@ mod common;
 
 use common::{fixture_path, kintai};
 use serde_json::Value;
+use std::collections::BTreeSet;
 
 #[test]
 fn ac16_1_public_decisions_replay_against_the_real_binary() {
@@ -11,9 +12,25 @@ fn ac16_1_public_decisions_replay_against_the_real_binary() {
     ))
     .unwrap();
     assert_eq!(corpus["schema"], "kintai.regressions.v1");
+    let cases = corpus["cases"].as_array().unwrap();
+    assert!(!cases.is_empty(), "the regression corpus must not be empty");
+    let mut ids = BTreeSet::new();
+    for case in cases {
+        let id = case["id"].as_str().unwrap();
+        assert!(!id.trim().is_empty(), "each case needs a stable ID");
+        assert!(ids.insert(id), "duplicate regression ID: {id}");
+        assert!(
+            !case["requirement"].as_str().unwrap().trim().is_empty(),
+            "{id}: missing requirement"
+        );
+        assert!(
+            !case["expected"].as_object().unwrap().is_empty(),
+            "{id}: expected assertions must not be empty"
+        );
+    }
     let policy = fixture_path("policy.toml");
     let punches = fixture_path("punches.csv");
-    for case in corpus["cases"].as_array().unwrap() {
+    for case in cases {
         let id = case["id"].as_str().unwrap();
         assert!(
             std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

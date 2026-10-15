@@ -86,6 +86,12 @@ fn classify(code: i32, text: &str) -> (i32, &'static str, String) {
     if code == 0 {
         return (0, "ok", String::new());
     }
+    if code < 0 {
+        return (code, "signal", String::new());
+    }
+    if !matches!(code, 1 | 101) {
+        return (code, "process", String::new());
+    }
     if text.contains("could not compile") {
         return (code, "compile", String::new());
     }
@@ -128,7 +134,7 @@ fn classify(code: i32, text: &str) -> (i32, &'static str, String) {
     }
     (
         code,
-        "test",
+        if unique.is_empty() { "process" } else { "test" },
         unique.into_iter().take(4).collect::<Vec<_>>().join(", "),
     )
 }
@@ -223,6 +229,15 @@ pub(super) fn run(root: &Path, args: &[String], temp_dir: &Path) -> Result<i32> 
     }
     let (path, only, keep) = options(args)?;
     let spec: Spec = serde_json::from_str(&fs::read_to_string(path)?)?;
+    let selected: Vec<_> = spec
+        .mutations
+        .iter()
+        .filter(|mutation| only.is_none_or(|s| mutation.label.contains(s)))
+        .collect();
+    if selected.is_empty() {
+        println!("適用する変異がありません。定義と --only を確認してください。");
+        return Ok(2);
+    }
     let base = temporary(temp_dir, keep)?;
     let work = base.path.join("repo");
     let excludes = spec.exclude.as_ref().map_or_else(
@@ -238,10 +253,7 @@ pub(super) fn run(root: &Path, args: &[String], temp_dir: &Path) -> Result<i32> 
         return Ok(2);
     }
     let mut survivors = Vec::new();
-    for mutation in &spec.mutations {
-        if only.is_some_and(|s| !s.is_empty() && !mutation.label.contains(s)) {
-            continue;
-        }
+    for mutation in selected {
         let target = work.join(&mutation.file);
         let original = root.join(&mutation.file);
         let text = source_text(&original)?;
@@ -275,7 +287,7 @@ pub(super) fn run(root: &Path, args: &[String], temp_dir: &Path) -> Result<i32> 
                 );
                 survivors.push(format!("{}（コンパイルできない）", mutation.label));
             }
-            _ => println!(
+            "test" => println!(
                 "[{}] 検出 ← 赤になった試験: {}",
                 mutation.label,
                 if who.is_empty() {
@@ -284,6 +296,10 @@ pub(super) fn run(root: &Path, args: &[String], temp_dir: &Path) -> Result<i32> 
                     &who
                 }
             ),
+            _ => {
+                println!("[{}] 判定不能（{kind}） ← 検出に数えない", mutation.label);
+                survivors.push(format!("{}（判定不能: {kind}）", mutation.label));
+            }
         }
     }
     println!("\n== 生き残り ==");
@@ -308,6 +324,10 @@ mod tests {
         );
         assert_eq!(classify(1, "could not compile").1, "compile");
         assert_eq!(classify(0, "test x ... FAILED").1, "ok");
+        assert_eq!(classify(-15, "test x ... FAILED").1, "signal");
+        assert_eq!(classify(124, "test x ... FAILED").1, "process");
+        assert_eq!(classify(1, "runner unavailable").1, "process");
+        assert_eq!(classify(101, "test x ... FAILED").1, "test");
     }
     #[test]
     fn replacement_and_args() {

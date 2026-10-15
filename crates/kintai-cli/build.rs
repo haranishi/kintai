@@ -36,6 +36,11 @@ fn read_git_hash() -> Option<String> {
     let manifest = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR")?);
     let root = manifest.parent()?.parent()?;
     let dot_git = root.join(".git");
+    // An archive can later become a checkout. Also watch the worktree pointer,
+    // including when absent, so Cargo does not cache `unknown` permanently.
+    if !dot_git.is_dir() {
+        println!("cargo::rerun-if-changed={}", dot_git.display());
+    }
     let git_dir = if dot_git.is_file() {
         // ワークツリーでは `.git` が「gitdir: <場所>」を書いたファイルになる。
         let text = fs::read_to_string(&dot_git).ok()?;
@@ -52,9 +57,14 @@ fn read_git_hash() -> Option<String> {
         return short_hash(head);
     };
     // 参照はワークツリーごとの場所ではなく、共通の場所にあることがある。
-    let common = fs::read_to_string(git_dir.join("commondir"))
+    let common_path = git_dir.join("commondir");
+    watch(&common_path);
+    let common = fs::read_to_string(common_path)
         .ok()
         .map_or_else(|| git_dir.clone(), |dir| git_dir.join(dir.trim()));
+    // A packed branch can acquire a new loose ref without changing HEAD or
+    // packed-refs. Watch the ref directory to observe that transition.
+    println!("cargo::rerun-if-changed={}", common.join("refs").display());
     for dir in [&git_dir, &common] {
         let loose = dir.join(reference);
         watch(&loose);

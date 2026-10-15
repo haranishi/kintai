@@ -13,6 +13,8 @@ Phase 0 の入口です。入出力のJSONは[区分のケース](case-format.md
 | `kintai retention --kind K --completed D --wage-due D` | 保存の期限の目安（[月次の集計](report.md)） |
 | `kintai case FILE` | ケースのJSONを計算して、結果のJSONを出す。別実装との差分試験に使う |
 | `kintai demo [--out DIR]` | 合成データの方針と打刻を使い、上の各出力を一通り出す。実データには触れない |
+| `kintai review --policy P --punches C --month YYYY-MM --out FILE` | [月次の確認画面](../review.md)をHTMLで新規保存する。`--data-from` と `--employee` で範囲を指定できる |
+| `kintai mcp --policy P --punches C --month YYYY-MM` | [読み取り専用MCP](../mcp.md)で起動時の範囲の集計を公開する。`--data-from` と `--employee` も利用できる |
 | `kintai --version` / `--help` | 版（git の短いハッシュを含む）/ 使い方 |
 
 出力は標準出力。エラーは標準エラーにJSON（`{"error": {"code": ..., "message": ...}}`）。時刻・日付は日本時間。終了コードは[区分のケース](case-format.md)の表のとおり。`--format` の既定は `text`（人が読む表）。JSON・CSVの形は[出力の形](cli-output.md)。
