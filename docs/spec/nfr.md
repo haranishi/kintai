@@ -11,7 +11,7 @@
 | 打刻CSVの取込 | 3秒以内 | 100万行の合成データ（UTF-8） |
 | 起動 | 50ミリ秒以内 | `kintai --version` |
 
-測るのは `--release` のビルドで、測定用の例（`crates/*/examples/bench_*.rs`）を `tools/bench.sh` でまとめて流す。
+測るのは `--release` のビルドで、測定用の例（`crates/*/examples/bench_*.rs`）を `cargo xtask bench` でまとめて流す。
 
 ## 決定性
 

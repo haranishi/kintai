@@ -5,7 +5,7 @@
 ## 必要なもの
 
 - Rust 1.88以上
-- Python 3（`tools/` の点検の道具と、別実装。標準ライブラリだけで動きます）
+- Python 3（別実装と、その差分試験だけ。標準ライブラリだけで動きます。本体の組み立てと、ふだんの点検には要りません）
 - あると良いもの: `cargo-deny`（依存の検査）、`uv`（ライセンス表示の検査 `reuse`）
 
 ## どこに何があるか
@@ -37,10 +37,10 @@ cargo run -p kintai-cli -- report --policy tests/fixtures/synthetic/policy.toml 
 PRの前に、次を流してください。
 
 ```sh
-tools/check-all.sh           # 書式、clippy、試験、文書、依存、仕様の対応、差分試験、ライセンス表示
+cargo xtask check-all        # 書式、clippy、試験、文書、依存、仕様の対応、差分試験、ライセンス表示
 ```
 
-`tools/check-all.sh --quick` は、依存の検査と最小のRustの確認を省きます。個別に流すなら、`cargo test -p kintai-jp-labor` のように対象を指定します。どの層が何を確かめているかは、[試験の地図](testing.md)にあります。
+`cargo xtask check-all --quick` は、依存の検査と最小のRustの確認を省きます。個別に流すなら、`cargo test -p kintai-jp-labor` のように対象を指定します。どの層が何を確かめているかは、[試験の地図](testing.md)にあります。
 
 ## 仕様を先に直す
 
@@ -50,12 +50,12 @@ tools/check-all.sh           # 書式、clippy、試験、文書、依存、仕�
 
 ## 試験が「門番」として働くかを確かめる
 
-試験が通っていても、守りたい規則が試験に守られているとは限りません。`tools/mutate.py` は、ソースにわざと誤りを入れて、試験が赤くなるかを確かめます。誤りの一覧は `tools/mutations/*.json` にあり、新しい守りを足したら、その守りを外す誤りも足してください。生き残った誤りは、試験の穴です。
+試験が通っていても、守りたい規則が試験に守られているとは限りません。`cargo xtask mutate` は、ソースにわざと誤りを入れて、試験が赤くなるかを確かめます。誤りの一覧は `tools/mutations/*.json` にあり、新しい守りを足したら、その守りを外す誤りも足してください。生き残った誤りは、試験の穴です。
 
 ## 変更を出すとき
 
 [参加の手引き](../CONTRIBUTING.md)に従ってください。特に、次の3つを守ってください。
 
 - 新しい機能、依存、公開するAPIの変更は、実装の前にIssueで相談する。
-- 文書は1ファイル100行以内。`python3 tools/check-links.py` が、リンク切れと行数を検査します。
+- 文書は1ファイル100行以内。`cargo xtask check-links` が、リンク切れと行数を検査します。
 - 他の勤怠・人事・給与ソフトのコードや、特定の製品の画面・文言を写さない。GPLやAGPLのものは、見ることも避けてください（[権利の確認](legal/rights-check.md)）。
