@@ -1,0 +1,261 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-core",
+    "-p",
+    "kintai-jp-labor",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "月次: 30分ちょうどを切り捨てる",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "if minutes.rem_euclid(60) >= 30 {",
+      "replace": "if minutes.rem_euclid(60) > 30 {"
+    },
+    {
+      "label": "保存: 起算日を早い方にする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "completed.max(wage_due)",
+      "replace": "completed.min(wage_due)"
+    },
+    {
+      "label": "保存: 初日を算入する",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": ".checked_add_days(1)",
+      "replace": ".checked_add_days(0)"
+    },
+    {
+      "label": "保存: 応当日の当日まで延ばす",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": ".checked_add_days(-1)",
+      "replace": ".checked_add_days(0)"
+    },
+    {
+      "label": "保存: 労働時間の状況の記録の本則を5年にする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "RetentionKind::StatusRecord => 3,",
+      "replace": "RetentionKind::StatusRecord => 5,"
+    },
+    {
+      "label": "月次: 期間の外の日を数える",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": ".filter(|day| period.contains(day.date))",
+      "replace": ".filter(|day| !period.contains(day.date))"
+    },
+    {
+      "label": "月次: 休日の丸めに延長の分を使う",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "holiday: round_to_hours(self.holiday_minutes),",
+      "replace": "holiday: round_to_hours(self.overtime_minutes),"
+    },
+    {
+      "label": "月次: 丸めの値の前方一致を許す",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": ".find(|rounding| rounding.code() == text)",
+      "replace": ".find(|rounding| rounding.code().starts_with(text))"
+    },
+    {
+      "label": "explain: 2023-04-01 当日に60時間超の率を出さない",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "Date::from_ymd(2023, 4, 1).is_ok_and(|from| date >= from)",
+      "replace": "Date::from_ymd(2023, 4, 1).is_ok_and(|from| date > from)"
+    },
+    {
+      "label": "explain: 60時間超＋深夜を70%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Over60, true) => (75,",
+      "replace": "(Category::Over60, true) => (70,"
+    },
+    {
+      "label": "explain: 法定休日＋深夜を50%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Holiday, true) => (60,",
+      "replace": "(Category::Holiday, true) => (50,"
+    },
+    {
+      "label": "explain: 深夜の始まりを21時にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "const NIGHT_START_MINUTE: i64 = 22 * 60;",
+      "replace": "const NIGHT_START_MINUTE: i64 = 21 * 60;"
+    },
+    {
+      "label": "explain: 所定外法定内を所定内に含める",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Within, day.within - day.extra_within),",
+      "replace": "(Category::Within, day.within),"
+    },
+    {
+      "label": "explain: 休憩をはさむ区間をつなぐ",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "if last.end == part.start",
+      "replace": "if last.end <= part.start"
+    },
+    {
+      "label": "月次: 深夜を労働時間数に足す",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "self.work_minutes = add(self.work_minutes, day.total)?;",
+      "replace": "self.work_minutes = add(self.work_minutes, day.total + day.night)?;"
+    },
+    {
+      "label": "月次: 60時間超に時間外の全部を入れる",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "self.over60_minutes = add(self.over60_minutes, day.over60)?;",
+      "replace": "self.over60_minutes = add(self.over60_minutes, day.overtime)?;"
+    },
+    {
+      "label": "月次: 所定外法定内に法定内の全部を入れる",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "self.extra_within_minutes = add(self.extra_within_minutes, day.extra_within)?;",
+      "replace": "self.extra_within_minutes = add(self.extra_within_minutes, day.within)?;"
+    },
+    {
+      "label": "月次: 深夜の丸めに休日の分を使う",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "night: round_to_hours(self.night_minutes),",
+      "replace": "night: round_to_hours(self.holiday_minutes),"
+    },
+    {
+      "label": "月次: 延長の丸めから60時間超を除く",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "overtime: round_to_hours(self.overtime_minutes),",
+      "replace": "overtime: round_to_hours(self.overtime_minutes - self.over60_minutes),"
+    },
+    {
+      "label": "月次: 29分を切り上げる",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "if minutes.rem_euclid(60) >= 30 {",
+      "replace": "if minutes.rem_euclid(60) >= 29 {"
+    },
+    {
+      "label": "月次: 起算日の違う月の期間を拒否しない",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "if period.start_day() != policy.month_start_day() {",
+      "replace": "if false && period.start_day() != policy.month_start_day() {"
+    },
+    {
+      "label": "月次: 1か月の台帳で、拒否された区分の結果を拒否しない",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "    if classification.refused.is_some() {\n        return Err(ReportError::Refused);\n    }\n    if period.start_day()",
+      "replace": "    if period.start_day()"
+    },
+    {
+      "label": "月次: 同じ従業員の2回を拒否しない",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "if !seen.insert(input.employee) {",
+      "replace": "if false && !seen.insert(input.employee) {"
+    },
+    {
+      "label": "月次: 従業員をIDの逆順に並べる",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "employees.sort_by(|a, b| a.employee.cmp(&b.employee));",
+      "replace": "employees.sort_by(|a, b| b.employee.cmp(&a.employee));"
+    },
+    {
+      "label": "月次: 週の曖昧さの記録を、週の起算日が期間にあるときだけ出す",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "RecordDate::WeekStart(week) => (0..7).any(|offset| {",
+      "replace": "RecordDate::WeekStart(week) => (0..1).any(|offset| {"
+    },
+    {
+      "label": "月次: 休憩の不足を期間の外の日だけにする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": ".filter(|shortage| in_period(shortage.date))",
+      "replace": ".filter(|shortage| !in_period(shortage.date))"
+    },
+    {
+      "label": "保存: 労働時間の状況の記録も支払期日との遅い方から数える",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "!matches!(self, RetentionKind::StatusRecord)",
+      "replace": "matches!(self, RetentionKind::StatusRecord)"
+    },
+    {
+      "label": "保存: 応当日がないとき、月末の前日にする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "Date::from_ymd(year, first.month(), last).map_err(|_| ReportError::OutOfRange)",
+      "replace": "Date::from_ymd(year, first.month(), last - 1).map_err(|_| ReportError::OutOfRange)"
+    },
+    {
+      "label": "保存: 現行の法定の最低を5年にする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "    pub const fn statutory_current_years(self) -> i32 {\n        3\n",
+      "replace": "    pub const fn statutory_current_years(self) -> i32 {\n        5\n"
+    },
+    {
+      "label": "保存: 製品の既定を3年にする",
+      "file": "crates/kintai-jp-labor/src/report.rs",
+      "find": "    pub const fn product_default_years(self) -> i32 {\n        5\n",
+      "replace": "    pub const fn product_default_years(self) -> i32 {\n        3\n"
+    },
+    {
+      "label": "月次（ID）: 従業員IDの先頭に記号（= など）を許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "&& first.is_ascii_alphanumeric()",
+      "replace": "&& first.is_ascii_graphic()"
+    },
+    {
+      "label": "月次（ID）: 空の従業員IDを許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "    let Some((first, rest)) = bytes.split_first() else {\n        return false;",
+      "replace": "    let Some((first, rest)) = bytes.split_first() else {\n        return true;"
+    },
+    {
+      "label": "explain: 法定内の深夜を0%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Within | Category::ExtraWithin, true) => (25,",
+      "replace": "(Category::Within | Category::ExtraWithin, true) => (0,"
+    },
+    {
+      "label": "explain: 時間外（深夜でない）を50%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Overtime, false) => (25,",
+      "replace": "(Category::Overtime, false) => (50,"
+    },
+    {
+      "label": "explain: 時間外の深夜を25%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Overtime, true) => (50,",
+      "replace": "(Category::Overtime, true) => (25,"
+    },
+    {
+      "label": "explain: 60時間超（深夜でない）を25%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Over60, false) => (50,",
+      "replace": "(Category::Over60, false) => (25,"
+    },
+    {
+      "label": "explain: 法定休日（深夜でない）を25%にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "(Category::Holiday, false) => (35,",
+      "replace": "(Category::Holiday, false) => (25,"
+    },
+    {
+      "label": "explain: 2023-04-01 より前でも60時間超の率を出す",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "let shown = category != Category::Over60 || over60_rate_applies(date);",
+      "replace": "let shown = true;"
+    },
+    {
+      "label": "explain: 深夜の終わりを6時にする",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "const NIGHT_END_MINUTE: i64 = 5 * 60;",
+      "replace": "const NIGHT_END_MINUTE: i64 = 6 * 60;"
+    },
+    {
+      "label": "explain: 率を出さない注意を、2023-04-01 以後に付ける",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "    if !over60_rate_applies(date)\n        && segments",
+      "replace": "    if over60_rate_applies(date)\n        && segments"
+    },
+    {
+      "label": "explain: 週の曖昧さの記録を注意に入れない",
+      "file": "crates/kintai-jp-labor/src/explain.rs",
+      "find": "RecordDate::WeekStart(week) => week.contains(date),",
+      "replace": "RecordDate::WeekStart(_) => false,"
+    }
+  ]
+}

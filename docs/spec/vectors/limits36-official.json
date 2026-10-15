@@ -1,0 +1,878 @@
+{
+ "schema": "kintai.vectors36.v1",
+ "note": "期待値は出典の公的な数値例(36協定は時間を分に換算)。derived- は導出で、公的な例ではない。findings_by_month は、指摘のある月だけを書く(書いていない月は指摘なし。ただし UnknownHistory は、履歴が足りない月に出る)。",
+ "vectors": [
+  {
+   "id": "mhlw-36-leaflet-p16-table1",
+   "source": "厚生労働省『時間外労働の上限規制 わかりやすい解説』p.16-17 の表(2021/4〜9)。2021/9 の直近2〜6か月の平均は 57.5,53.3,55.0,60.0,63.3 時間(合計は 115,160,220,300,380 時間)。 協定値は同p.16のStep1の例(年680時間、月85時間、6回)。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5100,
+     "special_annual_limit_minutes": 40800,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2021-04-01",
+      "overtime": 4800,
+      "holiday": 0
+     },
+     {
+      "start": "2021-05-01",
+      "overtime": 3600,
+      "holiday": 1200
+     },
+     {
+      "start": "2021-06-01",
+      "overtime": 2700,
+      "holiday": 900
+     },
+     {
+      "start": "2021-07-01",
+      "overtime": 2100,
+      "holiday": 600
+     },
+     {
+      "start": "2021-08-01",
+      "overtime": 2100,
+      "holiday": 0
+     },
+     {
+      "start": "2021-09-01",
+      "overtime": 4800,
+      "holiday": 0
+     }
+    ],
+    "history": []
+   },
+   "expect": {
+    "total": [
+     4800,
+     4800,
+     3600,
+     2700,
+     2100,
+     4800
+    ],
+    "special_count": [
+     1,
+     2,
+     2,
+     2,
+     2,
+     3
+    ],
+    "year_overtime": [
+     4800,
+     8400,
+     11100,
+     13200,
+     15300,
+     20100
+    ],
+    "sums_at_last": {
+     "2": 6900,
+     "3": 9600,
+     "4": 13200,
+     "5": 18000,
+     "6": 22800
+    },
+    "findings_at_last": []
+   }
+  },
+  {
+   "id": "mhlw-36-leaflet-p17-table2",
+   "source": "同 p.17 の表(2020/11〜2021/4)。2021/4 の直近2〜6か月の平均は 62.5,48.3,43.8,46.0,45.8 時間(合計は 125,145,175,230,275 時間)。協定年は4月起算なので、2021/4 は新しい協定年の1か月目。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5999,
+     "special_annual_limit_minutes": 43200,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2020-11-01",
+      "overtime": 2700,
+      "holiday": 0
+     },
+     {
+      "start": "2020-12-01",
+      "overtime": 2700,
+      "holiday": 600
+     },
+     {
+      "start": "2021-01-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2021-02-01",
+      "overtime": 1200,
+      "holiday": 0
+     },
+     {
+      "start": "2021-03-01",
+      "overtime": 2700,
+      "holiday": 0
+     },
+     {
+      "start": "2021-04-01",
+      "overtime": 4800,
+      "holiday": 0
+     }
+    ],
+    "history": []
+   },
+   "expect": {
+    "total": [
+     2700,
+     3300,
+     1800,
+     1200,
+     2700,
+     4800
+    ],
+    "sums_at_last": {
+     "2": 7500,
+     "3": 8700,
+     "4": 10500,
+     "5": 13800,
+     "6": 16500
+    },
+    "year_overtime_known_at_last": true,
+    "findings_at_last": []
+   }
+  },
+  {
+   "id": "mhlw-36-leaflet-p21-over45-seven-times",
+   "source": "同 p.21 の違反例: 時間外が45時間を超える月が7回(特別条項の発動は6回まで)。 Oと休日労働の分け方、協定値は試験の仮定(原典は合計のみ)。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5999,
+     "special_annual_limit_minutes": 43200,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2021-04-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2021-05-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-06-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2021-07-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-08-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2021-09-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-10-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2021-11-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-12-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2022-01-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2022-02-01",
+      "overtime": 2760,
+      "holiday": 0
+     },
+     {
+      "start": "2022-03-01",
+      "overtime": 2760,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2020-11-01",
+      "total": 0
+     },
+     {
+      "start": "2020-12-01",
+      "total": 0
+     },
+     {
+      "start": "2021-01-01",
+      "total": 0
+     },
+     {
+      "start": "2021-02-01",
+      "total": 0
+     },
+     {
+      "start": "2021-03-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "special_count_last": 7,
+    "findings_by_month": {
+     "2022-03-01": [
+      "SpecialCountExceeded"
+     ]
+    },
+    "note": "履歴の直前5か月は T=0 と明示した試験用の仮定"
+   }
+  },
+  {
+   "id": "mhlw-36-leaflet-p21-june-100h",
+   "source": "同 p.21 の違反例: 6月が100時間(時間外と休日労働の合計は100時間未満でなければならない)。 Oと休日労働の分け方、協定値は試験の仮定(原典は合計のみ)。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5999,
+     "special_annual_limit_minutes": 43200,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2021-04-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-05-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-06-01",
+      "overtime": 6000,
+      "holiday": 0
+     },
+     {
+      "start": "2021-07-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-08-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-09-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-10-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-11-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-12-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2022-01-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2022-02-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2022-03-01",
+      "overtime": 600,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2020-11-01",
+      "total": 0
+     },
+     {
+      "start": "2020-12-01",
+      "total": 0
+     },
+     {
+      "start": "2021-01-01",
+      "total": 0
+     },
+     {
+      "start": "2021-02-01",
+      "total": 0
+     },
+     {
+      "start": "2021-03-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2021-06-01": [
+      "SpecialMonthlyTotalExceeded",
+      "MonthlyTotalReached100h"
+     ]
+    },
+    "note": "T=100時間は『100時間未満』に反するので違反。協定の月の上限(5999分)も超える"
+   }
+  },
+  {
+   "id": "mhlw-36-leaflet-p21-avg80-three-months",
+   "source": "同 p.21 の違反例: 12月〜2月の3か月平均が80時間超(2か月平均だけなら問題なし)。 Oと休日労働の分け方、協定値は試験の仮定(原典は合計のみ)。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5999,
+     "special_annual_limit_minutes": 43200,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2021-04-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-05-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-06-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-07-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-08-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-09-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-10-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-11-01",
+      "overtime": 600,
+      "holiday": 0
+     },
+     {
+      "start": "2021-12-01",
+      "overtime": 5100,
+      "holiday": 0
+     },
+     {
+      "start": "2022-01-01",
+      "overtime": 4200,
+      "holiday": 0
+     },
+     {
+      "start": "2022-02-01",
+      "overtime": 5400,
+      "holiday": 0
+     },
+     {
+      "start": "2022-03-01",
+      "overtime": 600,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2020-11-01",
+      "total": 0
+     },
+     {
+      "start": "2020-12-01",
+      "total": 0
+     },
+     {
+      "start": "2021-01-01",
+      "total": 0
+     },
+     {
+      "start": "2021-02-01",
+      "total": 0
+     },
+     {
+      "start": "2021-03-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2022-02-01": [
+      {
+       "code": "MultiMonthSumExceeded",
+       "n": 3
+      }
+     ]
+    },
+    "sums_at": {
+     "2022-02-01": {
+      "2": 9600,
+      "3": 14700
+     }
+    },
+    "note": "2か月だけなら 70+90=160時間=上限ちょうどで適合。3か月は 85+70+90=245時間 > 240時間 で違反"
+   }
+  },
+  {
+   "id": "mhlw-36-leaflet-p4-44plus56",
+   "source": "同 p.4: 時間外44時間＋休日労働56時間＝100時間は、特別条項に当たらなくても違反。 Oと休日労働の分け方、協定値は試験の仮定(原典は合計のみ)。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "general",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 21600
+    },
+    "months": [
+     {
+      "start": "2021-04-01",
+      "overtime": 2640,
+      "holiday": 3360
+     }
+    ],
+    "history": [
+     {
+      "start": "2020-11-01",
+      "total": 0
+     },
+     {
+      "start": "2020-12-01",
+      "total": 0
+     },
+     {
+      "start": "2021-01-01",
+      "total": 0
+     },
+     {
+      "start": "2021-02-01",
+      "total": 0
+     },
+     {
+      "start": "2021-03-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2021-04-01": [
+      "MonthlyTotalReached100h"
+     ]
+    },
+    "note": "O=44 は45時間以内だが、O+H=100時間は『100時間未満』に反する。特別条項の有無に関わらず違反"
+   }
+  },
+  {
+   "id": "derived-36-agreement-limit-30h",
+   "source": "導出(公的な例ではない。査読L1-04): 協定の月限度が30時間のとき、30時間超45時間以下の月は、法定の45時間を超えていないので発動月に数えず、協定の限度超過(GeneralMonthlyLimitExceeded)にする。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "general",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 1800,
+     "annual_limit_minutes": 21600
+    },
+    "months": [
+     {
+      "start": "2022-04-01",
+      "overtime": 2100,
+      "holiday": 0
+     },
+     {
+      "start": "2022-05-01",
+      "overtime": 1200,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2022-03-01",
+      "total": 0
+     },
+     {
+      "start": "2021-11-01",
+      "total": 0
+     },
+     {
+      "start": "2021-12-01",
+      "total": 0
+     },
+     {
+      "start": "2022-01-01",
+      "total": 0
+     },
+     {
+      "start": "2022-02-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2022-04-01": [
+      "GeneralMonthlyLimitExceeded"
+     ]
+    },
+    "special_count_by_month": {
+     "2022-04-01": 0,
+     "2022-05-01": 0
+    }
+   }
+  },
+  {
+   "id": "derived-36-special-count-at-45h",
+   "source": "導出(公的な例ではない。査読L1-04): 特別条項でも、発動月は45時間(2700分)を超えた月。35時間の月は発動月に数えない。50時間の月は1回目の発動で、6回以内なら指摘なし。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "special",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 1800,
+     "annual_limit_minutes": 21600,
+     "special_monthly_total_limit_minutes": 5999,
+     "special_annual_limit_minutes": 43200,
+     "special_months_max": 6
+    },
+    "months": [
+     {
+      "start": "2022-04-01",
+      "overtime": 2100,
+      "holiday": 0
+     },
+     {
+      "start": "2022-05-01",
+      "overtime": 3000,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2022-03-01",
+      "total": 0
+     },
+     {
+      "start": "2021-11-01",
+      "total": 0
+     },
+     {
+      "start": "2021-12-01",
+      "total": 0
+     },
+     {
+      "start": "2022-01-01",
+      "total": 0
+     },
+     {
+      "start": "2022-02-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2022-04-01": [
+      "GeneralMonthlyLimitExceeded"
+     ]
+    },
+    "special_count_by_month": {
+     "2022-04-01": 0,
+     "2022-05-01": 1
+    }
+   }
+  },
+  {
+   "id": "derived-36-annual-agreement-300h",
+   "source": "導出(公的な例ではない): 一般条項で年の協定限度が300時間のとき、30時間×12か月＝360時間は、法定の360時間(21600分)ちょうどなので AnnualOvertimeExceeded でなく、協定の限度超過(GeneralAnnualLimitExceeded)。累計が300時間を超える11か月目から。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "general",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 18000
+    },
+    "months": [
+     {
+      "start": "2022-04-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-05-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-06-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-07-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-08-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-09-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-10-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-11-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2022-12-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2023-01-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2023-02-01",
+      "overtime": 1800,
+      "holiday": 0
+     },
+     {
+      "start": "2023-03-01",
+      "overtime": 1800,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2022-03-01",
+      "total": 0
+     },
+     {
+      "start": "2021-11-01",
+      "total": 0
+     },
+     {
+      "start": "2021-12-01",
+      "total": 0
+     },
+     {
+      "start": "2022-01-01",
+      "total": 0
+     },
+     {
+      "start": "2022-02-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2023-02-01": [
+      "GeneralAnnualLimitExceeded"
+     ],
+     "2023-03-01": [
+      "GeneralAnnualLimitExceeded"
+     ]
+    }
+   }
+  },
+  {
+   "id": "derived-36-annual-statutory-360h",
+   "source": "導出(公的な例ではない): 31時間×12か月＝372時間は、法定の360時間(21600分)を超えるので、超えた月(12か月目)から AnnualOvertimeExceeded。その前は協定の限度(300時間)超過。",
+   "case": {
+    "schema": "kintai.case36.v1",
+    "agreement": {
+     "kind": "general",
+     "year_start_month": 4,
+     "monthly_limit_minutes": 2700,
+     "annual_limit_minutes": 18000
+    },
+    "months": [
+     {
+      "start": "2022-04-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-05-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-06-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-07-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-08-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-09-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-10-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-11-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2022-12-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2023-01-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2023-02-01",
+      "overtime": 1860,
+      "holiday": 0
+     },
+     {
+      "start": "2023-03-01",
+      "overtime": 1860,
+      "holiday": 0
+     }
+    ],
+    "history": [
+     {
+      "start": "2022-03-01",
+      "total": 0
+     },
+     {
+      "start": "2021-11-01",
+      "total": 0
+     },
+     {
+      "start": "2021-12-01",
+      "total": 0
+     },
+     {
+      "start": "2022-01-01",
+      "total": 0
+     },
+     {
+      "start": "2022-02-01",
+      "total": 0
+     }
+    ]
+   },
+   "expect": {
+    "findings_by_month": {
+     "2023-01-01": [
+      "GeneralAnnualLimitExceeded"
+     ],
+     "2023-02-01": [
+      "GeneralAnnualLimitExceeded"
+     ],
+     "2023-03-01": [
+      "AnnualOvertimeExceeded"
+     ]
+    }
+   }
+  }
+ ]
+}

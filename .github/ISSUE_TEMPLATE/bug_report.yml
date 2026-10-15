@@ -1,0 +1,54 @@
+name: 不具合の報告
+description: 時間の区分や上限の判定、年次有給休暇の結果が、期待と違うとき
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        実在の従業員・会社の情報、実際の打刻は、貼らないでください。架空の値で再現してください。
+  - type: input
+    id: version
+    attributes:
+      label: 版
+      description: "`git rev-parse --short HEAD` の結果"
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: 環境
+      description: "OSと、`rustc --version` の結果"
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: 最小の入力
+      description: 不具合が出る、最小の方針（policy）と架空の打刻
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 手順
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待した結果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の結果
+    validations:
+      required: true
+  - type: checkboxes
+    id: no-real-data
+    attributes:
+      label: 確認
+      options:
+        - label: 実在の従業員・会社の情報を含めていない
+          required: true

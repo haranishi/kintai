@@ -1,0 +1,177 @@
+{
+ "test_cmd": [
+  "cargo",
+  "test",
+  "-q",
+  "--workspace",
+  "--no-fail-fast"
+ ],
+ "timeout_sec": 900,
+ "exclude": [
+  "target",
+  ".git",
+  ".cargo-home",
+  ".cargo-target",
+  ".tmp",
+  "tools/difftest-out",
+  "__pycache__"
+ ],
+ "mutations": [
+  {
+   "label": "L2-M01 36: 特別条項の月の上限ちょうどを超過にする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "if activated && total > special_monthly_total {",
+   "replace": "if activated && total >= special_monthly_total {"
+  },
+  {
+   "label": "L2-M02 36: 特別条項の月の上限の最大を6000にする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "pub const SPECIAL_MONTHLY_TOTAL_MAX_MINUTES: i64 = 5999;",
+   "replace": "pub const SPECIAL_MONTHLY_TOTAL_MAX_MINUTES: i64 = 6000;"
+  },
+  {
+   "label": "L2-M03 36: 特別条項の年の上限の最大を43201にする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "pub const SPECIAL_ANNUAL_MAX_MINUTES: i64 = 43_200;",
+   "replace": "pub const SPECIAL_ANNUAL_MAX_MINUTES: i64 = 43_201;"
+  },
+  {
+   "label": "L2-M04 36: 協定の年限度の最大を21601にする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "            ANNUAL_OVERTIME_LIMIT_MINUTES,\n            \"0〜21600\",",
+   "replace": "            ANNUAL_OVERTIME_LIMIT_MINUTES + 1,\n            \"0〜21600\","
+  },
+  {
+   "label": "L2-M05 36: 直近の合計を5か月までにする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "for back in 0..6_i64 {",
+   "replace": "for back in 0..5_i64 {"
+  },
+  {
+   "label": "L2-M06 36: 履歴の月を1か月ずらす",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "history.get(&(first_index + offset)).copied()",
+   "replace": "history.get(&(first_index + offset - 1)).copied()"
+  },
+  {
+   "label": "L2-M07 36: months が空のとき履歴の日を29〜31も許す",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "            if !(1..=28).contains(&entry.start.day()) {\n                return Err(Limits36Error::HistoryNotAgreementMonth { index });",
+   "replace": "            if !(1..=31).contains(&entry.start.day()) {\n                return Err(Limits36Error::HistoryNotAgreementMonth { index });"
+  },
+  {
+   "label": "L2-M08 年休: 年48日を表の外にしない（47日を週1日の行に）",
+   "file": "crates/kintai-jp-labor/src/leave.rs",
+   "find": "GrantRow::OneDay => Some((48, 72)),",
+   "replace": "GrantRow::OneDay => Some((47, 72)),"
+  },
+  {
+   "label": "L2-M09 年休: 5日の期間を13か月にする",
+   "file": "crates/kintai-jp-labor/src/leave.rs",
+   "find": "pub const FIVE_DAY_WINDOW_MONTHS: u32 = 12;",
+   "replace": "pub const FIVE_DAY_WINDOW_MONTHS: u32 = 13;"
+  },
+  {
+   "label": "L2-M10 年休: 取得を日付順に並べない",
+   "file": "crates/kintai-jp-labor/src/leave.rs",
+   "find": "    counted.sort_by_key(|(_, record)| record.date);\n",
+   "replace": ""
+  },
+  {
+   "label": "L2-M11 打刻: 1か月の勤務の数を年を見ずに数える",
+   "file": "crates/kintai-core/src/punch.rs",
+   "find": "let this_month = (date.year(), date.month());",
+   "replace": "let this_month = (2000, date.month());"
+  },
+  {
+   "label": "L2-M12 打刻: 始業を切り上げる",
+   "file": "crates/kintai-core/src/punch.rs",
+   "find": "        start: shift.start.time.floor(),",
+   "replace": "        start: shift.start.time.ceil().unwrap_or(shift.start.time.floor()),"
+  },
+  {
+   "label": "L2-M13 打刻: 休憩の開始を切り捨てる",
+   "file": "crates/kintai-core/src/punch.rs",
+   "find": "        let from = start\n            .time\n            .ceil()\n            .map_err(|_| PunchError::OutOfRange { index: start.index })?;",
+   "replace": "        let from = start.time.floor();"
+  },
+  {
+   "label": "L2-M14 取込: 行の長さに CR を含める",
+   "file": "crates/kintai-import/src/lib.rs",
+   "find": "        let line = line.strip_suffix(b\"\\r\").unwrap_or(line);\n        if line.len() > MAX_LINE_BYTES {\n            return Err(ImportError::line(ImportErrorKind::LineTooLong, number));",
+   "replace": "        if line.len() > MAX_LINE_BYTES {\n            return Err(ImportError::line(ImportErrorKind::LineTooLong, number));"
+  },
+  {
+   "label": "L2-M15 方針: 行の長さに CR を含める",
+   "file": "crates/kintai-cli/src/policy_file.rs",
+   "find": "        let line = line.strip_suffix(b\"\\r\").unwrap_or(line);\n        if line.len() > MAX_LINE_BYTES {\n            return Err(invalid_at(",
+   "replace": "        if line.len() > MAX_LINE_BYTES {\n            return Err(invalid_at("
+  },
+  {
+   "label": "L2-M16 説明: 法定内の深夜の割増を0%にする",
+   "file": "crates/kintai-jp-labor/src/explain.rs",
+   "find": "(Category::Within | Category::ExtraWithin, true) => (25,",
+   "replace": "(Category::Within | Category::ExtraWithin, true) => (0,"
+  },
+  {
+   "label": "L2-M17 説明: 時間外の深夜を25%にする",
+   "file": "crates/kintai-jp-labor/src/explain.rs",
+   "find": "(Category::Overtime, true) => (50,",
+   "replace": "(Category::Overtime, true) => (25,"
+  },
+  {
+   "label": "L2-M18 説明: 法定休日を25%にする",
+   "file": "crates/kintai-jp-labor/src/explain.rs",
+   "find": "(Category::Holiday, false) => (35,",
+   "replace": "(Category::Holiday, false) => (25,"
+  },
+  {
+   "label": "L2-M19 集計: 週の記録を週の初日だけで期間に入れる",
+   "file": "crates/kintai-jp-labor/src/report.rs",
+   "find": "RecordDate::WeekStart(week) => (0..7).any(|offset| {",
+   "replace": "RecordDate::WeekStart(week) => (0..1).any(|offset| {"
+  },
+  {
+   "label": "L2-M20 check: 週の記録を週の初日だけで期間に入れる",
+   "file": "crates/kintai-cli/src/check.rs",
+   "find": "RecordDate::WeekStart(week) => (0..7).any(|offset| {",
+   "replace": "RecordDate::WeekStart(week) => (0..1).any(|offset| {"
+  },
+  {
+   "label": "L2-M21 check: 休憩の不足の期間の終わりを含める",
+   "file": "crates/kintai-cli/src/check.rs",
+   "find": "self.from <= date && date < self.until",
+   "replace": "self.from <= date && date <= self.until"
+  },
+  {
+   "label": "L2-M22 report: data_from の既定を使わない",
+   "file": "crates/kintai-cli/src/report.rs",
+   "find": "let data_from = args.data_from.or(punches.first_date());",
+   "replace": "let data_from = args.data_from;"
+  },
+  {
+   "label": "L2-M23 check: data_from の既定を使わない（区分だけ）",
+   "file": "crates/kintai-cli/src/check.rs",
+   "find": "        let work = punches.work(&valid, &employee.id, data_from)?;",
+   "replace": "        let work = punches.work(&valid, &employee.id, args.data_from)?;"
+  },
+  {
+   "label": "L2-M24 explain: data_from の既定を使わない",
+   "file": "crates/kintai-cli/src/explain.rs",
+   "find": "let data_from = args.data_from.or(punches.first_date());",
+   "replace": "let data_from = args.data_from;"
+  },
+  {
+   "label": "L2-M25 36: 一般条項で発動月の判定を協定の月限度にする",
+   "file": "crates/kintai-jp-labor/src/limits36.rs",
+   "find": "            if activated {\n                findings.push(Finding::MonthlyOvertimeExceeded);\n            } else if overtime > monthly {",
+   "replace": "            if overtime > monthly {\n                findings.push(Finding::MonthlyOvertimeExceeded);\n            } else if overtime > monthly {"
+  },
+  {
+   "label": "L2-M26 年休: 失効したロットの未使用分を残数に入れる",
+   "file": "crates/kintai-jp-labor/src/leave.rs",
+   "find": "let remaining_halves = if expired { 0 } else { unused };",
+   "replace": "let remaining_halves = unused;"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+# kintai の合成データ（デモと試験に使う）。実在の人・会社ではありません。
+# 書き方は docs/spec/cli.md の「方針ファイル」。打刻は 2026-09-27（日）から 2026-10-31 まで。
+schema = "kintai.policy.v1"
+
+[workplace]
+work_system = "standard"
+scheduled_minutes_per_day = 420
+week_start = "sun"
+weekly_limit_minutes = 2400
+special_44h_confirmed = false
+legal_holiday_weekday = "sun"
+month_start_day = 1
+ambiguity = "reject"
+seconds = "worker_favorable"
+rounding = "monthly_30min"
+
+[agreement36]
+kind = "special"
+year_start_month = 4
+month_start_day = 1
+monthly_limit_minutes = 2700
+annual_limit_minutes = 21600
+special_monthly_total_limit_minutes = 5940
+special_annual_limit_minutes = 43200
+special_months_max = 6
+
+# E001: 通常の月（平日 9:00〜17:00、休憩1時間）。10/05 は秒つきの打刻、10/08 は23時まで、10/09 は年休。
+# 年休は、2024-10-01 の付与の残りが 2026-10-01 に失効する。
+[[employee]]
+id = "E001"
+worker_kind = "standard"
+hire_date = "2024-04-01"
+weekly_scheduled_days = 5
+weekly_scheduled_minutes = 2100
+attendance = ["meets", "meets", "meets"]
+
+# E002: 夜勤（月〜木の 22:00〜翌7:00、休憩1時間）。週4日だが週30時間以上なので通常の付与。
+[[employee]]
+id = "E002"
+hire_date = "2025-04-01"
+weekly_scheduled_days = 4
+weekly_scheduled_minutes = 1920
+attendance = ["meets"]
+
+# E003: 法定休日（日曜）の労働と、休憩の不足。3回目の付与の年は出勤率が8割未満。
+[[employee]]
+id = "E003"
+hire_date = "2023-10-01"
+weekly_scheduled_days = 5
+weekly_scheduled_minutes = 2100
+attendance = ["meets", "meets", "below", "meets"]
+
+# E004: 毎日3時間の時間外（10月は66時間で、月60時間を超える）。36協定の特別条項を発動する月。
+[[employee]]
+id = "E004"
+hire_date = "2026-04-01"
+weekly_scheduled_days = 5
+weekly_scheduled_minutes = 2100
+attendance = ["meets"]
+
+# E005: 週3日（比例付与）。10/10（土）22:00〜翌5:00 の勤務が、日曜（法定休日）と週の境界をまたぐ（拒否の例）。
+[[employee]]
+id = "E005"
+hire_date = "2025-04-01"
+weekly_scheduled_days = 3
+weekly_scheduled_minutes = 1080
+attendance = []

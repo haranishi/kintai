@@ -1,0 +1,49 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[年休: 失効日の当日を失効にしない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_4_lot_expires_on_the_expiry_day, ac06_8_official_vectors
+[年休: 失効日の当日の取得を許す] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_4_lot_expires_on_the_expiry_day
+[年休: 付与日の当日を使えなくする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_4_lot_is_usable_from_the_grant_day, ac06_10_explicit_grant_on_as_of_is_shown
+[年休: 付与日の当日のロットを飛ばす] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_4_lot_is_usable_from_the_grant_day, ac06_10_explicit_grant_on_as_of_is_shown
+[年休: 10日ちょうどの付与を5日取得義務の対象外にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_5_half_day_counts_as_one_half, ac06_6_five_day_obligation, ac06_7_carry_over_and_overlapping_windows
+[年休: 5日ちょうどの取得を未達にする（>= を > に）] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_6_five_day_obligation, ac06_6_taking_on_the_last_day_of_the_window_counts
+[年休: 5日の期間の最後の日に NotMet にする] 検出 ← 赤になった試験: ac06_6_five_day_obligation
+[年休: 応当日があるとき前日にしない] 検出 ← 赤になった試験: ac06_2_calendar_date_reads_format_but_not_range, ac06_2_every_date_matches_the_day_by_day_reading, ac06_2_hire_2023_08_29, ac06_2_period_examples
+[年休: 半日を2半日にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_10_register_rows, ac06_4_oldest_lot_first_and_a_full_day_may_span_two_lots
+[年休: below の年も付与する] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_3_below_skips_the_grant_but_service_continues
+[年休: below の年で勤続年数を戻す] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_3_below_skips_the_grant_but_service_continues
+[年休: unknown に注意を付けない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_3_unknown_grants_with_one_notice, ac06_8_official_vectors
+[年休: as_of 当日の付与を出さない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_register_rows, ac06_3_below_skips_the_grant_but_service_continues, ac06_4_lot_expires_on_the_expiry_day
+[年休: 対応外の判定に as_of 当日を入れない] 検出 ← 赤になった試験: ac06_9_records_after_as_of_are_not_judged
+[年休: 分割付与を10日ちょうどでも見る] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_7_carry_over_and_overlapping_windows, ac06_8_official_vectors, ac06_9_split_grant_definition
+[年休: 分割付与で次の初日ちょうども分割にする] 検出 ← 赤になった試験: ac06_9_split_grant_definition
+[年休: 週1800分ちょうどを比例付与にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_weekly_five_days_or_1800_minutes_come_first
+[年休: 年217日を比例付与にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_annual_days_take_priority_over_weekly_days
+[年休: 年間の日数より週の日数を優先する] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_annual_days_take_priority_over_weekly_days
+[年休: 付与表の1セルを変える（週3日の3年6か月）] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_1_proportional_grant_table_matches_regulation_24_3
+[年休: 消化を新しいロットから] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_explicit_grants, ac06_10_register_rows, ac06_4_lot_expires_on_the_expiry_day
+[年休: 明示の付与の半日の上限を201にする] 検出 ← 赤になった試験: ac06_10_explicit_grants
+[年休: 失効を23か月にする] 検出 ← 赤になった試験: ac06_2_hire_2023_08_29, ac06_4_lot_expires_on_the_expiry_day, ac06_8_official_vectors
+[年休: 次の初日を期間の終わりの当日にする（翌日にしない）] 検出 ← 赤になった試験: ac06_2_calendar_date_reads_format_but_not_range, ac06_2_every_date_matches_the_day_by_day_reading, ac06_2_first_grant_dates_vector, ac06_2_hire_2023_08_29
+[年休: 応当日がない月の期間の終わりを末日の前日にする（翌月1日の規則が崩れる）] 検出 ← 赤になった試験: ac06_2_every_date_matches_the_day_by_day_reading, ac06_2_first_grant_dates_vector, ac06_2_hire_2023_08_29, ac06_2_period_examples
+[年休: 全日を1半日にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_explicit_grants, ac06_10_insufficient_balance_is_invalid, ac06_10_register_rows
+[年休: 5日の期間に付与日の当日の取得を入れない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_4_lot_is_usable_from_the_grant_day, ac06_10_taking_on_as_of_is_counted
+[年休: 5日の期間に期間の最後の日の取得を入れない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_6_taking_on_the_last_day_of_the_window_counts
+[年休: as_of 当日の取得を数えない] 検出 ← 赤になった試験: ac06_10_balance_is_checked_for_a_record_on_as_of, ac06_10_explicit_grant_on_as_of_is_shown, ac06_10_taking_on_as_of_is_counted
+[年休: as_of 当日の明示の付与を出さない] 検出 ← 赤になった試験: ac06_10_explicit_grant_on_as_of_is_shown
+[年休: 5日の期間を1日長くする] 検出 ← 赤になった試験: ac06_2_hire_2023_08_29, ac06_6_five_day_obligation, ac06_8_official_vectors, ac06_10_explicit_grant_on_as_of_is_shown
+[年休: 付与日を前回の付与日から12か月ずつ数える（g0 から数えない）] 検出 ← 赤になった試験: ac06_2_hire_2023_08_29, ac06_8_official_vectors
+[年休: 6年6か月以後を6年目の日数で止めない（5年6か月で止める）] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_1_days_by_service_length
+[年休: 所定労働の項目の最大ちょうどを範囲外にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_annual_days_take_priority_over_weekly_days, ac06_12_weekly_five_days_or_1800_minutes_come_first, ac06_12_working_terms_ranges
+[年休: 週5日ちょうどを比例付与にする] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_weekly_five_days_or_1800_minutes_come_first
+[年休: 年間の日数の区分の上端を含めない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_12_annual_days_take_priority_over_weekly_days
+[年休: 1日の取得を、足りるロットでも2つのロットに分ける] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_explicit_grants, ac06_10_insufficient_balance_is_invalid, ac06_10_register_rows
+[年休: 半日の不足を見逃す] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_insufficient_balance_is_invalid, ac06_4_lot_is_usable_from_the_grant_day, ac06_10_balance_is_checked_for_a_record_on_as_of
+[年休: 失効した分に、使った分も入れる] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_remaining_is_granted_minus_used_minus_expired, ac06_4_lot_expires_on_the_expiry_day, ac06_8_official_vectors
+[年休: あと何日を、取得を引かずに出す] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_5_half_day_counts_as_one_half, ac06_6_five_day_obligation, ac06_7_carry_over_and_overlapping_windows
+[年休: 対応外の表の外を時間単位より先に見る] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_9_unsupported_in_order
+[年休: 分割付与の判定で付与日を新しい順に並べる] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_explicit_grants, ac06_9_split_grant_definition
+[年休: 書式の誤りのある付与日を飛ばして分割付与を判定する] 検出 ← 赤になった試験: ac06_9_unsupported_checks_before_date_validation
+[年休: 0000年の日付を書式の誤りにしない] 検出 ← 赤になった試験: ac06_2_calendar_date_reads_format_but_not_range
+
+== 生き残り ==
+なし
+[終了コード 0、1202秒]

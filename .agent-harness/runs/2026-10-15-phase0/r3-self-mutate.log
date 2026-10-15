@@ -1,0 +1,41 @@
+# 自分のコードの境界への変異（19件。06:58）
+check.rs | if first > last { | 検出
+check.rs | let exit = if args.fail_on_violation && violations | 検出
+check.rs | } else if refused > 0 {
+        EXIT_REFUSED | 検出
+check.rs | if period.first_day_number() == first_date.day_num | 検出
+policy_file.rs | if count > MAX_EMPLOYEES { | 検出
+policy_file.rs | if self.agreement.kind() != AgreementKind::None | 検出
+policy_file.rs | if line.len() > MAX_LINE_BYTES { | 検出
+policy_file.rs | for employee in scope {
+            if let Some(co | 検出
+inputs.rs | (2000..=2099).contains(&year) | 検出
+inputs.rs | .position(|punch| !policy.contains(&punch.employee | 検出
+text.rs | format!("{sign}{whole}.5日") | 検出
+demo.rs | builder.mode(0o700); | 検出
+demo.rs | options.mode(0o600); | 検出
+demo.rs | if entries.next().is_some() { | 検出
+report.rs | let Some(ledger) = row.ledger.filter(|_| row.refus | 生き残り
+report.rs | "NoHolidaySwap" | 対象外（見つからないか等価）
+leave.rs | Some(as_of),
+
+# 出力の形の変異（8件。AC-12.9・AC-12.10 の試験 ac12_output_shape.rs に対して。07:09 と、AC-12.10 の試験を表の形に書き直した後の 07:11）
+            &employee.valid_terms, | 検出
+explain.rs | legal_holiday: weekday == explained.legal_holiday_ | 検出
+common_out.rs | let dates: BTreeSet<_> = anomalies.iter().map(|ano | 検出
+report.rs | refused: Option<&'a RefusedOut>,     amb | 検出
+report.rs | work_days: i64,     work_minutes: i64, | 検出
+leave.rs | used_halves: i64,     remaining_halves:  | 検出
+explain.rs | law: &'static str,     article: &'static | 検出
+explain.rs | legal_holiday: bool,     national_holida | 検出
+common_out.rs | pub kind: &'static str,     /// 日付。      | 検出
+text.rs | line(&mut out, REFERENCE_LINE);     out  | 検出
+check.rs | stdout.push_str(&footer(&[( | 検出
+report.rs | refused: Option<&'a RefusedOut>,     amb | 検出
+report.rs | work_days: i64,     work_minutes: i64, | 検出
+leave.rs | used_halves: i64,     remaining_halves:  | 検出
+explain.rs | law: &'static str,     article: &'static | 検出
+explain.rs | legal_holiday: bool,     national_holida | 検出
+common_out.rs | pub kind: &'static str,     /// 日付。      | 検出
+text.rs | line(&mut out, REFERENCE_LINE);     out  | 検出
+check.rs | stdout.push_str(&footer(&[( | 検出

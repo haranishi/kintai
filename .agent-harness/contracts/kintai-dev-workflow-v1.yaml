@@ -1,0 +1,35 @@
+# 開発ワークフロー・ハーネス契約（正本は作者のObsidianノート「開発ワークフロー・ハーネス契約テンプレート」）。
+# 役割は人格でなく、工程の契約として置く。
+
+meta: {name: "kintai-dev-workflow", version: "1.0.0", status: active, owner: "保守者"}
+goal: >
+  Phase 0の完了。kintai-core・kintai-jp-labor・kintai-import・kintai-cli が docs/spec の仕様どおりに動き、
+  cargo fmt・clippy・test・doc・deny、REUSE検査、gitleaks が通り、別実装（Python）との差分試験が全件一致し、
+  変異試験の生き残りが0で、速さの目標を実測で満たし、権利と規約の確認記録が揃い、
+  別の担当による読み取りレビュー（法令の根拠の照合と、実装の照合の2系統）の指摘に対応済みであること。
+non_goals:
+  - "保存（SQLite）・サーバー・画面（Phase 1以降）"
+  - "割増賃金の金額の計算と給与仕訳（Phase 2）"
+  - "変形労働時間制・フレックスタイム制・裁量労働制・事業場外みなし・管理監督者・高度プロフェッショナル・年少者・妊産婦の制限（対応外。黙って通常制で計算せず、必ず拒否する）"
+  - "GitHubへの公開操作（保守者の承認後に行う）"
+roles:
+  - {stage: research,  runner: "Codex（read-only相当の調査）／Claude／Web検索", deliverable: "原文引用つきの調査記録（.agent-harness/runs/*/research/ と docs/legal/）"}
+  - {stage: design,    runner: "Claudeのメインループ",     deliverable: "仕様（docs/spec）・設計文書・実装指示書"}
+  - {stage: implement, runner: "Codex（workspace-write）／Opus", deliverable: "コード・試験・変更一覧",
+     denied: ["git commit/push", "crates/ と指定したディレクトリの外への書き込み", "新しい依存の追加（事前に相談）", "法令の読みを仕様から変えること（仕様の疑問は報告する）"]}
+  - {stage: verify,    runner: "決定的な試験 → 別実装の差分試験 → 別セッションのCodex／Opus（read-only）", deliverable: "検証結果と指摘一覧"}
+  - {stage: human_gate, runner: "保守者", approves: ["commit・push・公開", "名前とライセンスの最終決定", "スコープの変更", "法令の読みの最終確認（社会保険労務士など）"]}
+loop_control:
+  retry: "verifyが不合格なら implement へ差し戻す。上限3周。同じ失敗が2回続いたら保守者へ返す"
+  budgets: {max_cycles: 3}
+terminal_states: [SUCCESS, NO_WORK, NEEDS_HUMAN, BUDGET_EXCEEDED, FAILED, UNCERTAIN]
+invariants:
+  - "完了は自己申告でなく証拠（試験の結果、実ファイル、コマンドの出力）で判定する"
+  - "設計と実装、実装とレビューを同じ担当に兼ねさせない。別実装（Python）は、Rust実装を見せずに仕様だけから書かせる"
+  - "法令の根拠は、e-Govの版ID・条項・確認日を表に持たせる。解釈が割れる点は、設定にするか未対応にし、黙って一方を採らない"
+  - "対応外の働き方は、黙って通常制で計算せず、必ずエラーで拒否する"
+  - "公開前に、著作権・規約・法律の確認を行い、docs/legal/rights-check.md に記録する。調べていないことは『問題なし』と書かない"
+  - "他の勤怠・人事・給与ソフト（GPL/AGPLのOSSを含む）のコード・画面・仕様書を見て写さない。法令と公的な解釈だけから書く"
+  - "実データ（従業員の氏名・打刻・休暇・給与）を、リポジトリにも指示書にも入れない。合成データだけを使う"
+  - "工程間の受け渡しは、自己完結の文書で行う"
+receipt: "各周回の結果を .agent-harness/runs/ に残す"

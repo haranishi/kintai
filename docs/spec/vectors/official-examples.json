@@ -1,0 +1,1590 @@
+{
+ "schema": "kintai.vectors.v1",
+ "note": "期待値は、出典の公的な数値例(または、その数値と整合する導出)。分は整数。derived- は導出で公的な例ではない。",
+ "vectors": [
+  {
+   "id": "mhlw-check-roudou-ex1",
+   "source": "厚生労働省「時間外・休日労働と割増賃金」1.割増賃金のきまり・例1（所定9〜17時、翌5時まで、休憩1時間）。https://www.check-roudou.mhlw.go.jp/study/roudousya_jikangai.html",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 420,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-07T09:00",
+      "end": "2026-10-08T05:00",
+      "breaks": [
+       [
+        "2026-10-07T12:00",
+        "2026-10-07T13:00"
+       ]
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-07": {
+      "total": 1140,
+      "within": 480,
+      "extra_within": 60,
+      "overtime": 660,
+      "over60": 0,
+      "holiday": 0,
+      "night": 420,
+      "night_within": 0,
+      "night_overtime": 420,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 1140,
+      "within": 480,
+      "overtime": 660,
+      "over60": 0,
+      "holiday": 0,
+      "night": 420
+     }
+    }
+   }
+  },
+  {
+   "id": "mhlw-check-roudou-ex2",
+   "source": "同・例2（法定休日9〜24時、休憩1時間）。実働12時間は1.35、22〜24時の2時間は1.60。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-04T09:00",
+      "end": "2026-10-05T00:00",
+      "breaks": [
+       [
+        "2026-10-04T12:00",
+        "2026-10-04T13:00"
+       ]
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-04": {
+      "total": 840,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 840,
+      "night": 120,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 120
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 840,
+      "within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 840,
+      "night": 120
+     }
+    }
+   }
+  },
+  {
+   "id": "tokyo-aramashi-week-excess-1",
+   "source": "東京労働局「労働基準法のあらまし」2018年 p.27「時間外手当が必要なケース」。日曜休、月〜土7時間ずつの週42時間は、週超過2時間。https://jsite.mhlw.go.jp/tokyo-roudoukyoku/var/rev0/0146/7523/20171228164224.pdf",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 420,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-05T09:00",
+      "end": "2026-10-05T17:00",
+      "breaks": [
+       [
+        "2026-10-05T12:00",
+        "2026-10-05T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-10-06T09:00",
+      "end": "2026-10-06T17:00",
+      "breaks": [
+       [
+        "2026-10-06T12:00",
+        "2026-10-06T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-10-07T09:00",
+      "end": "2026-10-07T17:00",
+      "breaks": [
+       [
+        "2026-10-07T12:00",
+        "2026-10-07T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-10-08T09:00",
+      "end": "2026-10-08T17:00",
+      "breaks": [
+       [
+        "2026-10-08T12:00",
+        "2026-10-08T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-10-09T09:00",
+      "end": "2026-10-09T17:00",
+      "breaks": [
+       [
+        "2026-10-09T12:00",
+        "2026-10-09T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-10-10T09:00",
+      "end": "2026-10-10T17:00",
+      "breaks": [
+       [
+        "2026-10-10T12:00",
+        "2026-10-10T13:00"
+       ]
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-05": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-06": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-07": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-08": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-09": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-10": {
+      "total": 420,
+      "within": 300,
+      "extra_within": 0,
+      "overtime": 120,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 2520,
+      "within": 2400,
+      "overtime": 120,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "tokyo-aramashi-week-excess-2",
+   "source": "同。日曜休、月7h・火9h・水5h・木7h・金7h・土7hの週42時間は、火の日超過1時間と土の週超過1時間。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 420,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-05T09:00",
+      "end": "2026-10-05T16:00"
+     },
+     {
+      "start": "2026-10-06T09:00",
+      "end": "2026-10-06T18:00"
+     },
+     {
+      "start": "2026-10-07T09:00",
+      "end": "2026-10-07T14:00"
+     },
+     {
+      "start": "2026-10-08T09:00",
+      "end": "2026-10-08T16:00"
+     },
+     {
+      "start": "2026-10-09T09:00",
+      "end": "2026-10-09T16:00"
+     },
+     {
+      "start": "2026-10-10T09:00",
+      "end": "2026-10-10T16:00"
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-05": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-06": {
+      "total": 540,
+      "within": 480,
+      "extra_within": 60,
+      "overtime": 60,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-07": {
+      "total": 300,
+      "within": 300,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-08": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-09": {
+      "total": 420,
+      "within": 420,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-10": {
+      "total": 420,
+      "within": 360,
+      "extra_within": 0,
+      "overtime": 60,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 2520,
+      "within": 2400,
+      "overtime": 120,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "nagasaki-no28-case1",
+   "source": "長崎労働局「労働法の基礎講座 第28回」p.3。日曜を法定休日に特定。日曜8h、月〜金各8h、土曜休。法定内2400分、時間外0、休日480分。https://jsite.mhlw.go.jp/nagasaki-roudoukyoku/content/contents/no28-25071801.pdf",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-04T09:00",
+      "end": "2026-10-04T17:00"
+     },
+     {
+      "start": "2026-10-05T09:00",
+      "end": "2026-10-05T17:00"
+     },
+     {
+      "start": "2026-10-06T09:00",
+      "end": "2026-10-06T17:00"
+     },
+     {
+      "start": "2026-10-07T09:00",
+      "end": "2026-10-07T17:00"
+     },
+     {
+      "start": "2026-10-08T09:00",
+      "end": "2026-10-08T17:00"
+     },
+     {
+      "start": "2026-10-09T09:00",
+      "end": "2026-10-09T17:00"
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-04": {
+      "total": 480,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 480,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-05": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-06": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-07": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-08": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-09": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 2880,
+      "within": 2400,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 480,
+      "night": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "nagasaki-no28-case2",
+   "source": "同。日曜を法定休日に特定。日曜8h、月〜金各8h、土曜8h。法定内2400分、時間外480分、休日480分。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-04T09:00",
+      "end": "2026-10-04T17:00"
+     },
+     {
+      "start": "2026-10-05T09:00",
+      "end": "2026-10-05T17:00"
+     },
+     {
+      "start": "2026-10-06T09:00",
+      "end": "2026-10-06T17:00"
+     },
+     {
+      "start": "2026-10-07T09:00",
+      "end": "2026-10-07T17:00"
+     },
+     {
+      "start": "2026-10-08T09:00",
+      "end": "2026-10-08T17:00"
+     },
+     {
+      "start": "2026-10-09T09:00",
+      "end": "2026-10-09T17:00"
+     },
+     {
+      "start": "2026-10-10T09:00",
+      "end": "2026-10-10T17:00"
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-04": {
+      "total": 480,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 480,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-05": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-06": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-07": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-08": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-09": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-10": {
+      "total": 480,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 480,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 3360,
+      "within": 2400,
+      "overtime": 480,
+      "over60": 0,
+      "holiday": 480,
+      "night": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "mhlw-60h-leaflet-31day-month",
+   "source": "厚生労働省「改正労働基準法」p.3の31日の月の例（1日が水曜、平日は毎日時間外3時間、土曜11日は4時間、日曜12日は法定休日2時間）。週別の時間外9・19・15・15・15時間、累計73時間。月の時間外4380分＝60時間以下3600分＋60時間超780分、休日120分。27日の時間外3時間目から60時間超。https://www.mhlw.go.jp/content/11200000/091214-1_03.pdf。6/28〜6/30は勤務なしと明示(data_from=2026-06-28)。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-07-01T09:00",
+      "end": "2026-07-01T21:00",
+      "breaks": [
+       [
+        "2026-07-01T12:00",
+        "2026-07-01T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-02T09:00",
+      "end": "2026-07-02T21:00",
+      "breaks": [
+       [
+        "2026-07-02T12:00",
+        "2026-07-02T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-03T09:00",
+      "end": "2026-07-03T21:00",
+      "breaks": [
+       [
+        "2026-07-03T12:00",
+        "2026-07-03T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-06T09:00",
+      "end": "2026-07-06T21:00",
+      "breaks": [
+       [
+        "2026-07-06T12:00",
+        "2026-07-06T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-07T09:00",
+      "end": "2026-07-07T21:00",
+      "breaks": [
+       [
+        "2026-07-07T12:00",
+        "2026-07-07T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-08T09:00",
+      "end": "2026-07-08T21:00",
+      "breaks": [
+       [
+        "2026-07-08T12:00",
+        "2026-07-08T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-09T09:00",
+      "end": "2026-07-09T21:00",
+      "breaks": [
+       [
+        "2026-07-09T12:00",
+        "2026-07-09T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-10T09:00",
+      "end": "2026-07-10T21:00",
+      "breaks": [
+       [
+        "2026-07-10T12:00",
+        "2026-07-10T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-11T09:00",
+      "end": "2026-07-11T13:00"
+     },
+     {
+      "start": "2026-07-12T09:00",
+      "end": "2026-07-12T11:00"
+     },
+     {
+      "start": "2026-07-13T09:00",
+      "end": "2026-07-13T21:00",
+      "breaks": [
+       [
+        "2026-07-13T12:00",
+        "2026-07-13T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-14T09:00",
+      "end": "2026-07-14T21:00",
+      "breaks": [
+       [
+        "2026-07-14T12:00",
+        "2026-07-14T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-15T09:00",
+      "end": "2026-07-15T21:00",
+      "breaks": [
+       [
+        "2026-07-15T12:00",
+        "2026-07-15T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-16T09:00",
+      "end": "2026-07-16T21:00",
+      "breaks": [
+       [
+        "2026-07-16T12:00",
+        "2026-07-16T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-17T09:00",
+      "end": "2026-07-17T21:00",
+      "breaks": [
+       [
+        "2026-07-17T12:00",
+        "2026-07-17T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-20T09:00",
+      "end": "2026-07-20T21:00",
+      "breaks": [
+       [
+        "2026-07-20T12:00",
+        "2026-07-20T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-21T09:00",
+      "end": "2026-07-21T21:00",
+      "breaks": [
+       [
+        "2026-07-21T12:00",
+        "2026-07-21T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-22T09:00",
+      "end": "2026-07-22T21:00",
+      "breaks": [
+       [
+        "2026-07-22T12:00",
+        "2026-07-22T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-23T09:00",
+      "end": "2026-07-23T21:00",
+      "breaks": [
+       [
+        "2026-07-23T12:00",
+        "2026-07-23T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-24T09:00",
+      "end": "2026-07-24T21:00",
+      "breaks": [
+       [
+        "2026-07-24T12:00",
+        "2026-07-24T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-27T09:00",
+      "end": "2026-07-27T21:00",
+      "breaks": [
+       [
+        "2026-07-27T12:00",
+        "2026-07-27T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-28T09:00",
+      "end": "2026-07-28T21:00",
+      "breaks": [
+       [
+        "2026-07-28T12:00",
+        "2026-07-28T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-29T09:00",
+      "end": "2026-07-29T21:00",
+      "breaks": [
+       [
+        "2026-07-29T12:00",
+        "2026-07-29T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-30T09:00",
+      "end": "2026-07-30T21:00",
+      "breaks": [
+       [
+        "2026-07-30T12:00",
+        "2026-07-30T13:00"
+       ]
+      ]
+     },
+     {
+      "start": "2026-07-31T09:00",
+      "end": "2026-07-31T21:00",
+      "breaks": [
+       [
+        "2026-07-31T12:00",
+        "2026-07-31T13:00"
+       ]
+      ]
+     }
+    ],
+    "data_from": "2026-06-28"
+   },
+   "expect": {
+    "days": {
+     "2026-07-01": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-02": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-03": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-06": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-07": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-08": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-09": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-10": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-11": {
+      "total": 240,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 240,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-12": {
+      "total": 120,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 120,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-13": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-14": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-15": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-16": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-17": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-20": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-21": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-22": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-23": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-24": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-27": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 60,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-28": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 180,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-29": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 180,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-30": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 180,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-07-31": {
+      "total": 660,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 180,
+      "over60": 180,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-07-01": {
+      "total": 15540,
+      "within": 11040,
+      "overtime": 4380,
+      "over60": 780,
+      "holiday": 120,
+      "night": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "derived-incomplete-week-complete",
+   "source": "導出(公的な数値例ではない。査読L1-01): 日曜起算・日曜が法定休日。9/28(月)〜10/3(土)に毎日8時間=週48時間。data_from=週の起算日(9/27)。週の全体がそろっているので、10/3の480分が時間外(10月の期間)。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "data_from": "2026-09-27",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-09-28T09:00",
+      "end": "2026-09-28T17:00"
+     },
+     {
+      "start": "2026-09-29T09:00",
+      "end": "2026-09-29T17:00"
+     },
+     {
+      "start": "2026-09-30T09:00",
+      "end": "2026-09-30T17:00"
+     },
+     {
+      "start": "2026-10-01T09:00",
+      "end": "2026-10-01T17:00"
+     },
+     {
+      "start": "2026-10-02T09:00",
+      "end": "2026-10-02T17:00"
+     },
+     {
+      "start": "2026-10-03T09:00",
+      "end": "2026-10-03T17:00"
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-09-28": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-09-29": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-09-30": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-01": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-02": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-03": {
+      "total": 480,
+      "within": 0,
+      "extra_within": 0,
+      "overtime": 480,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-09-01": {
+      "total": 1440,
+      "within": 1440,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0
+     },
+     "2026-10-01": {
+      "total": 1440,
+      "within": 960,
+      "overtime": 480,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0
+     }
+    },
+    "ambiguities": [],
+    "refused": null
+   }
+  },
+  {
+   "id": "derived-incomplete-week-reject",
+   "source": "導出(公的な数値例ではない。査読L1-01): 日曜起算・日曜が法定休日。9/28(月)〜10/3(土)に毎日8時間=週48時間。10月の打刻だけ(data_from=10/1)。最初の週(起算日9/27)の前半がそろっていないので、既定は確定集計を拒否。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "data_from": "2026-10-01",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "reject"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-01T09:00",
+      "end": "2026-10-01T17:00"
+     },
+     {
+      "start": "2026-10-02T09:00",
+      "end": "2026-10-02T17:00"
+     },
+     {
+      "start": "2026-10-03T09:00",
+      "end": "2026-10-03T17:00"
+     }
+    ]
+   },
+   "expect": {
+    "exit_code": 4,
+    "refused": {
+     "code": "AmbiguousBoundary",
+     "dates": [
+      "2026-09-27"
+     ]
+    },
+    "days": {},
+    "periods": {},
+    "ambiguities": []
+   }
+  },
+  {
+   "id": "derived-incomplete-week-use-default",
+   "source": "導出(公的な数値例ではない。査読L1-01): 日曜起算・日曜が法定休日。9/28(月)〜10/3(土)に毎日8時間=週48時間。(b)と同じ入力を use_default で。時間外が0になる(本来は480分)ことが、拒否が既定である理由。",
+   "case": {
+    "schema": "kintai.case.v1",
+    "data_from": "2026-10-01",
+    "policy": {
+     "work_system": "standard",
+     "scheduled_minutes_per_day": 480,
+     "week_start": "sun",
+     "weekly_limit_minutes": 2400,
+     "special_44h_confirmed": false,
+     "legal_holiday_weekday": "sun",
+     "month_start_day": 1,
+     "ambiguity": "use_default"
+    },
+    "shifts": [
+     {
+      "start": "2026-10-01T09:00",
+      "end": "2026-10-01T17:00"
+     },
+     {
+      "start": "2026-10-02T09:00",
+      "end": "2026-10-02T17:00"
+     },
+     {
+      "start": "2026-10-03T09:00",
+      "end": "2026-10-03T17:00"
+     }
+    ]
+   },
+   "expect": {
+    "days": {
+     "2026-10-01": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-02": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     },
+     "2026-10-03": {
+      "total": 480,
+      "within": 480,
+      "extra_within": 0,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0,
+      "night_within": 0,
+      "night_overtime": 0,
+      "night_over60": 0,
+      "night_holiday": 0
+     }
+    },
+    "periods": {
+     "2026-10-01": {
+      "total": 1440,
+      "within": 1440,
+      "overtime": 0,
+      "over60": 0,
+      "holiday": 0,
+      "night": 0
+     }
+    },
+    "ambiguities": [
+     {
+      "date": "2026-09-27",
+      "code": "IncompleteWeek"
+     }
+    ],
+    "refused": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,245 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-core",
+    "-p",
+    "kintai-import",
+    "-p",
+    "kintai-jp-labor",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "打刻: 24時間ちょうどを LongShift にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if end.minutes_since(open.start.time.floor()) >= LONG_SHIFT_MINUTES {",
+      "replace": "if end.minutes_since(open.start.time.floor()) > LONG_SHIFT_MINUTES {"
+    },
+    {
+      "label": "打刻: 終了側を切り上げない（切り捨てる）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if self.second == 0 {",
+      "replace": "if self.second < 60 {"
+    },
+    {
+      "label": "打刻: 同時刻を3件以上でだけ異常にする",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if let [first, _, ..] = group {",
+      "replace": "if let [first, _, _, ..] = group {"
+    },
+    {
+      "label": "打刻: 1か月の勤務を1000件ちょうどで拒否する",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if count > MAX_SHIFTS_PER_MONTH {",
+      "replace": "if count >= MAX_SHIFTS_PER_MONTH {"
+    },
+    {
+      "label": "打刻: reject で秒が1のときを見逃す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": ".position(|punch| punch.time.second() != 0)",
+      "replace": ".position(|punch| punch.time.second() > 1)"
+    },
+    {
+      "label": "打刻: 切った終わりに接する休憩を残す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if last.end() < end {",
+      "replace": "if last.end() <= end {"
+    },
+    {
+      "label": "打刻: 休憩中の out を OutWithoutIn にする",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "self.anomaly(AnomalyKind::OutDuringBreak, item);",
+      "replace": "self.anomaly(AnomalyKind::OutWithoutIn, item);"
+    },
+    {
+      "label": "打刻: 従業員IDの64文字ちょうどを拒否する",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "bytes.len() <= EMPLOYEE_ID_MAX_LEN",
+      "replace": "bytes.len() < EMPLOYEE_ID_MAX_LEN"
+    },
+    {
+      "label": "打刻: 従業員IDに = を許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "matches!(byte, b'.' | b'_' | b'-')",
+      "replace": "matches!(byte, b'.' | b'_' | b'-' | b'=')"
+    },
+    {
+      "label": "打刻: 60秒を許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": ".filter(|second| *second < 60)",
+      "replace": ".filter(|second| *second <= 60)"
+    },
+    {
+      "label": "休憩: 480分ちょうどに60分を求める",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "if work_minutes > BREAK_60_OVER_MINUTES {",
+      "replace": "if work_minutes >= BREAK_60_OVER_MINUTES {"
+    },
+    {
+      "label": "休憩: 360分ちょうどに45分を求める",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "} else if work_minutes > BREAK_45_OVER_MINUTES {",
+      "replace": "} else if work_minutes >= BREAK_45_OVER_MINUTES {"
+    },
+    {
+      "label": "休憩: 勤務の間の空きを数えない",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "after.span().start().minutes_since(before.span().end()),",
+      "replace": "0,"
+    },
+    {
+      "label": "休憩: 足りている日も警告にする",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "if rest < required {",
+      "replace": "if rest <= required {"
+    },
+    {
+      "label": "打刻: 切り上げを2分にする",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "            self.minute.checked_add_minutes(1)",
+      "replace": "            self.minute.checked_add_minutes(2)"
+    },
+    {
+      "label": "打刻: in を切り上げる（切り捨てない）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "        start: shift.start.time.floor(),",
+      "replace": "        start: shift.start.time.ceil().unwrap_or(shift.start.time.floor()),"
+    },
+    {
+      "label": "打刻: break_start を切り捨てる（切り上げない）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "        let from = start\n            .time\n            .ceil()\n            .map_err(|_| PunchError::OutOfRange { index: start.index })?;",
+      "replace": "        let from = start.time.floor();"
+    },
+    {
+      "label": "打刻: break_end を切り上げる（切り捨てない）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if let Ok(rest) = Interval::new(from, end.time.floor()) {",
+      "replace": "if let Ok(rest) = Interval::new(from, end.time.ceil().unwrap_or(end.time.floor())) {"
+    },
+    {
+      "label": "打刻: out を切り捨てる（切り上げない）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "        let end = out\n            .time\n            .ceil()\n            .map_err(|_| PunchError::OutOfRange { index: out.index })?;",
+      "replace": "        let end = out.time.floor();"
+    },
+    {
+      "label": "打刻: 勤務外の break_end を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "(None, PunchKind::BreakEnd) => self.anomaly(AnomalyKind::BreakEndWithoutStart, item),",
+      "replace": "(None, PunchKind::BreakEnd) => {}"
+    },
+    {
+      "label": "打刻: 勤務外の out を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "(None, PunchKind::Out) => self.anomaly(AnomalyKind::OutWithoutIn, item),",
+      "replace": "(None, PunchKind::Out) => {}"
+    },
+    {
+      "label": "打刻: 勤務外の break_start を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "(None, PunchKind::BreakStart) => self.anomaly(AnomalyKind::BreakStartWithoutIn, item),",
+      "replace": "(None, PunchKind::BreakStart) => {}"
+    },
+    {
+      "label": "打刻: 重なった in を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "                self.anomaly(AnomalyKind::DuplicateIn, item);\n                self.start(item);",
+      "replace": "                self.start(item);"
+    },
+    {
+      "label": "打刻: 勤務中の break_end を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "None => self.anomaly(AnomalyKind::BreakEndWithoutStart, item),",
+      "replace": "None => {}"
+    },
+    {
+      "label": "打刻: 休憩中の break_start を異常にせず、休憩を始め直す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "                if open.break_start.is_some() {\n                    self.anomaly(AnomalyKind::BreakStartWithoutIn, item);\n                } else {\n                    open.break_start = Some(item);\n                }",
+      "replace": "                open.break_start = Some(item);"
+    },
+    {
+      "label": "打刻: 勤務中のまま終わる打刻を異常にしない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "        if let Some(open) = self.open.take() {\n            self.anomaly(AnomalyKind::OpenShift, open.start);\n        }",
+      "replace": "        let _ = self.open.take();"
+    },
+    {
+      "label": "打刻: 秒の違う同じ1分の打刻を同時刻にする",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "for group in items.chunk_by(|a, b| a.time == b.time) {",
+      "replace": "for group in items.chunk_by(|a, b| a.time.floor() == b.time.floor()) {"
+    },
+    {
+      "label": "打刻: 同時刻の番号を最も大きい番号にする",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "                .min()\n                .unwrap_or(first.index);",
+      "replace": "                .max()\n                .unwrap_or(first.index);"
+    },
+    {
+      "label": "打刻: 異常を時刻の順に並べない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "        self.anomalies\n            .sort_by_key(|anomaly| (anomaly.time, anomaly.kind, anomaly.index));\n",
+      "replace": ""
+    },
+    {
+      "label": "打刻: 1か月の勤務の数を月が替わっても戻さない",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if month != Some(this_month) {",
+      "replace": "if month.is_none() {"
+    },
+    {
+      "label": "打刻: 入力の範囲の外の時点を許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "if !minute.is_input_range() {",
+      "replace": "if false && !minute.is_input_range() {"
+    },
+    {
+      "label": "打刻: 秒の区切りに : 以外を許す",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "let [b':', s1, s2] = tail else {",
+      "replace": "let [_, s1, s2] = tail else {"
+    },
+    {
+      "label": "打刻: 秒の方針を逆に当てる（worker_favorable で秒を拒否する）",
+      "file": "crates/kintai-core/src/punch.rs",
+      "find": "    if seconds == SecondsPolicy::Reject\n        && let Some(index)",
+      "replace": "    if seconds != SecondsPolicy::Reject\n        && let Some(index)"
+    },
+    {
+      "label": "休憩: 勤務の内側の休憩を数えない",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "rest = add(rest, inside.len_minutes())?;",
+      "replace": "rest = add(rest, 0)?;"
+    },
+    {
+      "label": "休憩: 同じ労働日の勤務を合わせない",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "        .chunk_by(|a, b| a.labor_day() == b.labor_day())",
+      "replace": "        .chunk_by(|_, _| false)"
+    },
+    {
+      "label": "休憩: 実労働に休憩を含める",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "work = add(work, shift.work_minutes())?;",
+      "replace": "work = add(work, shift.span().len_minutes())?;"
+    },
+    {
+      "label": "休憩: 不足の分に実際の休憩を引かない",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "shortage_minutes: required - rest,",
+      "replace": "shortage_minutes: required,"
+    },
+    {
+      "label": "休憩: 8時間超に60分と45分を足して求める",
+      "file": "crates/kintai-jp-labor/src/breaks.rs",
+      "find": "    if work_minutes > BREAK_60_OVER_MINUTES {\n        60\n",
+      "replace": "    if work_minutes > BREAK_60_OVER_MINUTES {\n        105\n"
+    }
+  ]
+}

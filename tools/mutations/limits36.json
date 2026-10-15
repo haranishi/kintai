@@ -1,0 +1,277 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-jp-labor",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "36: 発動月を2700分以上にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "let activated = overtime > MONTHLY_OVERTIME_LIMIT_MINUTES;",
+      "replace": "let activated = overtime >= MONTHLY_OVERTIME_LIMIT_MINUTES;"
+    },
+    {
+      "label": "36: 発動月の数を2700分以上で数える",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if month.overtime > MONTHLY_OVERTIME_LIMIT_MINUTES {",
+      "replace": "if month.overtime >= MONTHLY_OVERTIME_LIMIT_MINUTES {"
+    },
+    {
+      "label": "36: T が100時間ちょうどを適合にする（T < 6000 を T <= 6000 に）",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if total >= MONTHLY_TOTAL_CAP_MINUTES {",
+      "replace": "if total > MONTHLY_TOTAL_CAP_MINUTES {"
+    },
+    {
+      "label": "36: 平均80時間ちょうどを違反にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "Some(sum) if *sum > AVERAGE_CAP_MINUTES * i64::from(n) => {",
+      "replace": "Some(sum) if *sum >= AVERAGE_CAP_MINUTES * i64::from(n) => {"
+    },
+    {
+      "label": "36: 平均を4800ではなく4799で比べる",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const AVERAGE_CAP_MINUTES: i64 = 4800;",
+      "replace": "pub const AVERAGE_CAP_MINUTES: i64 = 4799;"
+    },
+    {
+      "label": "36: 年360時間ちょうどを法定の超過にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if year.overtime > ANNUAL_OVERTIME_LIMIT_MINUTES {",
+      "replace": "if year.overtime >= ANNUAL_OVERTIME_LIMIT_MINUTES {"
+    },
+    {
+      "label": "36: 協定の年限度ちょうどを超過にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "} else if year.overtime > annual {",
+      "replace": "} else if year.overtime >= annual {"
+    },
+    {
+      "label": "36: 協定の月限度ちょうどを超過にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "} else if overtime > monthly {",
+      "replace": "} else if overtime >= monthly {"
+    },
+    {
+      "label": "36: 特別条項の回数ちょうどを超過にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if activated && i64::from(year.special_count) > special_months {",
+      "replace": "if activated && i64::from(year.special_count) >= special_months {"
+    },
+    {
+      "label": "36: 回数の超過を発動月でない月にも付ける",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if activated && i64::from(year.special_count) > special_months {",
+      "replace": "if i64::from(year.special_count) > special_months {"
+    },
+    {
+      "label": "36: 特別条項の月の上限を発動月でない月にも見る",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if activated && total > special_monthly_total {",
+      "replace": "if total > special_monthly_total {"
+    },
+    {
+      "label": "36: 特別条項の年の上限ちょうどを超過にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if year.overtime > special_annual {",
+      "replace": "if year.overtime >= special_annual {"
+    },
+    {
+      "label": "36: 協定年が替わっても ΣO と発動月の数を戻さない",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if index == 0 || position == 0 {",
+      "replace": "if index == 0 {"
+    },
+    {
+      "label": "36: 協定年の途中から始まる年も ΣO が分かるとする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "known: position == 0,",
+      "replace": "known: true,"
+    },
+    {
+      "label": "36: 履歴の足りない月を0分とみなす",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "            _ => None,\n        };\n        let slot",
+      "replace": "            (Some(sum), None) => Some(sum),\n            _ => None,\n        };\n        let slot"
+    },
+    {
+      "label": "36: 協定月の初日に29日を許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "        if !(1..=28).contains(&month.start.day()) {\n            return Err(Limits36Error::MonthStartDay { index });",
+      "replace": "        if !(1..=29).contains(&month.start.day()) {\n            return Err(Limits36Error::MonthStartDay { index });"
+    },
+    {
+      "label": "36: 履歴に months の最初の月を許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if key >= month_index(first) {",
+      "replace": "if key > month_index(first) {"
+    },
+    {
+      "label": "36: 履歴の同じ月の2回を許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if totals.insert(key, entry.total).is_some() {",
+      "replace": "if totals.insert(key, entry.total).is_some() && false {"
+    },
+    {
+      "label": "36: 月の分の上限を44641にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const MONTH_MINUTES_MAX: i64 = 44_640;",
+      "replace": "pub const MONTH_MINUTES_MAX: i64 = 44_641;"
+    },
+    {
+      "label": "36: 協定なしで H だけの月を違反にしない",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if overtime > 0 || month.holiday > 0 {",
+      "replace": "if overtime > 0 {"
+    },
+    {
+      "label": "36: 協定の月限度の最大を2701にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "            MONTHLY_OVERTIME_LIMIT_MINUTES,\n            \"0〜2700\",",
+      "replace": "            MONTHLY_OVERTIME_LIMIT_MINUTES + 1,\n            \"0〜2700\","
+    },
+    {
+      "label": "36: 特別条項の回数の最大を7にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const SPECIAL_MONTHS_MAX: i64 = 6;",
+      "replace": "pub const SPECIAL_MONTHS_MAX: i64 = 7;"
+    },
+    {
+      "label": "36: 直近 n か月の合計を 4800×n＋1 と比べる",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "Some(sum) if *sum > AVERAGE_CAP_MINUTES * i64::from(n) => {",
+      "replace": "Some(sum) if *sum > AVERAGE_CAP_MINUTES * i64::from(n) + 1 => {"
+    },
+    {
+      "label": "36: 協定年の起算月を1か月遅らせる",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "let position = (month.start.month() + 12 - agreement.year_start_month) % 12;",
+      "replace": "let position = (month.start.month() + 11 - agreement.year_start_month) % 12;"
+    },
+    {
+      "label": "36: 直近の合計に使う月を5か月にする（n＝6が作れない）",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "for back in 0..6_i64 {",
+      "replace": "for back in 0..5_i64 {"
+    },
+    {
+      "label": "36: 履歴の月を1か月ずらして引く",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "history.get(&(first_index + offset)).copied()",
+      "replace": "history.get(&(first_index + offset - 1)).copied()"
+    },
+    {
+      "label": "36: 履歴が足りないときに UnknownHistory を付けない",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "None => findings.push(Finding::UnknownHistory { n }),",
+      "replace": "None => {}"
+    },
+    {
+      "label": "36: 協定年の初月から始まる2年目以降も ΣO を不明にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "known: position == 0,",
+      "replace": "known: index == 0,"
+    },
+    {
+      "label": "36: ΣO が不明（下限値）の年は、確実な年の違反も出さない",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if year.overtime > ANNUAL_OVERTIME_LIMIT_MINUTES {",
+      "replace": "if year.known && year.overtime > ANNUAL_OVERTIME_LIMIT_MINUTES {"
+    },
+    {
+      "label": "36: months の分の -1 を許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if minutes < 0 {",
+      "replace": "if minutes < -1 {"
+    },
+    {
+      "label": "36: 履歴の T の44640分ちょうどを拒否する",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if (0..=MONTH_MINUTES_MAX).contains(&total) {",
+      "replace": "if (0..MONTH_MINUTES_MAX).contains(&total) {"
+    },
+    {
+      "label": "36: 協定の限度の最大ちょうどを範囲外にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "Some(minutes) if !(0..=max).contains(&minutes) => {",
+      "replace": "Some(minutes) if !(0..max).contains(&minutes) => {"
+    },
+    {
+      "label": "36: 協定の限度の0を範囲外にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "Some(minutes) if !(0..=max).contains(&minutes) => {",
+      "replace": "Some(minutes) if !(1..=max).contains(&minutes) => {"
+    },
+    {
+      "label": "36: 協定年の起算月の12を範囲外にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": ".filter(|month| (1..=12).contains(month))",
+      "replace": ".filter(|month| (1..=11).contains(month))"
+    },
+    {
+      "label": "36: months が空のとき、履歴の日に29日を許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "            if !(1..=28).contains(&entry.start.day()) {",
+      "replace": "            if !(1..=29).contains(&entry.start.day()) {"
+    },
+    {
+      "label": "36: 履歴の日が協定月の初日の日より前でも許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if entry.start.day() != first.day() {",
+      "replace": "if entry.start.day() > first.day() {"
+    },
+    {
+      "label": "36: 区分の結果の O から60時間超を除く（months_from_periods）",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": ".map_or((0, 0), |period| (period.overtime, period.holiday));",
+      "replace": ".map_or((0, 0), |period| (period.overtime - period.over60, period.holiday));"
+    },
+    {
+      "label": "36: 区分の結果の H に60時間超を足す（from_period）",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "            overtime: period.overtime,\n            holiday: period.holiday,",
+      "replace": "            overtime: period.overtime,\n            holiday: period.holiday + period.over60,"
+    },
+    {
+      "label": "36: months の日がそろっていなくても許す",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "            month.start.day() == before.start.day()\n                && month_index",
+      "replace": "            month_index"
+    },
+    {
+      "label": "36: 特別条項の月の上限の最大を6000にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const SPECIAL_MONTHLY_TOTAL_MAX_MINUTES: i64 = 5999;",
+      "replace": "pub const SPECIAL_MONTHLY_TOTAL_MAX_MINUTES: i64 = 6000;"
+    },
+    {
+      "label": "36: 特別条項の年の上限の最大を43201にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const SPECIAL_ANNUAL_MAX_MINUTES: i64 = 43_200;",
+      "replace": "pub const SPECIAL_ANNUAL_MAX_MINUTES: i64 = 43_201;"
+    },
+    {
+      "label": "36: 年360時間を21601分にする",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "pub const ANNUAL_OVERTIME_LIMIT_MINUTES: i64 = 21_600;",
+      "replace": "pub const ANNUAL_OVERTIME_LIMIT_MINUTES: i64 = 21_601;"
+    },
+    {
+      "label": "36: 特別条項で発動月にも GeneralMonthlyLimitExceeded を付ける",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "if !activated && overtime > monthly {",
+      "replace": "if overtime > monthly {"
+    },
+    {
+      "label": "36: OwnEmployerOnly を付けない",
+      "file": "crates/kintai-jp-labor/src/limits36.rs",
+      "find": "notices: vec![Limits36Notice::OwnEmployerOnly],",
+      "replace": "notices: Vec::new(),"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[取込: 4096バイトちょうどの行を拒否する] 検出 ← 赤になった試験: ac10_6_line_length_limit
+[取込: 10万1人目を受け付ける] 検出 ← 赤になった試験: ac10_6_at_most_100000_employees
+[取込: 256MiB ちょうどのファイルを拒否する] 検出 ← 赤になった試験: tests::ac10_6_size_boundary
+[取込: total_minutes の 44640 を拒否する] 検出 ← 赤になった試験: history_csv
+[取込: BOM を取り除かない] 検出 ← 赤になった試験: ac01_8_header_errors, ac01_8_unreadable_bytes, ac01_8_utf8_with_bom_and_crlf, ac01_8_valid_csv_round_trips
+[取込: 途中の空の行を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 改行でない CR を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 値の足りない行を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 囲まない値の中の引用符を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 範囲外の日付を書式の誤りにする] 検出 ← 赤になった試験: history_csv, leaves_csv, value_errors_point_at_line_and_column, ac10_6_date_range
+[取込: BOM がないとき Shift_JIS に切り替えない] 検出 ← 赤になった試験: ac01_8_shift_jis_japanese_value_is_read_then_rejected, ac01_8_unreadable_bytes
+[取込: BOM のない UTF-8 でないファイルを Shift_JIS でなく UTF-8 で読む] 検出 ← 赤になった試験: ac01_8_shift_jis_japanese_value_is_read_then_rejected
+[取込: 文字コードの誤りの行番号を1つずらす] 検出 ← 赤になった試験: ac01_8_unreadable_bytes, ac10_5_arbitrary_bytes_do_not_panic, ac10_5_broken_csv_does_not_panic, ac10_5_csv_like_bytes_do_not_panic
+[取込: BOM を見つけても取り除かない] 検出 ← 赤になった試験: ac01_8_header_errors, ac01_8_unreadable_bytes, ac01_8_utf8_with_bom_and_crlf, ac01_8_valid_csv_round_trips
+[取込: 行の長さに CRLF の CR を含める] 検出 ← 赤になった試験: ac10_6_line_length_limit
+[取込: 見出しの列名の大文字・小文字を区別しない] 検出 ← 赤になった試験: ac01_8_header_errors
+[取込: 見出しの重なる列名を拒否しない] 検出 ← 赤になった試験: ac01_8_header_errors
+[取込: 見出しの足りない列を拒否しない] 検出 ← 赤になった試験: ac01_8_header_errors
+[取込: 見出しの列の位置を0から数える] 検出 ← 赤になった試験: ac01_8_header_errors, ac01_8_rejects_csv_without_header, leaves_csv
+[取込: 値の多すぎる行を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 上限の1バイト先まで読んでしまう] 検出 ← 赤になった試験: ac10_6_file_size_limit
+[取込: 上限を超えたファイルを読めたことにする] 検出 ← 赤になった試験: ac10_6_file_size_limit
+[取込: 休暇・履歴の日付の書式の誤りを日時の誤りにする] 検出 ← 赤になった試験: leaves_csv
+[取込: total_minutes の符号（+）を許す] 検出 ← 赤になった試験: history_csv
+[取込: 閉じていない引用符を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 閉じた引用符の直後の文字を許す] 検出 ← 赤になった試験: malformed_rows
+[取込: 1行目が空でも見出しがないことにしない] 検出 ← 赤になった試験: ac01_8_header_errors
+[取込: 打刻の行番号を1つずらす] 検出 ← 赤になった試験: ac01_8_utf8_with_bom_and_crlf, ac01_8_valid_csv_round_trips
+[取込: 休暇の単位 hours を全日として読む] 検出 ← 赤になった試験: leaves_csv
+[取込: 打刻の種別 break_end を break_start として読む] 検出 ← 赤になった試験: ac01_8_utf8_with_bom_and_crlf, ac01_8_valid_csv_round_trips
+
+== 生き残り ==
+なし
+[終了コード 0、254秒]

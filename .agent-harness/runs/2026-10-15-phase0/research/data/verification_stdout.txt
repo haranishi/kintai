@@ -1,0 +1,99 @@
+{
+  "raw_encoding": "Shift_JISで厳密復号成功（CP932も同じ文字列に復号）",
+  "raw_sha256": "cec37a743c96995cdb9cb52b685c9003634682a9b0e1a640a6b9b96881fe964a",
+  "raw_bytes": 21538,
+  "raw_data_rows": 1067,
+  "first_date": "1955-01-01",
+  "last_date": "2027-11-23",
+  "years_checked": [
+    {
+      "year": 2020,
+      "generated_count": 18,
+      "csv_count": 18,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 2
+      }
+    },
+    {
+      "year": 2021,
+      "generated_count": 17,
+      "csv_count": 17,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 1
+      }
+    },
+    {
+      "year": 2022,
+      "generated_count": 16,
+      "csv_count": 16,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16
+      }
+    },
+    {
+      "year": 2023,
+      "generated_count": 17,
+      "csv_count": 17,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 1
+      }
+    },
+    {
+      "year": 2024,
+      "generated_count": 21,
+      "csv_count": 21,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 5
+      }
+    },
+    {
+      "year": 2025,
+      "generated_count": 19,
+      "csv_count": 19,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 3
+      }
+    },
+    {
+      "year": 2026,
+      "generated_count": 18,
+      "csv_count": 18,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条3項": 1,
+        "3条2項": 1
+      }
+    },
+    {
+      "year": 2027,
+      "generated_count": 17,
+      "csv_count": 17,
+      "difference_count": 0,
+      "categories": {
+        "国民の祝日（2条／特措法）": 16,
+        "3条2項": 1
+      }
+    }
+  ],
+  "checked_holiday_rows": 143,
+  "holiday_differences": [],
+  "official_equinoxes_checked": 16,
+  "equinox_mismatches": [],
+  "unverified_future_years": [
+    2028,
+    2029,
+    2030
+  ]
+}

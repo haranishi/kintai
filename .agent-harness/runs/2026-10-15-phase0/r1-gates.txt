@@ -1,0 +1,83 @@
+$ cargo fmt --all -- --check
+[終了コード 0]
+
+$ cargo clippy --workspace --all-targets --all-features -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
+[終了コード 0]
+
+$ cargo test --workspace
+     Running unittests src/main.rs (.cargo-target/debug/deps/kintai-07bc6078b86b075d)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac09_case_cli.rs (.cargo-target/debug/deps/ac09_case_cli-d1ae694fd500e1cb)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+     Running tests/ac09_properties.rs (.cargo-target/debug/deps/ac09_properties-f00d672f61bb5cee)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/ac11_unsupported_cli.rs (.cargo-target/debug/deps/ac11_unsupported_cli-f165619bc788e956)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/ac13_data_from_cli.rs (.cargo-target/debug/deps/ac13_data_from_cli-1b5cb94144b03946)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_core-c573a6a0ae56b5e3)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac02_calendar.rs (.cargo-target/debug/deps/ac02_calendar-5bb474d6d6150450)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+     Running tests/ac02_instant_interval.rs (.cargo-target/debug/deps/ac02_instant_interval-c86cf503363d282a)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac02_notation.rs (.cargo-target/debug/deps/ac02_notation-3456aff75a120c6f)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/ac02_periods.rs (.cargo-target/debug/deps/ac02_periods-a34788c018a22a4a)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_import-7e75259d6c301b6e)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_jp_labor-d01f15f5d0cc1224)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac03_incomplete_week.rs (.cargo-target/debug/deps/ac03_incomplete_week-55dd9a464ecc9d02)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac03_official_vectors.rs (.cargo-target/debug/deps/ac03_official_vectors-27eb3addad4ff3ef)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/ac03_properties.rs (.cargo-target/debug/deps/ac03_properties-d7d34974746bb0be)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.65s
+     Running tests/ac03_rules.rs (.cargo-target/debug/deps/ac03_rules-f055e877db7611d7)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac04_over60.rs (.cargo-target/debug/deps/ac04_over60-094538cdc10a7ba9)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac11_policy.rs (.cargo-target/debug/deps/ac11_policy-f1f03cfa9dac8d6d)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ac13_shifts.rs (.cargo-target/debug/deps/ac13_shifts-f2b1e74dcfaa0b8b)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/provenance.rs (.cargo-target/debug/deps/provenance-78b108d087e14e60)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+   Doc-tests kintai_core
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+   Doc-tests kintai_import
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+   Doc-tests kintai_jp_labor
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[終了コード 0]
+
+（集計: 合格 129 件、失敗 0 件）
+
+$ RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps   （3クレートの lib.rs/main.rs を touch して作り直した実行）
+ Documenting kintai-import v0.0.1 (~/Projects/kintai/crates/kintai-import)
+ Documenting kintai-cli v0.0.1 (~/Projects/kintai/crates/kintai-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+   Generated ~/Projects/kintai/.cargo-target/doc/kintai/index.html and 3 other files
+[終了コード 0]
+
+$ cargo deny check
+         └── toml v0.9.12+spec-1.1.0
+             └── kintai-cli v0.0.1
+
+advisories ok, bans ok, licenses ok, sources ok
+[終了コード 0]
+
+$ python3 tools/check-spec-trace.py
+AC-13.6   python     0  0/0                   （なし）
+
+条件 114件（manual 3件は対象外）。参照の無い条件: 69件
+  AC-09.5 AC-09.6 AC-09.7 AC-03.14 AC-12.1 AC-12.2 AC-12.3 AC-12.4 AC-12.5 AC-12.6 AC-12.7 AC-12.8 AC-07.1 AC-07.2 AC-07.3 AC-07.4 AC-07.5 AC-07.6 AC-06.1 AC-06.2 AC-06.3 AC-06.4 AC-06.5 AC-06.6 AC-06.7 AC-06.8 AC-06.9 AC-06.12 AC-06.10 AC-06.11 AC-05.1 AC-05.2 AC-05.3 AC-05.4 AC-05.5 AC-05.6 AC-05.7 AC-05.8 AC-05.9 AC-05.10 AC-05.11 AC-05.12 AC-05.13 AC-05.14 AC-05.15 AC-10.1 AC-10.2 AC-10.3 AC-10.4 AC-10.5 AC-10.6 AC-10.7 AC-10.8 AC-01.1 AC-01.2 AC-01.3 AC-01.4 AC-01.5 AC-01.6 AC-01.7 AC-01.8 AC-08.1 AC-08.2 AC-08.3 AC-08.4 AC-08.5 AC-08.6 AC-08.7 AC-13.6
+[終了コード 0]
+
+$ cargo +1.88 check --workspace --all-targets
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+[終了コード 0]
+

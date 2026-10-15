@@ -1,0 +1,210 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "--workspace",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "core: 区間の重なりで、端が接するのも重なりにする",
+      "file": "crates/kintai-core/src/interval.rs",
+      "find": "self.start < other.end && other.start < self.end",
+      "replace": "self.start <= other.end && other.start <= self.end"
+    },
+    {
+      "label": "core: うるう年の400年の規則を壊す",
+      "file": "crates/kintai-core/src/calendar.rs",
+      "find": "|| year % 400 == 0",
+      "replace": "|| year % 400 == 1"
+    },
+    {
+      "label": "core: 月の期間で、起算日当日を前の期間にする",
+      "file": "crates/kintai-core/src/period.rs",
+      "find": "if date.day() >= start_day.get() {",
+      "replace": "if date.day() > start_day.get() {"
+    },
+    {
+      "label": "core: 1970-01-01 の曜日を金曜にする",
+      "file": "crates/kintai-core/src/weekday.rs",
+      "find": "0 => Weekday::Thursday,",
+      "replace": "0 => Weekday::Friday,"
+    },
+    {
+      "label": "core: 0:00 での分割を2日おきにする",
+      "file": "crates/kintai-core/src/interval.rs",
+      "find": "let next_midnight = (cursor.div_euclid(MINUTES_PER_DAY) + 1) * MINUTES_PER_DAY;",
+      "replace": "let next_midnight = (cursor.div_euclid(MINUTES_PER_DAY) + 2) * MINUTES_PER_DAY;"
+    },
+    {
+      "label": "core: 24:00 を Hour24 として拒否しない",
+      "file": "crates/kintai-core/src/instant.rs",
+      "find": "if hour == 24 && minute == 0 {\n            return Err(CoreError::Hour24);\n        }\n        if hour > 23 || minute > 59 {",
+      "replace": "if hour > 24 || minute > 59 {"
+    },
+    {
+      "label": "core: 入力の日付の範囲（2000〜2099年）を検査しない",
+      "file": "crates/kintai-core/src/date.rs",
+      "find": "if date.is_input_range() {",
+      "replace": "if true || date.is_input_range() {"
+    },
+    {
+      "label": "深夜: 22:00 ちょうどを深夜に入れない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "const NIGHT_START_MINUTE: i64 = 22 * 60;",
+      "replace": "const NIGHT_START_MINUTE: i64 = 22 * 60 + 1;"
+    },
+    {
+      "label": "深夜: 5:00 ちょうどを深夜に入れる",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "const NIGHT_END_MINUTE: i64 = 5 * 60;",
+      "replace": "const NIGHT_END_MINUTE: i64 = 5 * 60 + 1;"
+    },
+    {
+      "label": "日8時間: 480 を 481 に",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "pub const DAILY_LIMIT_MINUTES: i64 = 480;",
+      "replace": "pub const DAILY_LIMIT_MINUTES: i64 = 481;"
+    },
+    {
+      "label": "60時間超: 3600 を 3601 に",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "pub const OVER60_THRESHOLD_MINUTES: i64 = 3600;",
+      "replace": "pub const OVER60_THRESHOLD_MINUTES: i64 = 3601;"
+    },
+    {
+      "label": "60時間超: 同じ日の前の分から超えるにする",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "let (_, over60_pieces) = split_head(&overtime_pieces, up_to_60);",
+      "replace": "let (over60_pieces, _) = split_head(&overtime_pieces, overtime - up_to_60);"
+    },
+    {
+      "label": "週の枠: 週が替わっても累計を戻さない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "Some((current, minutes)) if current == week => minutes,",
+      "replace": "Some((_, minutes)) => minutes,"
+    },
+    {
+      "label": "60時間超: 月の期間が替わっても累計を戻さない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "Some((current, minutes)) if current == period => minutes,",
+      "replace": "Some((_, minutes)) => minutes,"
+    },
+    {
+      "label": "所定外法定内: 0未満を許す",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "extra_within: (within - policy.scheduled_minutes_per_day()).max(0),",
+      "replace": "extra_within: within - policy.scheduled_minutes_per_day(),"
+    },
+    {
+      "label": "法定休日: 暦日でなく労働日の曜日で判定する",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "if calendar_day.weekday() == policy.legal_holiday_weekday() {\n                    pieces.holiday.push(item);",
+      "replace": "if shift.labor_day().weekday() == policy.legal_holiday_weekday() {\n                    pieces.holiday.push(item);"
+    },
+    {
+      "label": "曖昧さ: またぐ勤務を3暦日以上にする",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "if days.len() < 2 {",
+      "replace": "if days.len() < 3 {"
+    },
+    {
+      "label": "曖昧さ: 週の境界を見ない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "if weeks.len() >= 2 {",
+      "replace": "if weeks.len() >= 3 {"
+    },
+    {
+      "label": "曖昧さ: 月の境界を見ない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "if periods.len() >= 2 {",
+      "replace": "if periods.len() >= 3 {"
+    },
+    {
+      "label": "曖昧さ: data_from と週の起算日が同じ日でも IncompleteWeek にする",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "if week.first_day_number() < first_complete_day.day_number() {",
+      "replace": "if week.first_day_number() <= first_complete_day.day_number() {"
+    },
+    {
+      "label": "拒否: refused.dates の重複を除かない",
+      "file": "crates/kintai-jp-labor/src/classify.rs",
+      "find": "dates.dedup_by_key(|date| date.day_number());",
+      "replace": "dates.sort();"
+    },
+    {
+      "label": "勤務の検査: 休憩が勤務の端に接するのを許す",
+      "file": "crates/kintai-jp-labor/src/shift.rs",
+      "find": "if interval.start() <= span.start() || interval.end() >= span.end() {",
+      "replace": "if interval.start() < span.start() || interval.end() > span.end() {"
+    },
+    {
+      "label": "勤務の検査: 1440分の勤務を許す",
+      "file": "crates/kintai-jp-labor/src/shift.rs",
+      "find": "pub const MAX_SHIFT_MINUTES: i64 = 1439;",
+      "replace": "pub const MAX_SHIFT_MINUTES: i64 = 1440;"
+    },
+    {
+      "label": "勤務の検査: 日時の入力範囲を見ない",
+      "file": "crates/kintai-jp-labor/src/shift.rs",
+      "find": "        .any(|instant| !instant.is_input_range())",
+      "replace": "        .any(|instant| !instant.is_input_range() && false)"
+    },
+    {
+      "label": "検査の順序: 対応外の表を下から見る",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "if let Some(code) = unsupported.into_iter().flatten().next() {",
+      "replace": "if let Some(code) = unsupported.into_iter().flatten().last() {"
+    },
+    {
+      "label": "検査の範囲: 所定480分を範囲外にする",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "if !(0..=MAX_SCHEDULED_MINUTES_PER_DAY).contains(&self.scheduled_minutes_per_day) {",
+      "replace": "if !(0..MAX_SCHEDULED_MINUTES_PER_DAY).contains(&self.scheduled_minutes_per_day) {"
+    },
+    {
+      "label": "週44時間: 確認の項目がないときに許す",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "&& self.special_44h_confirmed != Some(true)",
+      "replace": "&& self.special_44h_confirmed == Some(false)"
+    },
+    {
+      "label": "休日の振替: 1件だけなら対応外にしない",
+      "file": "crates/kintai-jp-labor/src/policy.rs",
+      "find": "(self.holiday_swaps > 0).then_some(UnsupportedCode::HolidaySwap),",
+      "replace": "(self.holiday_swaps > 1).then_some(UnsupportedCode::HolidaySwap),"
+    },
+    {
+      "label": "CLI: 任意の項目の null を既定にしない",
+      "file": "crates/kintai-cli/src/dto.rs",
+      "find": "map.get(key).filter(|value| !value.is_null())",
+      "replace": "map.get(key)"
+    },
+    {
+      "label": "CLI: 曖昧さの拒否の終了コードを0にする",
+      "file": "crates/kintai-cli/src/case.rs",
+      "find": "pub const EXIT_REFUSED: u8 = 4;",
+      "replace": "pub const EXIT_REFUSED: u8 = 0;"
+    },
+    {
+      "label": "CLI: 知らない項目を見逃す",
+      "file": "crates/kintai-cli/src/dto.rs",
+      "find": "if map.keys().any(|key| !known.contains(&key.as_str())) {",
+      "replace": "if false && map.keys().any(|key| !known.contains(&key.as_str())) {"
+    },
+    {
+      "label": "CLI: 同じ名前の項目を見逃す",
+      "file": "crates/kintai-cli/src/strict_json.rs",
+      "find": "if object.contains_key(&key) {",
+      "replace": "if false && object.contains_key(&key) {"
+    },
+    {
+      "label": "CLI: 日時の解析を対応外の検査より前にする",
+      "file": "crates/kintai-cli/src/case.rs",
+      "find": "    // 手順2・3\n    let policy = validate(&raw.policy.to_work_policy()?)?;\n    // 手順4\n    let inputs = shift_inputs(&raw.shifts)?;",
+      "replace": "    let inputs = shift_inputs(&raw.shifts)?;\n    let policy = validate(&raw.policy.to_work_policy()?)?;"
+    }
+  ]
+}

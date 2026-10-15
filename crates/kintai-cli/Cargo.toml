@@ -1,0 +1,29 @@
+[package]
+name = "kintai-cli"
+description = "kintai のコマンドライン（report・check・leave・explain・demo）。"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+publish.workspace = true
+license = "MIT OR Apache-2.0"
+
+[lints]
+workspace = true
+
+[dependencies]
+kintai-core = { version = "0.0.1", path = "../kintai-core" }
+kintai-jp-labor = { version = "0.0.1", path = "../kintai-jp-labor" }
+kintai-import = { version = "0.0.1", path = "../kintai-import" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = { version = "0.9", default-features = false, features = ["parse", "serde"] }
+pico-args = "0.5"
+
+[dev-dependencies]
+proptest = "1"
+
+[[bin]]
+name = "kintai"
+path = "src/main.rs"

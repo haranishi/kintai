@@ -1,0 +1,976 @@
+# R3 品質の基準の出力（査読 L2 への対応のあと。2026-10-15 08:20 開始。TMPDIR=$WS/.tmp、CARGO_NET_OFFLINE=true）
+$ cargo fmt --all -- --check
+[終了コード 0]
+
+$ cargo clippy --workspace --all-targets --all-features -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.12s
+[終了コード 0]
+
+$ cargo test --workspace
+   Compiling kintai-cli v0.0.1 (<scratchpad>/r3-ws/crates/kintai-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.06s
+     Running unittests src/main.rs (.cargo-target/debug/deps/kintai-e8792531ac2bb195)
+
+running 37 tests
+test case36::tests::integers_are_json_integers_only ... ok
+test explain::tests::clock_marks_the_next_day ... ok
+test dto::tests::arrays_are_not_objects ... ok
+test check::tests::first_agreement_month_starts_on_or_after_the_first_date ... ok
+test args::tests::ac12_8_extra_and_valueless_arguments_are_invalid ... ok
+test args::tests::format_values_and_default ... ok
+test dto::tests::null_optional_items_use_defaults ... ok
+test check::tests::findings_are_explained_with_the_basis ... ok
+test case::tests::broken_json_is_invalid_input ... ok
+test failure::tests::json_line_has_code_and_message ... ok
+test inputs::tests::month_periods_follow_the_start_day ... ok
+test case_leave::tests::hourly_record_is_unsupported_even_with_a_broken_date ... ok
+test case36::tests::empty_months_give_empty_output ... ok
+test inputs::tests::year_month_boundaries ... ok
+test policy_file::tests::ac10_6_employee_count_boundary ... ok
+test common_out::tests::anomaly_dates_are_unique_and_sorted ... ok
+test policy_file::tests::ac10_6_line_length_boundary ... ok
+test policy_file::tests::ac10_7_messages_do_not_echo_the_input ... ok
+test policy_file::tests::base_policy_reads_with_defaults ... ok
+test policy_file::tests::dates_are_checked_in_step_4 ... ok
+test policy_file::tests::line_table_agrees_with_counting ... ok
+test policy_file::tests::utf8_bom_is_accepted_and_bad_bytes_are_rejected ... ok
+test text::tests::ac08_6_footer_has_the_meta_and_ends_with_the_reference_line ... ok
+test policy_file::tests::toml_integers_in_any_radix_and_with_underscores ... ok
+test policy_file::tests::duplicate_ids_and_duplicate_keys_are_invalid ... ok
+test policy_file::tests::line_numbers_count_lf ... ok
+test strict_json::tests::duplicate_names_are_rejected_at_any_depth ... ok
+test text::tests::half_days_are_shown_without_floats ... ok
+test text::tests::tables_align_columns_and_trim_trailing_spaces ... ok
+test policy_file::tests::scope_limits_the_worker_kind_check ... ok
+test policy_file::tests::ac12_1_unsupported_codes_in_table_order ... ok
+test strict_json::tests::broken_json_and_trailing_text_are_rejected ... ok
+test strict_json::tests::reads_every_kind_of_value ... ok
+test text::tests::width_counts_wide_characters_as_two ... ok
+test demo::tests::demo_data_is_synthetic_and_well_formed ... ok
+test policy_file::tests::ac12_1_shape_errors_are_invalid_input ... ok
+test policy_file::tests::l2_01_hundred_thousand_employees_parse_quickly ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.34s
+
+     Running tests/ac09_36_case.rs (.cargo-target/debug/deps/ac09_36_case-7d48c7aae320db13)
+
+running 9 tests
+test ac09_7_findings_order_in_output ... ok
+test ac09_5_empty_months ... ok
+test ac09_7_output_is_one_deterministic_line ... ok
+test ac09_5_minutes_ranges ... ok
+test ac09_5_vectors_through_the_binary ... ok
+test ac09_5_dates_must_be_valid_and_consistent ... ok
+test ac09_5_required_items_and_null ... ok
+test ac09_5_types_unknown_items_and_duplicates ... ok
+test ac09_5_agreement_limits_out_of_range ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running tests/ac09_36_properties.rs (.cargo-target/debug/deps/ac09_36_properties-978dfdcc2f86ffae)
+
+running 3 tests
+test ac09_5_mutated_bytes_never_crash ... ok
+test ac09_5_replaced_items_never_crash ... ok
+test ac09_5_valid_cases_succeed ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/ac09_case_cli.rs (.cargo-target/debug/deps/ac09_case_cli-48b301be9cf7d13a)
+
+running 13 tests
+test ac09_2_use_default_output ... ok
+test null_optional_items_mean_defaults ... ok
+test ac09_1_duplicate_names_are_invalid ... ok
+test version_and_help ... ok
+test command_line_errors ... ok
+test ac09_4_exit_codes ... ok
+test ac09_3_output_is_one_deterministic_line ... ok
+test ac09_1_datetime_notation ... ok
+test ac09_1_shift_checks ... ok
+test ac09_1_required_items ... ok
+test ac09_2_official_vectors_through_the_binary ... ok
+test ac09_1_value_ranges ... ok
+test ac09_1_shape_and_types ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/ac09_leave_case.rs (.cargo-target/debug/deps/ac09_leave_case-4192c10c160ccac6)
+
+running 8 tests
+test ac09_6_hours_are_rejected ... ok
+test ac09_6_vectors_through_the_binary ... ok
+test ac09_7_unsupported_order ... ok
+test ac09_7_output_is_one_deterministic_line ... ok
+test ac09_6_dates_and_balance ... ok
+test ac09_7_validation_order ... ok
+test ac09_6_required_items_and_null ... ok
+test ac09_6_types_ranges_and_enums ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/ac09_leave_properties.rs (.cargo-target/debug/deps/ac09_leave_properties-e06b5f9e1a4d1d99)
+
+running 3 tests
+test ac09_6_mutated_bytes_never_crash ... ok
+test ac09_6_replaced_items_never_crash ... ok
+test ac09_6_cases_end_with_a_defined_code ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/ac09_properties.rs (.cargo-target/debug/deps/ac09_properties-43e6938bdab976f6)
+
+running 3 tests
+test ac09_4_mutated_json_never_crashes ... ok
+test ac09_4_arbitrary_bytes_are_invalid_input ... ok
+test ac09_2_random_cases_keep_the_sums ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/ac10_cli_properties.rs (.cargo-target/debug/deps/ac10_cli_properties-12790de686a77026)
+
+running 5 tests
+test ac10_5_random_arguments_never_crash ... ok
+test ac10_5_arbitrary_policy_bytes_are_invalid ... ok
+test ac10_5_mutated_policy_never_crashes ... ok
+test ac10_5_mutated_punches_never_crash ... ok
+test ac10_5_mutated_leaves_and_history_never_crash ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+     Running tests/ac11_unsupported_cli.rs (.cargo-target/debug/deps/ac11_unsupported_cli-279e5dfd20e10082)
+
+running 9 tests
+test ac13_1_shift_errors_come_before_refusal ... ok
+test ac11_4_nothing_is_printed_for_refused_workers ... ok
+test ac11_3_missing_or_null_legal_holiday ... ok
+test ac13_1_shape_errors_come_first ... ok
+test ac13_1_value_errors_come_before_unsupported ... ok
+test ac13_2_first_row_wins ... ok
+test ac13_1_unsupported_comes_before_shift_errors ... ok
+test ac11_2_message_cites_the_article ... ok
+test ac11_1_every_row_of_the_table ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/ac12_check_cli.rs (.cargo-target/debug/deps/ac12_check_cli-f5d1334621de58f2)
+
+running 13 tests
+test month_start_day_mismatch_is_unsupported ... ok
+test use_default_lists_ambiguities_in_the_range ... ok
+test ac12_3_warning_only_exits_1 ... ok
+test ac12_3_clean_data_exits_0 ... ok
+test month_before_the_first_agreement_month_is_invalid ... ok
+test break_shortage_on_the_next_period_start_is_not_counted ... ok
+test no_agreement_flags_any_overtime ... ok
+test ac12_3_fail_on_violation_exits_1 ... ok
+test ac12_3_unknown_history_is_a_violation ... ok
+test punch_anomaly_is_a_violation_and_a_refusal ... ok
+test data_from_avoids_the_incomplete_week_in_check ... ok
+test data_from_sets_the_first_agreement_month ... ok
+test history_errors_name_the_line ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/ac12_demo_cli.rs (.cargo-target/debug/deps/ac12_demo_cli-19219e74be9aa7ad)
+
+running 5 tests
+test ac10_8_demo_creates_private_folder_and_files ... ok
+test ac12_7_demo_writes_only_to_out_and_shows_every_command ... ok
+test demo_refuses_non_empty_folders_and_files ... ok
+test ac10_4_demo_output_is_deterministic ... ok
+test ac12_7_demo_without_out_uses_a_new_temporary_folder ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/ac12_errors_cli.rs (.cargo-target/debug/deps/ac12_errors_cli-ab945a195580ab76)
+
+running 10 tests
+test l2_11_retention_starts_with_three_date_lines ... ok
+test help_lists_every_command ... ok
+test l2_02_out_of_range_shift_error_hides_the_employee_id ... ok
+test ac08_5_retention_through_the_command ... ok
+test ac12_8_exit_codes_follow_the_table ... ok
+test ac12_6_case_handles_three_schemas ... ok
+test ac10_7_error_messages_do_not_echo_input_rows ... ok
+test ac12_8_argument_errors_are_json_with_exit_2 ... ok
+test ac12_1_policy_file_errors_through_the_command ... ok
+test ac10_6_input_limits_are_invalid_input ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/ac12_explain_cli.rs (.cargo-target/debug/deps/ac12_explain_cli-92771ca8d1a0c0ef)
+
+running 10 tests
+test national_holiday_is_not_a_legal_holiday ... ok
+test ac12_5_explain_text ... ok
+test legal_holiday_work_is_35_percent ... ok
+test ac12_5_explain_json_has_segments_with_premium_and_basis ... ok
+test over60_segments_are_50_percent ... ok
+test refused_employee_exits_4 ... ok
+test day_without_work_has_no_segments ... ok
+test explain_arguments_are_checked ... ok
+test data_from_avoids_the_incomplete_week_in_explain ... ok
+test continuation_from_the_previous_day_is_explained ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ac12_leave_cli.rs (.cargo-target/debug/deps/ac12_leave_cli-718a4cce51358aaa)
+
+running 7 tests
+test explicit_grants_are_used ... ok
+test ac12_4_leave_text_has_every_section ... ok
+test insufficient_balance_names_the_line ... ok
+test out_of_table_is_unsupported ... ok
+test hourly_leave_is_unsupported_with_the_id ... ok
+test leave_inputs_are_checked ... ok
+test ac12_4_leave_json_matches_the_case ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ac12_output_shape.rs (.cargo-target/debug/deps/ac12_output_shape-13d0fd2bb5ac7044)
+
+running 5 tests
+test ac12_9_report_csv_columns_in_order ... ok
+test ac12_9_leave_json_keys_in_order ... ok
+test ac12_9_report_json_keys_in_order ... ok
+test ac12_9_explain_json_keys_in_order ... ok
+test ac12_10_every_text_output_has_the_meta ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/ac12_report_cli.rs (.cargo-target/debug/deps/ac12_report_cli-2bf6d2db785276a5)
+
+running 15 tests
+test month_without_punches_gives_zero_rows ... ok
+test seconds_reject_makes_the_seconds_invalid ... ok
+test ac12_2_report_json_has_the_ledger_items ... ok
+test ac12_2_report_text_is_a_table_with_the_meta ... ok
+test punch_anomaly_refuses_only_that_employee ... ok
+test punch_ids_must_be_in_the_policy ... ok
+test ac12_2_report_csv_has_fixed_columns ... ok
+test rounding_none_has_no_rounded_hours ... ok
+test use_default_records_the_ambiguities ... ok
+test employees_without_punches_get_zero_rows ... ok
+test data_from_after_the_week_start_refuses_the_week ... ok
+test week_record_spanning_the_period_start_is_reported ... ok
+test ac10_4_row_order_does_not_change_the_output ... ok
+test employee_filter_computes_one_person ... ok
+test ac10_4_same_input_same_bytes ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/ac13_data_from_cli.rs (.cargo-target/debug/deps/ac13_data_from_cli-1e323e31418748a9)
+
+running 5 tests
+test removed_worker_kinds_are_not_defined ... ok
+test ac03_15_incomplete_week_through_the_binary ... ok
+test ac13_1_holiday_swaps_type ... ok
+test ac13_1_data_from_errors_and_the_order ... ok
+test ac13_5_bad_data_from_is_invalid ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_core-c573a6a0ae56b5e3)
+
+running 1 test
+test calendar::tests::epoch_and_known_days ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac01_punch.rs (.cargo-target/debug/deps/ac01_punch-aa51b65a112452aa)
+
+running 23 tests
+test ac01_1_no_punches ... ok
+test ac01_3_anomalous_employee_gets_no_shifts ... ok
+test ac01_2_open_shift_at_the_end ... ok
+test ac01_4_break_shorter_than_a_minute_disappears ... ok
+test ac01_2_anomaly_points_at_the_punch ... ok
+test ac01_2_long_shift_at_24_hours ... ok
+test ac01_1_employees_are_separate_and_sorted_by_id ... ok
+test ac01_2_lists_every_anomaly_in_time_order ... ok
+test ac01_1_in_break_out_makes_one_shift ... ok
+test ac01_2_same_timestamp ... ok
+test ac01_4_floor_and_ceil ... ok
+test ac01_4_clipping_keeps_breaks_inside ... ok
+test ac01_1_several_shifts_in_any_input_order ... ok
+test ac01_4_shifts_ending_and_starting_in_one_minute ... ok
+test ac01_2_transitions_outside_the_table ... ok
+test ac01_4_start_side_floors_and_end_side_ceils ... ok
+test ac01_5_reject_nonzero_seconds ... ok
+test ac01_5_seconds_policy_codes ... ok
+test ac01_codes ... ok
+test ac01_punch_time_notation ... ok
+test ac08_7_employee_id_format ... ok
+test ac10_4_same_input_same_result ... ok
+test ac10_6_at_most_1000_shifts_per_month ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac01_punch_properties.rs (.cargo-target/debug/deps/ac01_punch_properties-decea0f45a1332a8)
+
+running 4 tests
+test ac10_5_arbitrary_punches_do_not_panic ... ok
+test ac01_4_worker_favorable_never_loses_work ... ok
+test ac01_5_whole_minutes_are_kept_as_is ... ok
+test ac10_4_result_does_not_depend_on_input_order ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/ac02_calendar.rs (.cargo-target/debug/deps/ac02_calendar-5bb474d6d6150450)
+
+running 8 tests
+test ac02_1_weekday_offsets ... ok
+test ac02_6_input_out_of_range_is_rejected ... ok
+test ac02_6_results_can_reach_2200 ... ok
+test ac02_1_ordering_and_display_are_deterministic ... ok
+test ac02_1_leap_years_and_month_lengths ... ok
+test ac02_1_every_input_date_matches_chrono ... ok
+test ac02_1_every_representable_date_matches_chrono ... ok
+test ac02_1_add_days_matches_chrono_for_every_date ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests/ac02_instant_interval.rs (.cargo-target/debug/deps/ac02_instant_interval-c86cf503363d282a)
+
+running 8 tests
+test ac02_3_touching_and_one_minute_overlap ... ok
+test ac02_3_empty_interval_is_rejected ... ok
+test ac02_4_split_examples ... ok
+test ac02_2_instant_edges ... ok
+test ac02_2_decompose_and_compose_round_trip ... ok
+test ac02_2_add_minutes_round_trip ... ok
+test ac02_4_split_pieces_fit_one_day_and_sum_up ... ok
+test ac02_3_overlap_matches_minute_sets ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac02_notation.rs (.cargo-target/debug/deps/ac02_notation-3456aff75a120c6f)
+
+running 7 tests
+test ac02_5_invalid_dates_are_rejected ... ok
+test ac02_5_invalid_instants_are_rejected ... ok
+test error_messages_are_not_empty ... ok
+test ac02_6_out_of_range_instants_are_rejected ... ok
+test ac02_5_instant_round_trips ... ok
+test ac02_5_arbitrary_text_never_panics ... ok
+test ac02_5_every_date_round_trips ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/ac02_periods.rs (.cargo-target/debug/deps/ac02_periods-a34788c018a22a4a)
+
+running 8 tests
+test ac02_7_month_start_day_range ... ok
+test ac02_7_week_before_range ... ok
+test ac02_7_month_period_at_range_edges ... ok
+test ac02_7_month_period_start_day_1 ... ok
+test ac02_7_week_first_day ... ok
+test ac02_7_month_period_start_day_16 ... ok
+test ac02_7_week_first_day_for_every_date ... ok
+test ac02_7_month_period_contains_every_date ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+     Running tests/mut_core.rs (.cargo-target/debug/deps/mut_core-2bcceb8aa1d1b6ca)
+
+running 1 test
+test ac02_6_instant_type_edges_are_inside_the_range ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mut_l2_review.rs (.cargo-target/debug/deps/mut_l2_review-d64f830b5d0800f1)
+
+running 1 test
+test l2_m11_shift_count_is_per_year_and_month ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_import-a56f50d64cc02f07)
+
+running 1 test
+test tests::ac10_6_size_boundary ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac01_import.rs (.cargo-target/debug/deps/ac01_import-4793cdba234bbe17)
+
+running 13 tests
+test ac01_8_rejects_csv_without_header ... ok
+test ac01_8_shift_jis_with_crlf ... ok
+test ac01_8_unreadable_bytes ... ok
+test every_error_kind_has_a_message ... ok
+test ac01_8_shift_jis_japanese_value_is_read_then_rejected ... ok
+test ac01_8_header_errors ... ok
+test value_errors_point_at_line_and_column ... ok
+test leaves_csv ... ok
+test history_csv ... ok
+test ac08_7_employee_id_in_csv ... ok
+test malformed_rows ... ok
+test ac01_8_utf8_with_bom_and_crlf ... ok
+test ac10_7_messages_have_no_row_content ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac01_line_endings.rs (.cargo-target/debug/deps/ac01_line_endings-26e4dc99dec39899)
+
+running 3 tests
+test l2_10_blank_line_error_comes_before_a_stray_cr_below ... ok
+test l2_09_final_lone_cr_is_rejected ... ok
+test crlf_and_unterminated_lines_still_read ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac10_limits.rs (.cargo-target/debug/deps/ac10_limits-76f9a03e64096be5)
+
+running 5 tests
+test io_errors_are_reported_without_details ... ok
+test ac10_6_date_range ... ok
+test ac10_6_line_length_limit ... ok
+test ac10_6_at_most_100000_employees ... ok
+test ac10_6_file_size_limit ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.84s
+
+     Running tests/ac10_properties.rs (.cargo-target/debug/deps/ac10_properties-75d11ec8eb13d1a4)
+
+running 5 tests
+test ac10_5_arbitrary_bytes_do_not_panic ... ok
+test ac10_5_csv_like_bytes_do_not_panic ... ok
+test ac10_7_error_message_has_no_row_content ... ok
+test ac10_5_broken_csv_does_not_panic ... ok
+test ac01_8_valid_csv_round_trips ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running unittests src/lib.rs (.cargo-target/debug/deps/kintai_jp_labor-c047d86739e00fe0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac01_breaks.rs (.cargo-target/debug/deps/ac01_breaks-35b0a22ea960e998)
+
+running 10 tests
+test ac01_6_required_minutes_at_the_boundaries ... ok
+test provenance_of_article_34 ... ok
+test ac01_6_from_punches ... ok
+test ac01_6_night_shift_belongs_to_the_start_day ... ok
+test ac01_6_gap_between_shifts_of_the_same_labor_day ... ok
+test ac01_7_warning_code_and_message ... ok
+test ac01_6_eight_hours_and_one_minute ... ok
+test ac01_6_shortage_at_360_361_480_481 ... ok
+test ac01_7_no_automatic_deduction ... ok
+test ac01_6_shortage_matches_a_recount ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ac03_incomplete_week.rs (.cargo-target/debug/deps/ac03_incomplete_week-8ecedbd39c896967)
+
+running 8 tests
+test ac13_3_week_start_before_2000 ... ok
+test ac03_16_month_only_input_is_refused ... ok
+test ac13_3_incomplete_week_follows_week_start ... ok
+test ac13_4_week_start_sorts_before_later_labor_days ... ok
+test ac03_15_use_default_records_and_computes ... ok
+test ac03_16_full_week_with_data_from_shows_overtime ... ok
+test ac13_4_same_date_is_ordered_by_code ... ok
+test ac03_15_only_when_data_from_is_after_week_start ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac03_official_vectors.rs (.cargo-target/debug/deps/ac03_official_vectors-031e0af6670e0050)
+
+running 2 tests
+test ac04_6_sixty_hour_leaflet_example ... ok
+test ac03_10_every_official_vector_matches ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/ac03_properties.rs (.cargo-target/debug/deps/ac03_properties-e9927986af1977c9)
+
+running 6 tests
+test classify_error_message ... ok
+test last_minute_of_the_range ... ok
+test month_period_before_2000_is_reported ... ok
+test ac03_13_order_does_not_matter ... ok
+test ac03_13_totals_and_naive_agreement ... ok
+test ac03_1_adding_a_break_never_adds_work ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.52s
+
+     Running tests/ac03_rules.rs (.cargo-target/debug/deps/ac03_rules-159ed5cfc25aaa68)
+
+running 15 tests
+test ac03_2_daily_480_boundary ... ok
+test ac03_12_holiday_boundary ... ok
+test ac03_1_breaks_are_not_work ... ok
+test ac03_5_legal_holiday_is_only_holiday ... ok
+test ac03_8_extra_within ... ok
+test ac03_4_weekly_44_hours ... ok
+test ac03_12_ending_at_midnight_does_not_cross ... ok
+test ac03_6_non_legal_holiday_follows_weekday_rules ... ok
+test ac03_11_week_continues_across_months ... ok
+test ac03_3_daily_overtime_is_not_counted_twice ... ok
+test ac03_12_refusal_hides_all_days ... ok
+test ac03_7_night_boundaries ... ok
+test ac03_12_week_and_month_boundaries ... ok
+test ac03_3_weekly_limit ... ok
+test ac03_9_overnight_shift_counts_on_start_day ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac04_over60.rs (.cargo-target/debug/deps/ac04_over60-e9bb15b08c668fd9)
+
+running 7 tests
+test ac04_7_month_start_day_1_splits_on_first ... ok
+test ac04_4_later_minutes_exceed_first ... ok
+test ac04_7_month_start_day_16 ... ok
+test ac04_5_night_over60 ... ok
+test ac04_3_legal_holiday_is_not_counted ... ok
+test ac04_2_threshold_3600_and_3601 ... ok
+test ac04_1_resets_each_period ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac05_limits36_properties.rs (.cargo-target/debug/deps/ac05_limits36_properties-0e3fff3a28b724bb)
+
+running 3 tests
+test ac05_8_year_start_resets_the_running_totals ... ok
+test ac05_6_splitting_t_keeps_the_sums ... ok
+test ac05_matches_a_naive_reading_of_the_spec ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/ac05_limits36_rules.rs (.cargo-target/debug/deps/ac05_limits36_rules-c6a7c99f0ae4213f)
+
+running 21 tests
+test ac05_10_valid_agreement_accessors ... ok
+test ac05_13_own_employer_only_notice_is_always_there ... ok
+test ac05_7_unknown_history_is_not_zero ... ok
+test ac05_10_agreement_limits_over_the_legal_maximum_are_invalid ... ok
+test ac05_5_hundred_hours_boundary ... ok
+test ac05_8_year_reset ... ok
+test ac05_1_overtime_and_holiday_from_classification ... ok
+test ac05_2_no_agreement ... ok
+test ac05_12_activation_month_is_over_45_hours ... ok
+test ac05_3_general_monthly_limits ... ok
+test ac05_4_special_clause_limits ... ok
+test ac05_15_mid_year_start_uses_lower_bounds ... ok
+test ac05_3_general_annual_limits ... ok
+test ac05_1_months_from_periods_fill_gaps_with_zero ... ok
+test ac05_6_multi_month_sum_boundary_for_each_n ... ok
+test ac05_error_messages_name_the_place_not_the_value ... ok
+test ac05_14_cumulative_findings_and_count_only_on_activation_months ... ok
+test ac05_findings_are_in_code_table_order ... ok
+test ac05_minutes_ranges ... ok
+test ac05_months_and_history_must_be_consistent ... ok
+test ac05_findings_cite_article_36 ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac05_limits36_vectors.rs (.cargo-target/debug/deps/ac05_limits36_vectors-bc07212b8d5c43cc)
+
+running 2 tests
+test ac05_9_leaflet_table_in_hours ... ok
+test ac05_9_official_vectors_match_every_expectation ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac06_leave_dates.rs (.cargo-target/debug/deps/ac06_leave_dates-bf9f1aca85535eb2)
+
+running 6 tests
+test ac06_2_results_beyond_the_type_range_are_errors ... ok
+test ac06_2_period_examples ... ok
+test ac06_2_hire_2023_08_29 ... ok
+test ac06_2_first_grant_dates_vector ... ok
+test ac06_2_calendar_date_reads_format_but_not_range ... ok
+test ac06_2_every_date_matches_the_day_by_day_reading ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests/ac06_leave_properties.rs (.cargo-target/debug/deps/ac06_leave_properties-c9b6e46312777d6f)
+
+running 3 tests
+test ac06_adding_a_record_never_lowers_window_sums ... ok
+test ac06_remaining_is_granted_minus_used_minus_expired ... ok
+test ac06_matches_a_naive_reading_of_the_spec ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/ac06_leave_rules.rs (.cargo-target/debug/deps/ac06_leave_rules-c01cc5b7200acfb2)
+
+running 18 tests
+test ac06_10_explicit_grants ... ok
+test ac06_9_records_after_as_of_are_not_judged ... ok
+test ac06_3_below_skips_the_grant_but_service_continues ... ok
+test ac06_4_lot_expires_on_the_expiry_day ... ok
+test ac06_3_unknown_grants_with_one_notice ... ok
+test ac06_7_carry_over_and_overlapping_windows ... ok
+test ac06_5_half_day_counts_as_one_half ... ok
+test ac06_10_register_rows ... ok
+test ac06_4_oldest_lot_first_and_a_full_day_may_span_two_lots ... ok
+test ac06_4_lot_is_usable_from_the_grant_day ... ok
+test ac06_6_five_day_obligation ... ok
+test ac06_9_split_grant_definition ... ok
+test ac06_10_insufficient_balance_is_invalid ... ok
+test ac06_9_unsupported_checks_before_date_validation ... ok
+test ac06_9_unsupported_codes_cite_the_law ... ok
+test ac06_9_unsupported_in_order ... ok
+test ac06_error_messages ... ok
+test ac06_8_official_vectors ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac06_leave_table.rs (.cargo-target/debug/deps/ac06_leave_table-9229edd4f322d6ad)
+
+running 8 tests
+test ac06_12_weekly_five_days_or_1800_minutes_come_first ... ok
+test ac06_12_weekly_days_last ... ok
+test ac06_12_working_terms_ranges ... ok
+test ac06_12_annual_days_take_priority_over_weekly_days ... ok
+test kanji_numbers_are_read ... ok
+test ac06_1_days_by_service_length ... ok
+test ac06_1_normal_grant_table_matches_article_39 ... ok
+test ac06_1_proportional_grant_table_matches_regulation_24_3 ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac07_holidays.rs (.cargo-target/debug/deps/ac07_holidays-22f4c16bd1f360a9)
+
+running 12 tests
+test ac07_5_kinds_are_distinguished ... ok
+test ac07_2_olympic_years ... ok
+test ac07_5_article_3_does_not_recurse ... ok
+test ac07_3_equinoxes_match_the_naoj_forecast_62 ... ok
+test ac07_6_national_holidays_are_not_legal_holidays ... ok
+test ac07_3_equinox_formula_is_exact_for_every_year ... ok
+test ac07_3_equinoxes_match_the_official_16 ... ok
+test ac07_4_status_by_year ... ok
+test ac07_1_embedded_table_equals_the_official_csv ... ok
+test ac07_holidays_follow_article_2_and_the_law_record ... ok
+test ac07_2_rules_reproduce_all_143_official_rows ... ok
+test ac07_5_generated_years_are_consistent ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac08_properties.rs (.cargo-target/debug/deps/ac08_properties-233dc432b4aaf6e5)
+
+running 2 tests
+test ac08_3_rounding_is_within_half_an_hour ... ok
+test ac08_1_ledger_is_the_sum_of_days ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/ac08_report.rs (.cargo-target/debug/deps/ac08_report-903b2a43e930ca28)
+
+running 16 tests
+test ac08_7_report_uses_checked_employee_ids ... ok
+test ac08_3_round_to_hours_at_29_and_30 ... ok
+test ac08_4_no_daily_rounding_value ... ok
+test ac08_5_retention_kinds ... ok
+test ac08_5_status_record_counts_from_completion ... ok
+test ac08_5_civil_code_period_edges ... ok
+test ac08_5_later_of_completion_and_wage_due ... ok
+test report_error_messages ... ok
+test ac08_6_meta_is_always_present ... ok
+test ac08_2_overtime_excludes_legal_holiday_work ... ok
+test ac08_1_labor_day_decides_the_period ... ok
+test ac08_1_ledger_fields_from_classification ... ok
+test monthly_report_entries ... ok
+test ac08_1_official_sixty_hour_month ... ok
+test ac08_3_monthly_rounding_keeps_minutes_and_over60 ... ok
+test provenance_matches_the_retrieved_statutes ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac11_policy.rs (.cargo-target/debug/deps/ac11_policy-b38cf569528976fb)
+
+running 11 tests
+test ac11_1_worker_kinds ... ok
+test ac11_1_work_systems ... ok
+test ac13_1_range_errors_come_before_unsupported ... ok
+test ac11_1_other_rows ... ok
+test ac13_2_table_order ... ok
+test ac11_4_refused_policy_cannot_be_used ... ok
+test defaults_are_applied ... ok
+test ac11_3_legal_holiday_unspecified ... ok
+test ac13_1_numeric_ranges ... ok
+test ac11_2_error_has_code_and_article ... ok
+test ac11_2_code_strings_match_the_table ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ac13_shifts.rs (.cargo-target/debug/deps/ac13_shifts-a6965e44fcfaae6f)
+
+running 7 tests
+test shift_error_messages_have_only_indices ... ok
+test ac13_5_touching_is_allowed ... ok
+test ac13_5_shift_checks ... ok
+test ac13_4_one_record_per_labor_day_and_code ... ok
+test ac13_3_midnight_end_does_not_cross ... ok
+test ac13_3_codes_follow_the_definition ... ok
+test ac13_4_ordering_of_records_and_refused_dates ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/explain_day.rs (.cargo-target/debug/deps/explain_day-8bff206575b84186)
+
+running 12 tests
+test premium_floor_before_april_2023_and_codes ... ok
+test premium_floor_table ... ok
+test empty_day_still_has_meta ... ok
+test night_within_is_25_percent ... ok
+test provenance_matches_the_retrieved_statutes ... ok
+test crossing_into_the_legal_holiday_with_use_default ... ok
+test refused_and_mismatched_results ... ok
+test weekly_excess_on_saturday_is_overtime ... ok
+test over60_rate_is_shown_from_april_2023 ... ok
+test official_example_2_legal_holiday ... ok
+test official_example_1_overtime_into_night ... ok
+test official_sixty_hour_example_on_the_27th ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/explain_properties.rs (.cargo-target/debug/deps/explain_properties-812867d08b789e82)
+
+running 1 test
+test explanation_matches_the_classification ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/mut_leave.rs (.cargo-target/debug/deps/mut_leave-e53cc892afb7c48d)
+
+running 4 tests
+test ac06_10_explicit_grant_on_as_of_is_shown ... ok
+test ac06_10_balance_is_checked_for_a_record_on_as_of ... ok
+test ac06_6_taking_on_the_last_day_of_the_window_counts ... ok
+test ac06_10_taking_on_as_of_is_counted ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mut_limits36.rs (.cargo-target/debug/deps/mut_limits36-025d7fab4c945cf0)
+
+running 2 tests
+test history_day_must_equal_the_agreement_month_start_day ... ok
+test ac05_1_over60_minutes_stay_in_overtime_and_out_of_holiday ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mut_report.rs (.cargo-target/debug/deps/mut_report-ddd6a717fee337c7)
+
+running 2 tests
+test ac03_15_incomplete_week_note_is_attached_to_the_days_of_that_week ... ok
+test ac03_15_incomplete_week_record_is_in_the_report_of_each_month_it_touches ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/provenance.rs (.cargo-target/debug/deps/provenance-b1beacc2ad21c60d)
+
+running 2 tests
+test every_provenance_is_complete ... ok
+test laws_match_the_retrieved_revisions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kintai_core
+
+running 2 tests
+test crates/kintai-core/src/lib.rs - (line 12) ... ok
+test crates/kintai-core/src/punch.rs - punch (line 21) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.47s; merged doctests compilation took 0.25s
+   Doc-tests kintai_import
+
+running 1 test
+test crates/kintai-import/src/lib.rs - (line 24) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.44s; merged doctests compilation took 0.22s
+   Doc-tests kintai_jp_labor
+
+running 7 tests
+test crates/kintai-jp-labor/src/leave.rs - leave (line 13) ... ok
+test crates/kintai-jp-labor/src/limits36.rs - limits36 (line 15) ... ok
+test crates/kintai-jp-labor/src/breaks.rs - breaks (line 9) ... ok
+test crates/kintai-jp-labor/src/lib.rs - (line 20) ... ok
+test crates/kintai-jp-labor/src/explain.rs - explain (line 21) ... ok
+test crates/kintai-jp-labor/src/report.rs - report (line 12) ... ok
+test crates/kintai-jp-labor/src/holidays.rs - holidays (line 16) ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.47s; merged doctests compilation took 0.23s
+[終了コード 0]
+# 集計: test result の行 59 個、合格 438、失敗 0、無視 0
+
+$ RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps
+    Checking kintai-jp-labor v0.0.1 (<scratchpad>/r3-ws/crates/kintai-jp-labor)
+ Documenting kintai-jp-labor v0.0.1 (<scratchpad>/r3-ws/crates/kintai-jp-labor)
+ Documenting kintai-core v0.0.1 (<scratchpad>/r3-ws/crates/kintai-core)
+    Checking kintai-import v0.0.1 (<scratchpad>/r3-ws/crates/kintai-import)
+ Documenting kintai-import v0.0.1 (<scratchpad>/r3-ws/crates/kintai-import)
+ Documenting kintai-cli v0.0.1 (<scratchpad>/r3-ws/crates/kintai-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.56s
+   Generated <scratchpad>/r3-ws/.cargo-target/doc/kintai/index.html and 3 other files
+[終了コード 0]
+
+$ cargo deny --offline check bans licenses sources
+warning[duplicate]: found 2 duplicate entries for crate 'winnow'
+   ┌─ <scratchpad>/r3-ws/Cargo.lock:56:1
+   │  
+56 │ ╭ winnow 0.7.15 registry+https://github.com/rust-lang/crates.io-index
+57 │ │ winnow 1.0.4 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰──────────────────────────────────────────────────────────────────┘ lock entries
+   │  
+   ├ winnow v0.7.15
+     └── toml v0.9.12+spec-1.1.0
+         └── kintai-cli v0.0.1
+   ├ winnow v1.0.4
+     └── toml_parser v1.1.5+spec-1.1.0
+         └── toml v0.9.12+spec-1.1.0
+             └── kintai-cli v0.0.1
+
+bans ok, licenses ok, sources ok
+[終了コード 0]
+
+$ python3 tools/check-spec-trace.py
+条件        種類  参照  内訳（crates/tools）  例
+AC-09.5   rust    12  12/0                  crates/kintai-cli/tests/ac09_36_case.rs:3
+AC-09.6   rust    10  10/0                  crates/kintai-cli/tests/ac09_leave_case.rs:3
+AC-09.7   rust    13  13/0                  crates/kintai-cli/tests/ac09_36_case.rs:4
+AC-09.1   rust     7  7/0                   crates/kintai-cli/tests/ac09_case_cli.rs:3
+AC-09.2   rust     6  6/0                   crates/kintai-cli/tests/ac09_case_cli.rs:4
+AC-09.3   rust     3  3/0                   crates/kintai-cli/tests/ac09_case_cli.rs:5
+AC-09.4   rust     8  8/0                   crates/kintai-cli/tests/ac09_case_cli.rs:6
+AC-03.1   rust     4  4/0                   crates/kintai-jp-labor/tests/ac03_properties.rs:4
+AC-03.2   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:63
+AC-03.3   rust     2  2/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:84
+AC-03.4   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:134
+AC-03.5   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:164
+AC-03.6   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:184
+AC-03.7   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:199
+AC-03.8   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:231
+AC-03.9   rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:255
+AC-03.10  rust     2  2/0                   crates/kintai-jp-labor/tests/ac03_official_vectors.rs:1
+AC-03.11  rust     1  1/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:277
+AC-03.12  rust     4  4/0                   crates/kintai-jp-labor/tests/ac03_rules.rs:301
+AC-03.13  rust     3  3/0                   crates/kintai-jp-labor/tests/ac03_properties.rs:3
+AC-03.14  python     0  0/0                   （なし）
+AC-03.15  rust    10  10/0                  crates/kintai-cli/tests/ac12_report_cli.rs:274
+AC-03.16  rust     3  3/0                   crates/kintai-jp-labor/tests/ac03_incomplete_week.rs:6
+AC-12.9   rust     9  9/0                   crates/kintai-cli/tests/ac12_explain_cli.rs:71
+AC-12.10  rust     9  9/0                   crates/kintai-cli/src/text.rs:189
+AC-12.1   rust     5  5/0                   crates/kintai-cli/src/policy_file.rs:1
+AC-12.2   rust     5  5/0                   crates/kintai-cli/src/report.rs:1
+AC-12.3   rust     6  6/0                   crates/kintai-cli/src/check.rs:1
+AC-12.4   rust     4  4/0                   crates/kintai-cli/src/leave.rs:1
+AC-12.5   rust     4  4/0                   crates/kintai-cli/src/explain.rs:1
+AC-12.6   rust     2  2/0                   crates/kintai-cli/tests/ac12_errors_cli.rs:1
+AC-12.7   rust     4  4/0                   crates/kintai-cli/src/demo.rs:1
+AC-12.8   rust     4  4/0                   crates/kintai-cli/src/args.rs:194
+AC-02.1   rust     7  7/0                   crates/kintai-core/tests/ac02_calendar.rs:1
+AC-02.2   rust     5  5/0                   crates/kintai-core/tests/ac02_instant_interval.rs:1
+AC-02.3   rust     4  4/0                   crates/kintai-core/tests/ac02_instant_interval.rs:2
+AC-02.4   rust     3  3/0                   crates/kintai-core/tests/ac02_instant_interval.rs:3
+AC-02.5   rust     6  6/0                   crates/kintai-core/tests/ac02_notation.rs:1
+AC-02.6   rust     8  8/0                   crates/kintai-core/tests/ac02_calendar.rs:3
+AC-02.7   rust     9  9/0                   crates/kintai-core/tests/ac02_periods.rs:1
+AC-07.1   rust     2  2/0                   crates/kintai-jp-labor/tests/ac07_holidays.rs:3
+AC-07.2   rust     3  3/0                   crates/kintai-jp-labor/tests/ac07_holidays.rs:4
+AC-07.3   rust     4  4/0                   crates/kintai-jp-labor/tests/ac07_holidays.rs:5
+AC-07.4   rust     3  3/0                   crates/kintai-jp-labor/tests/ac07_holidays.rs:6
+AC-07.5   rust     4  4/0                   crates/kintai-jp-labor/tests/ac07_holidays.rs:7
+AC-07.6   rust     3  3/0                   crates/kintai-cli/tests/ac12_explain_cli.rs:176
+AC-06.1   rust     4  4/0                   crates/kintai-jp-labor/tests/ac06_leave_table.rs:3
+AC-06.2   rust     7  7/0                   crates/kintai-jp-labor/tests/ac06_leave_dates.rs:1
+AC-06.3   rust     5  5/0                   crates/kintai-jp-labor/tests/ac06_leave_properties.rs:5
+AC-06.4   rust     5  5/0                   crates/kintai-jp-labor/tests/ac06_leave_properties.rs:3
+AC-06.5   rust     2  2/0                   crates/kintai-jp-labor/tests/ac06_leave_properties.rs:353
+AC-06.6   rust     5  5/0                   crates/kintai-jp-labor/tests/ac06_leave_properties.rs:4
+AC-06.7   rust     2  2/0                   crates/kintai-jp-labor/tests/ac06_leave_properties.rs:371
+AC-06.8   rust     2  2/0                   crates/kintai-jp-labor/tests/ac06_leave_rules.rs:3
+AC-06.9   rust     5  5/0                   crates/kintai-jp-labor/tests/ac06_leave_rules.rs:536
+AC-06.12  rust     5  5/0                   crates/kintai-jp-labor/tests/ac06_leave_table.rs:5
+AC-06.10  rust     7  7/0                   crates/kintai-jp-labor/tests/ac06_leave_rules.rs:726
+AC-06.11  python     0  0/0                   （なし）
+AC-05.1   rust     5  5/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:3
+AC-05.2   rust     3  3/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:5
+AC-05.3   rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:240
+AC-05.4   rust     1  1/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:303
+AC-05.5   rust     1  1/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:357
+AC-05.6   rust     4  4/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:3
+AC-05.7   rust     1  1/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:417
+AC-05.8   rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:309
+AC-05.9   rust     4  4/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:737
+AC-05.10  rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:500
+AC-05.11  python     0  0/0                   （なし）
+AC-05.12  rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:273
+AC-05.13  rust     1  1/0                   crates/kintai-jp-labor/tests/ac05_limits36_rules.rs:627
+AC-05.14  rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:273
+AC-05.15  rust     2  2/0                   crates/kintai-jp-labor/tests/ac05_limits36_properties.rs:273
+AC-10.1   rust     3  3/0                   crates/kintai-jp-labor/examples/bench_jp_labor.rs:9
+AC-10.2   rust     3  3/0                   crates/kintai-jp-labor/examples/bench_jp_labor.rs:12
+AC-10.3   rust     2  2/0                   crates/kintai-import/examples/bench_import.rs:1
+AC-10.4   rust    10  10/0                  crates/kintai-cli/tests/ac12_demo_cli.rs:160
+AC-10.5   rust    11  11/0                  crates/kintai-cli/tests/ac10_cli_properties.rs:1
+AC-10.6   rust    13  13/0                  crates/kintai-cli/src/policy_file.rs:1083
+AC-10.7   rust    14  14/0                  crates/kintai-cli/src/inputs.rs:8
+AC-10.8   rust     3  3/0                   crates/kintai-cli/src/demo.rs:1
+AC-04.1   rust     3  3/0                   crates/kintai-jp-labor/tests/ac03_properties.rs:5
+AC-04.2   rust     1  1/0                   crates/kintai-jp-labor/tests/ac04_over60.rs:48
+AC-04.3   rust     1  1/0                   crates/kintai-jp-labor/tests/ac04_over60.rs:83
+AC-04.4   rust     1  1/0                   crates/kintai-jp-labor/tests/ac04_over60.rs:102
+AC-04.5   rust     2  2/0                   crates/kintai-jp-labor/tests/ac04_over60.rs:103
+AC-04.6   rust     2  2/0                   crates/kintai-jp-labor/tests/ac03_official_vectors.rs:2
+AC-04.7   rust     2  2/0                   crates/kintai-jp-labor/tests/ac04_over60.rs:138
+AC-01.1   rust    11  11/0                  crates/kintai-core/src/punch.rs:1
+AC-01.2   rust     8  8/0                   crates/kintai-core/tests/ac01_punch.rs:167
+AC-01.3   rust     3  3/0                   crates/kintai-core/src/punch.rs:404
+AC-01.4   rust     7  7/0                   crates/kintai-core/tests/ac01_punch.rs:407
+AC-01.5   rust     4  4/0                   crates/kintai-cli/tests/ac12_report_cli.rs:340
+AC-01.6   rust    10  10/0                  crates/kintai-jp-labor/src/breaks.rs:1
+AC-01.7   rust     3  3/0                   crates/kintai-jp-labor/tests/ac01_breaks.rs:1
+AC-01.8   rust    13  13/0                  crates/kintai-import/tests/ac01_import.rs:1
+AC-08.1   rust    11  11/0                  crates/kintai-cli/tests/ac12_report_cli.rs:124
+AC-08.2   rust     3  3/0                   crates/kintai-cli/tests/ac12_report_cli.rs:99
+AC-08.3   rust     5  5/0                   crates/kintai-jp-labor/tests/ac08_properties.rs:5
+AC-08.4   rust     5  5/0                   crates/kintai-cli/tests/ac12_errors_cli.rs:193
+AC-08.5   rust    10  10/0                  crates/kintai-cli/src/retention.rs:1
+AC-08.6   rust     5  5/0                   crates/kintai-cli/src/text.rs:189
+AC-08.7   rust    11  11/0                  crates/kintai-cli/tests/ac12_report_cli.rs:166
+AC-11.1   rust     6  6/0                   crates/kintai-cli/tests/ac11_unsupported_cli.rs:3
+AC-11.2   rust     6  6/0                   crates/kintai-cli/tests/ac11_unsupported_cli.rs:4
+AC-11.3   rust     4  4/0                   crates/kintai-cli/tests/ac11_unsupported_cli.rs:5
+AC-11.4   rust     5  5/0                   crates/kintai-cli/tests/ac11_unsupported_cli.rs:6
+AC-13.1   rust    11  11/0                  crates/kintai-cli/tests/ac11_unsupported_cli.rs:7
+AC-13.2   rust     8  8/0                   crates/kintai-cli/tests/ac11_unsupported_cli.rs:8
+AC-13.3   rust     6  6/0                   crates/kintai-jp-labor/tests/ac03_incomplete_week.rs:9
+AC-13.4   rust     6  6/0                   crates/kintai-jp-labor/tests/ac03_incomplete_week.rs:10
+AC-13.5   rust     5  5/0                   crates/kintai-cli/tests/ac13_data_from_cli.rs:6
+AC-13.6   python     0  0/0                   （なし）
+
+条件 116件（manual 3件は対象外）。参照の無い条件: 4件
+  AC-03.14 AC-06.11 AC-05.11 AC-13.6
+[終了コード 0]
+
+$ python3 tools/check-links.py（GIT_CEILING_DIRECTORIES=$WS の親）
+.agent-harness/runs/2026-10-15-phase0/research/track-A.md:123: リンク切れ downloads/
+.agent-harness/runs/2026-10-15-phase0/research/track-B.md:7: リンク切れ downloads/
+.agent-harness/runs/2026-10-15-phase0/research/track-B.md:7: リンク切れ notes_B.md
+.agent-harness/runs/2026-10-15-phase0/review-l2.md:58: リンク切れ benchmarks.md
+検査したMarkdown: 74件、問題: 4件
+[終了コード 1]
+
+$ cargo +1.88 check --workspace --all-targets
+    Checking kintai-jp-labor v0.0.1 (<scratchpad>/r3-ws/crates/kintai-jp-labor)
+    Checking kintai-core v0.0.1 (<scratchpad>/r3-ws/crates/kintai-core)
+    Checking kintai-import v0.0.1 (<scratchpad>/r3-ws/crates/kintai-import)
+    Checking kintai-cli v0.0.1 (<scratchpad>/r3-ws/crates/kintai-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.73s
+[終了コード 0]
+
+# 終了 08:20

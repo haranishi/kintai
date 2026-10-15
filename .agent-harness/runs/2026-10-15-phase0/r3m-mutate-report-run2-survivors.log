@@ -1,0 +1,7 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[月次: 週の曖昧さの記録を、週の起算日が期間にあるときだけ出す] 検出 ← 赤になった試験: ac03_15_incomplete_week_record_is_in_the_report_of_each_month_it_touches
+[explain: 週の曖昧さの記録を注意に入れない] 検出 ← 赤になった試験: ac03_15_incomplete_week_note_is_attached_to_the_days_of_that_week
+
+== 生き残り ==
+なし
+[終了コード 0、57秒]

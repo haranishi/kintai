@@ -1,0 +1,39 @@
+name: 法令の読みの誤りの指摘
+description: kintai-jp-labor の表や計算が、法令や厚生労働省の説明と違うとき
+labels: [labor-rule]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象
+      description: 表の行、規則の名前、または関数の名前
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 正しいと考える内容
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: e-Govの条項、または厚生労働省などの一次資料のURL
+      description: URLのない指摘は、確認できるまで保留します。
+    validations:
+      required: true
+  - type: input
+    id: confirmed
+    attributes:
+      label: 資料を確認した日
+    validations:
+      required: true
+  - type: dropdown
+    id: professional
+    attributes:
+      label: 社会保険労務士・弁護士ですか
+      options:
+        - はい
+        - いいえ
+    validations:
+      required: true

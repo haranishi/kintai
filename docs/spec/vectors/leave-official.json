@@ -1,0 +1,303 @@
+{
+ "schema": "kintai.vectorsleave.v1",
+ "note": "期待値は出典の公的な数値例。derived- は導出で、公的な例ではない。付与表の全セルは、試験が条文の表と直接比べる。",
+ "vectors": [
+  {
+   "id": "mhlw-annual5-p8-case1",
+   "source": "厚生労働省『年5日の年次有給休暇の確実な取得 わかりやすい解説』p.8 ケース1: 入社2019-04-01、同日に10日付与。期間は2019-04-01〜2020-03-31。",
+   "case": {
+    "schema": "kintai.caseleave.v1",
+    "as_of": "2019-12-01",
+    "employee": {
+     "hire_date": "2019-04-01",
+     "weekly_scheduled_days": 5,
+     "weekly_scheduled_minutes": 2400,
+     "annual_scheduled_days": null,
+     "attendance": [
+      "meets"
+     ],
+     "grants": [
+      {
+       "date": "2019-04-01",
+       "halves": 20
+      }
+     ]
+    },
+    "taken": []
+   },
+   "expect": {
+    "five_day": [
+     {
+      "base_date": "2019-04-01",
+      "window_end": "2020-03-31",
+      "status": "InProgress",
+      "needed_halves": 10
+     }
+    ]
+   }
+  },
+  {
+   "id": "mhlw-annual5-p9-case2-no-prorate",
+   "source": "同 p.9 ケース2(按分なし): 入社2019-04-01、2019-10-01に10日、2020-04-01に11日。期間は2019-10-01〜2020-09-30と2020-04-01〜2021-03-31。",
+   "case": {
+    "schema": "kintai.caseleave.v1",
+    "as_of": "2020-06-01",
+    "employee": {
+     "hire_date": "2019-04-01",
+     "weekly_scheduled_days": 5,
+     "weekly_scheduled_minutes": 2400,
+     "annual_scheduled_days": null,
+     "attendance": [
+      "meets",
+      "meets"
+     ],
+     "grants": [
+      {
+       "date": "2019-10-01",
+       "halves": 20
+      },
+      {
+       "date": "2020-04-01",
+       "halves": 22
+      }
+     ]
+    },
+    "taken": []
+   },
+   "expect": {
+    "five_day": [
+     {
+      "base_date": "2019-10-01",
+      "window_end": "2020-09-30",
+      "status": "InProgress",
+      "needed_halves": 10
+     },
+     {
+      "base_date": "2020-04-01",
+      "window_end": "2021-03-31",
+      "status": "InProgress",
+      "needed_halves": 10
+     }
+    ]
+   }
+  },
+  {
+   "id": "derived-first-grant-dates",
+   "source": "導出(公的な数値例ではない): 民法143条の応当日の規則。雇入れ日から6か月後の応当日。応当日がない月は翌月1日。。2024-08-29は、6か月後の2025-02-29が存在しないので2025-03-01(訂正: 別実装の担当が指摘した誤りを直した)",
+   "cases": [
+    {
+     "hire_date": "2024-04-01",
+     "first_grant": "2024-10-01"
+    },
+    {
+     "hire_date": "2024-08-31",
+     "first_grant": "2025-03-01"
+    },
+    {
+     "hire_date": "2024-08-30",
+     "first_grant": "2025-03-01"
+    },
+    {
+     "hire_date": "2024-08-29",
+     "first_grant": "2025-03-01"
+    },
+    {
+     "hire_date": "2024-02-29",
+     "first_grant": "2024-08-29"
+    },
+    {
+     "hire_date": "2024-12-31",
+     "first_grant": "2025-07-01"
+    }
+   ]
+  },
+  {
+   "id": "derived-expiry-and-order",
+   "source": "導出(公的な数値例ではない): 付与の2年後に失効、古いロットから消化。。as_of当日の付与(2年6か月・12日=24)は存在する(別実装の担当が指摘した数え落としを直した)",
+   "case": {
+    "schema": "kintai.caseleave.v1",
+    "as_of": "2026-10-01",
+    "employee": {
+     "hire_date": "2024-04-01",
+     "weekly_scheduled_days": 5,
+     "weekly_scheduled_minutes": 2400,
+     "annual_scheduled_days": null,
+     "attendance": [
+      "meets",
+      "meets"
+     ],
+     "grants": null
+    },
+    "taken": [
+     {
+      "date": "2025-06-02",
+      "unit": "full"
+     },
+     {
+      "date": "2026-05-07",
+      "unit": "half"
+     }
+    ]
+   },
+   "expect": {
+    "lots": [
+     {
+      "grant_date": "2024-10-01",
+      "granted_halves": 20,
+      "expires": "2026-10-01",
+      "used_halves": 3,
+      "remaining_halves": 0,
+      "note": "as_of=失効日の当日は使えない=失効済み(残0)。未使用17は失効分",
+      "expired_halves": 17
+     },
+     {
+      "grant_date": "2025-10-01",
+      "granted_halves": 22,
+      "expires": "2027-10-01",
+      "used_halves": 0,
+      "remaining_halves": 22,
+      "expired_halves": 0
+     },
+     {
+      "grant_date": "2026-10-01",
+      "granted_halves": 24,
+      "expires": "2028-10-01",
+      "used_halves": 0,
+      "remaining_halves": 24,
+      "expired_halves": 0,
+      "note": "as_of=2026-10-01の3件目(2年6か月)。出勤率は第3回が未指定なのでunknown"
+     }
+    ],
+    "balance_halves": 46,
+    "notices": [
+     "AttendanceUnconfirmed"
+    ],
+    "five_day": [
+     {
+      "base_date": "2024-10-01",
+      "window_end": "2025-09-30",
+      "taken_halves": 2,
+      "status": "NotMet",
+      "needed_halves": 8
+     },
+     {
+      "base_date": "2025-10-01",
+      "window_end": "2026-09-30",
+      "taken_halves": 1,
+      "status": "NotMet",
+      "needed_halves": 9
+     },
+     {
+      "base_date": "2026-10-01",
+      "window_end": "2027-09-30",
+      "taken_halves": 0,
+      "status": "InProgress",
+      "needed_halves": 10
+     }
+    ]
+   }
+  },
+  {
+   "id": "derived-2023-08-29-corresponding-dates",
+   "source": "導出(公的な例ではない。査読L1-10): 雇入れ2023-08-29。付与日は六箇月経過日(2024-02-29)から数え、応当日のない年は翌月1日。失効日は付与日の2年後の応当日(なければ翌月1日)、5日の期間の終わりは1年後の応当日の前日(なければ月末)。 2027-03-01の付与の5日の期間は、2028-03-01の前日(2028年はうるう年)の2028-02-29まで。",
+   "case": {
+    "schema": "kintai.caseleave.v1",
+    "as_of": "2028-03-01",
+    "employee": {
+     "hire_date": "2023-08-29",
+     "weekly_scheduled_days": 5,
+     "weekly_scheduled_minutes": 2400,
+     "annual_scheduled_days": null,
+     "attendance": [],
+     "grants": null
+    },
+    "taken": []
+   },
+   "expect": {
+    "lots": [
+     {
+      "grant_date": "2024-02-29",
+      "granted_halves": 20,
+      "expires": "2026-03-01",
+      "used_halves": 0,
+      "remaining_halves": 0,
+      "expired_halves": 20
+     },
+     {
+      "grant_date": "2025-03-01",
+      "granted_halves": 22,
+      "expires": "2027-03-01",
+      "used_halves": 0,
+      "remaining_halves": 0,
+      "expired_halves": 22
+     },
+     {
+      "grant_date": "2026-03-01",
+      "granted_halves": 24,
+      "expires": "2028-03-01",
+      "used_halves": 0,
+      "remaining_halves": 0,
+      "expired_halves": 24
+     },
+     {
+      "grant_date": "2027-03-01",
+      "granted_halves": 28,
+      "expires": "2029-03-01",
+      "used_halves": 0,
+      "remaining_halves": 28,
+      "expired_halves": 0
+     },
+     {
+      "grant_date": "2028-02-29",
+      "granted_halves": 32,
+      "expires": "2030-03-01",
+      "used_halves": 0,
+      "remaining_halves": 32,
+      "expired_halves": 0
+     }
+    ],
+    "balance_halves": 60,
+    "five_day": [
+     {
+      "base_date": "2024-02-29",
+      "window_end": "2025-02-28",
+      "taken_halves": 0,
+      "status": "NotMet",
+      "needed_halves": 10
+     },
+     {
+      "base_date": "2025-03-01",
+      "window_end": "2026-02-28",
+      "taken_halves": 0,
+      "status": "NotMet",
+      "needed_halves": 10
+     },
+     {
+      "base_date": "2026-03-01",
+      "window_end": "2027-02-28",
+      "taken_halves": 0,
+      "status": "NotMet",
+      "needed_halves": 10
+     },
+     {
+      "base_date": "2027-03-01",
+      "window_end": "2028-02-29",
+      "taken_halves": 0,
+      "status": "NotMet",
+      "needed_halves": 10
+     },
+     {
+      "base_date": "2028-02-29",
+      "window_end": "2029-02-28",
+      "taken_halves": 0,
+      "status": "InProgress",
+      "needed_halves": 10
+     }
+    ],
+    "notices": [
+     "AttendanceUnconfirmed"
+    ]
+   }
+  }
+ ]
+}

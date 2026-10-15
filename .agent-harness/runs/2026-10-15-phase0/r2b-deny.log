@@ -1,0 +1,16 @@
+warning[duplicate]: found 2 duplicate entries for crate 'winnow'
+   ┌─ <scratchpad>/r2b-ws/Cargo.lock:56:1
+   │  
+56 │ ╭ winnow 0.7.15 registry+https://github.com/rust-lang/crates.io-index
+57 │ │ winnow 1.0.4 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰──────────────────────────────────────────────────────────────────┘ lock entries
+   │  
+   ├ winnow v0.7.15
+     └── toml v0.9.12+spec-1.1.0
+         └── kintai-cli v0.0.1
+   ├ winnow v1.0.4
+     └── toml_parser v1.1.5+spec-1.1.0
+         └── toml v0.9.12+spec-1.1.0
+             └── kintai-cli v0.0.1
+
+bans ok, licenses ok, sources ok

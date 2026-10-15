@@ -1,0 +1,50 @@
+version = 1
+SPDX-PackageName = "kintai"
+SPDX-PackageDownloadLocation = "https://github.com/haranishi/kintai"
+
+# 既定: コード（Rustのcrate、CIの設定、スクリプト）。MIT OR Apache-2.0 の選択式。
+[[annotations]]
+path = "**"
+SPDX-FileCopyrightText = "2026 Ikki Nishihara and the kintai contributors"
+SPDX-License-Identifier = "MIT OR Apache-2.0"
+
+# 文書。
+[[annotations]]
+path = ["*.md", "docs/**", ".agent-harness/**", "crates/**/*.md"]
+SPDX-FileCopyrightText = "2026 Ikki Nishihara and the kintai contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# 法令の条文は著作権の対象外（著作権法13条）。e-Gov法令検索から取得した写し。
+[[annotations]]
+path = ["docs/legal/sources/statutes-*.txt", "docs/legal/sources/revisions-*.txt"]
+SPDX-FileCopyrightText = "Public domain (Japanese statutes, Copyright Act Art. 13); retrieved from e-Gov Law Search"
+SPDX-License-Identifier = "CC0-1.0"
+
+# 内閣府の祝日CSV（公共データ利用規約 第1.0版。CC BY 4.0と互換）。出典の表示が条件。
+[[annotations]]
+path = ["docs/legal/sources/syukujitsu-*.csv"]
+SPDX-FileCopyrightText = "Cabinet Office, Government of Japan (source: Kokumin no Shukujitsu CSV)"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# 国立天文台の春分・秋分の日付。公共データ利用規約でもCC BYでもなく、国立天文台の規程に従う。クレジット表示が条件。
+[[annotations]]
+path = ["docs/legal/sources/equinox-*.csv"]
+SPDX-FileCopyrightText = "National Astronomical Observatory of Japan"
+SPDX-License-Identifier = "LicenseRef-NAOJ-terms"
+
+# 設定ファイル類。
+[[annotations]]
+path = [
+    ".gitignore",
+    ".gitattributes",
+    "Cargo.toml",
+    "Cargo.lock",
+    "rust-toolchain.toml",
+    "deny.toml",
+    "REUSE.toml",
+    ".github/ISSUE_TEMPLATE/**",
+    ".github/pull_request_template.md",
+    ".github/dependabot.yml",
+]
+SPDX-FileCopyrightText = "2026 Ikki Nishihara and the kintai contributors"
+SPDX-License-Identifier = "CC0-1.0"

@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.pdf binary
+
+# 取込の試験のCSVは、改行（CRLF）と文字コード（Shift_JIS）を、そのまま保つ。改行を正規化しない。
+crates/kintai-import/tests/fixtures/** -text

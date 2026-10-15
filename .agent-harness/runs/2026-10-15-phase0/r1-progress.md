@@ -1,0 +1,13 @@
+# R1 作業ログ（実装担当: Claude Opus。Codexの試みは予算切れでコード0行のため、ゼロから作り直し）
+
+- [段階0 読解] impl-r1.md → core.md → classify/over60/unsupported/validation.md → case-format.md → official-examples.json → architecture.md → track-A.md を読了。骨組みのまま build と `cargo deny check` がオフラインで通ることを確認（rustc 1.99、MSRV 1.88）。
+- [段階1 設計] core: Date=1970-01-01からの日数(i64)・範囲2000〜2099、Instant=分(i64)、Interval=半開、Week/MonthPeriodは範囲外(1999-12や2100-01)の初日も表せる型にする（出力のperiods.startが1999-12-16になりうるため）。jp-labor: WorkPolicy(生の値)→validate()で手順2→3、ShiftSet::new()で手順4、classify()で手順5。CLIが手順1(serde)と、日時の文字列の解析(手順4)を手順3の後に行う。日時の解析エラーは手順4に置く読み（疑問として報告）。
+- [段階2 kintai-core 完了] calendar/date/instant/interval/period/weekday/error。試験 29件（chronoと2000〜2099年の全36,525日を突き合わせ、往復、境界、範囲外）が通過。clippy・fmt も通過。
+- [段階3 kintai-jp-labor 本体] provenance（23の根拠と3つの法令の版ID）・policy（WorkPolicy::validate は手順2→3、表の順）・shift（ShiftSet::new が手順4の構造の検査）・classify（区間の演算。chunk_byで労働日ごと、週と月の累計は鍵が替われば0）。clippy通過。文書の例で公的な数値例1（1140/480/60/660、深夜420）が一致。次は試験。
+- [段階4 jp-labor の試験] 公的な数値例7件（素朴な実装とも一致）、手書きの例22件、proptest 3本（各300件。区間の演算と1分ずつの素朴な実装の全件一致、順序の入れ替え、休憩の追加）、方針の検査11件、勤務の検査と曖昧さ7件、根拠の定数2件。clippy の assert_is_empty に合わせて空との比較を assert_eq! にした。
+- [段階5 kintai-cli] build.rs（.git のファイルを読むだけで短いハッシュ。なければ unknown）、dto（serde_json::Value から項目ごとに型を確かめる手順1、列挙の読み替えの手順2）、case（手順1→5の順）、failure。試験25件（バイナリを Command で実行）が通過。clippy・fmt 通過。
+- [段階6 仕上げ] CLI に無作為入力の性質の試験（正しいケース・壊したJSON・任意のバイト列）を追加。clamp を max/min に置換（パニックの余地をなくす）。Rust 1.88 で check 通過。tools/mutations/r1-classify.json（境界の変異27件）を作り、tools/mutate.py を実行中。
+- [段階7 仕様の更新に追従] 02:41〜02:42 に case-format・classify・unsupported・validation が更新された（review-l1 を受けた変更とみられる）。差分: 日時の書式の誤りは手順4と明記（実装済みの読みと同じ）／対応外を25コードに再編（DeferredIndustry を AutomobileDriver・Physician・DisasterRecoveryConstruction・HazardousWork に分割、construction・sugar_manufacturing は表から外れた）／policy.holiday_swaps（空でない配列で HolidaySwap）／トップレベルの data_from と曖昧さ IncompleteWeek（日付は週の起算日）／AC-03.15・03.16 の追加。これに合わせて作り直す。変異試験は基準が赤（仕様の変更で試験の前提が崩れたため）なので、作り直した後に再実行する。
+- [段階8 2回目の仕様の更新（02:52〜02:53）と調整役の連絡に追従] core: Date/Instant の型を1900〜2200年に広げ、入力の入口（FromStr と Date::parse・Instant::parse）だけが2000〜2099年に絞る（Date::INPUT_MIN/INPUT_MAX、is_input_range）。jp-labor: ShiftSet::new が日時の入力範囲を検査（ShiftError::OutOfRange）。CLI: strict_json で同じ名前の項目を手順1で拒否。数値例の試験を exit_code・refused・ambiguities・data_from に対応させ、derived-incomplete-week-* を含む10件が通過。全試験・clippy 通過。
+- [段階9 検証] 変異試験 tools/mutations/r1-classify.json（33件）: 基準は緑、33件すべて検出、生き残り0（ログ r1-mutate.log）。品質の基準（fmt・clippy・test 129件・doc・deny・check-spec-trace）と Rust 1.88 の check がすべて終了コード0（出力 r1-gates.txt）。03:07 の cli.md の更新は report・check・方針ファイルの話で、case と --version には影響なし。残りは報告書。
+- [段階10 報告] r1-report.md を作成（98行。natural-japanese のクイック工程で lint 0件）。速さの試しの測定は今のコードで最良 9.0 ms（1,000人×31日、release、作業用の場所の測定プログラム。リポジトリには入れていない）。第1周の作業は完了。

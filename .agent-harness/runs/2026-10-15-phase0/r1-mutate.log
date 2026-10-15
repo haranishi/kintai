@@ -1,0 +1,38 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[core: 区間の重なりで、端が接するのも重なりにする] 検出 ← 赤になった試験: ac09_1_shift_checks, ac02_3_overlap_matches_minute_sets, ac02_3_touching_and_one_minute_overlap, ac03_13_order_does_not_matter
+[core: うるう年の400年の規則を壊す] 検出 ← 赤になった試験: ac02_1_every_input_date_matches_chrono, ac02_1_every_representable_date_matches_chrono, ac02_1_leap_years_and_month_lengths, ac02_5_every_date_round_trips
+[core: 月の期間で、起算日当日を前の期間にする] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_2_use_default_output, ac02_7_month_period_contains_every_date, ac02_7_month_period_start_day_1
+[core: 1970-01-01 の曜日を金曜にする] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_3_output_is_one_deterministic_line, ac03_15_incomplete_week_through_the_binary, ac02_1_every_input_date_matches_chrono
+[core: 0:00 での分割を2日おきにする] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_2_use_default_output, ac09_3_output_is_one_deterministic_line, ac09_4_exit_codes
+[core: 24:00 を Hour24 として拒否しない] 検出 ← 赤になった試験: ac02_2_instant_edges, ac02_5_invalid_instants_are_rejected
+[core: 入力の日付の範囲（2000〜2099年）を検査しない] 検出 ← 赤になった試験: ac13_5_bad_data_from_is_invalid, ac02_6_input_out_of_range_is_rejected, ac02_5_every_date_round_trips, ac02_6_out_of_range_instants_are_rejected
+[深夜: 22:00 ちょうどを深夜に入れない] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_3_output_is_one_deterministic_line, ac03_10_every_official_vector_matches, ac03_13_totals_and_naive_agreement
+[深夜: 5:00 ちょうどを深夜に入れる] 検出 ← 赤になった試験: ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work, ac03_2_daily_480_boundary, ac03_7_night_boundaries
+[日8時間: 480 を 481 に] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_3_output_is_one_deterministic_line, ac03_10_every_official_vector_matches, ac04_6_sixty_hour_leaflet_example
+[60時間超: 3600 を 3601 に] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac03_10_every_official_vector_matches, ac04_6_sixty_hour_leaflet_example, ac03_13_totals_and_naive_agreement
+[60時間超: 同じ日の前の分から超えるにする] 検出 ← 赤になった試験: ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work, ac04_4_later_minutes_exceed_first
+[週の枠: 週が替わっても累計を戻さない] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac03_10_every_official_vector_matches, ac04_6_sixty_hour_leaflet_example, ac03_13_totals_and_naive_agreement
+[60時間超: 月の期間が替わっても累計を戻さない] 検出 ← 赤になった試験: ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work, ac04_1_resets_each_period, ac04_7_month_start_day_16
+[所定外法定内: 0未満を許す] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac03_10_every_official_vector_matches, ac04_6_sixty_hour_leaflet_example, ac03_13_totals_and_naive_agreement
+[法定休日: 暦日でなく労働日の曜日で判定する] 検出 ← 赤になった試験: ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work, ac03_12_holiday_boundary
+[曖昧さ: またぐ勤務を3暦日以上にする] 検出 ← 赤になった試験: ac09_2_use_default_output, ac09_4_exit_codes, ac13_4_same_date_is_ordered_by_code, ac13_4_week_start_sorts_before_later_labor_days
+[曖昧さ: 週の境界を見ない] 検出 ← 赤になった試験: ac09_2_use_default_output, ac13_4_week_start_sorts_before_later_labor_days, ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work
+[曖昧さ: 月の境界を見ない] 検出 ← 赤になった試験: ac09_2_use_default_output, ac03_13_totals_and_naive_agreement, ac03_1_adding_a_break_never_adds_work, ac03_12_week_and_month_boundaries
+[曖昧さ: data_from と週の起算日が同じ日でも IncompleteWeek にする] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac03_15_incomplete_week_through_the_binary, ac13_5_bad_data_from_is_invalid, ac03_15_only_when_data_from_is_after_week_start
+[拒否: refused.dates の重複を除かない] 検出 ← 赤になった試験: ac09_4_exit_codes, ac13_4_same_date_is_ordered_by_code, ac03_13_totals_and_naive_agreement, ac03_12_ending_at_midnight_does_not_cross
+[勤務の検査: 休憩が勤務の端に接するのを許す] 検出 ← 赤になった試験: ac09_1_shift_checks, ac13_5_shift_checks
+[勤務の検査: 1440分の勤務を許す] 検出 ← 赤になった試験: ac09_1_shift_checks, ac13_5_shift_checks
+[勤務の検査: 日時の入力範囲を見ない] 検出 ← 赤になった試験: ac13_5_shift_checks
+[検査の順序: 対応外の表を下から見る] 検出 ← 赤になった試験: ac13_2_first_row_wins, ac13_1_range_errors_come_before_unsupported, ac13_2_table_order
+[検査の範囲: 所定480分を範囲外にする] 検出 ← 赤になった試験: ac09_1_datetime_notation, ac09_1_shift_checks, ac09_1_value_ranges, ac09_2_official_vectors_through_the_binary
+[週44時間: 確認の項目がないときに許す] 検出 ← 赤になった試験: ac11_1_every_row_of_the_table, ac11_2_message_cites_the_article, ac13_2_first_row_wins, ac03_4_weekly_44_hours
+[休日の振替: 1件だけなら対応外にしない] 検出 ← 赤になった試験: ac13_2_first_row_wins, ac11_1_other_rows
+[CLI: 任意の項目の null を既定にしない] 検出 ← 赤になった試験: dto::tests::null_optional_items_use_defaults, null_optional_items_mean_defaults, ac11_3_missing_or_null_legal_holiday, ac13_1_holiday_swaps_type
+[CLI: 曖昧さの拒否の終了コードを0にする] 検出 ← 赤になった試験: ac09_2_official_vectors_through_the_binary, ac09_4_exit_codes, ac09_2_random_cases_keep_the_sums, ac03_15_incomplete_week_through_the_binary
+[CLI: 知らない項目を見逃す] 検出 ← 赤になった試験: ac09_1_shape_and_types, ac13_1_shape_errors_come_first
+[CLI: 同じ名前の項目を見逃す] 検出 ← 赤になった試験: strict_json::tests::duplicate_names_are_rejected_at_any_depth, ac09_1_duplicate_names_are_invalid
+[CLI: 日時の解析を対応外の検査より前にする] 検出 ← 赤になった試験: ac13_1_unsupported_comes_before_shift_errors
+
+== 生き残り ==
+なし
+exit=0

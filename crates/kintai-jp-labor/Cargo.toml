@@ -1,0 +1,20 @@
+[package]
+name = "kintai-jp-labor"
+description = "日本の労働基準法に基づく時間の区分、36協定の上限、年次有給休暇の規則。根拠つきの日付表を持つ。"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+publish.workspace = true
+license = "MIT OR Apache-2.0"
+
+[lints]
+workspace = true
+
+[dependencies]
+kintai-core = { version = "0.0.1", path = "../kintai-core" }
+
+[dev-dependencies]
+proptest = "1"
+serde_json = "1"

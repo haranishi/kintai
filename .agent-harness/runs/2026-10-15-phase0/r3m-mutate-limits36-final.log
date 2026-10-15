@@ -1,0 +1,49 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[36: 発動月を2700分以上にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_12_activation_month_is_over_45_hours, ac05_15_mid_year_start_uses_lower_bounds, ac05_3_general_annual_limits
+[36: 発動月の数を2700分以上で数える] 検出 ← 赤になった試験: ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_12_activation_month_is_over_45_hours, ac05_9_official_vectors_match_every_expectation
+[36: T が100時間ちょうどを適合にする（T < 6000 を T <= 6000 に）] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_2_no_agreement, ac05_5_hundred_hours_boundary, ac05_findings_are_in_code_table_order
+[36: 平均80時間ちょうどを違反にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_6_multi_month_sum_boundary_for_each_n, ac05_9_official_vectors_match_every_expectation
+[36: 平均を4800ではなく4799で比べる] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_6_multi_month_sum_boundary_for_each_n, ac05_9_official_vectors_match_every_expectation
+[36: 年360時間ちょうどを法定の超過にする] 検出 ← 赤になった試験: ac05_15_mid_year_start_uses_lower_bounds, ac05_3_general_annual_limits, ac05_9_official_vectors_match_every_expectation
+[36: 協定の年限度ちょうどを超過にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_15_mid_year_start_uses_lower_bounds, ac05_3_general_annual_limits, ac05_9_official_vectors_match_every_expectation
+[36: 協定の月限度ちょうどを超過にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid, ac05_15_mid_year_start_uses_lower_bounds, ac05_3_general_annual_limits
+[36: 特別条項の回数ちょうどを超過にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_15_mid_year_start_uses_lower_bounds, ac05_4_special_clause_limits
+[36: 回数の超過を発動月でない月にも付ける] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_4_special_clause_limits
+[36: 特別条項の月の上限を発動月でない月にも見る] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_4_special_clause_limits, ac05_5_hundred_hours_boundary
+[36: 特別条項の年の上限ちょうどを超過にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_4_special_clause_limits
+[36: 協定年が替わっても ΣO と発動月の数を戻さない] 検出 ← 赤になった試験: ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_15_mid_year_start_uses_lower_bounds
+[36: 協定年の途中から始まる年も ΣO が分かるとする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_15_mid_year_start_uses_lower_bounds, ac05_8_year_reset
+[36: 履歴の足りない月を0分とみなす] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_7_unknown_history_is_not_zero, ac05_findings_are_in_code_table_order
+[36: 協定月の初日に29日を許す] 検出 ← 赤になった試験: ac05_months_and_history_must_be_consistent
+[36: 履歴に months の最初の月を許す] 検出 ← 赤になった試験: ac05_months_and_history_must_be_consistent
+[36: 履歴の同じ月の2回を許す] 検出 ← 赤になった試験: ac05_months_and_history_must_be_consistent
+[36: 月の分の上限を44641にする] 検出 ← 赤になった試験: ac05_minutes_ranges
+[36: 協定なしで H だけの月を違反にしない] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_2_no_agreement
+[36: 協定の月限度の最大を2701にする] 検出 ← 赤になった試験: ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 特別条項の回数の最大を7にする] 検出 ← 赤になった試験: ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 直近 n か月の合計を 4800×n＋1 と比べる] 検出 ← 赤になった試験: ac05_6_multi_month_sum_boundary_for_each_n
+[36: 協定年の起算月を1か月遅らせる] 検出 ← 赤になった試験: ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_15_mid_year_start_uses_lower_bounds
+[36: 直近の合計に使う月を5か月にする（n＝6が作れない）] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid, ac05_12_activation_month_is_over_45_hours, ac05_14_cumulative_findings_and_count_only_on_activation_months
+[36: 履歴の月を1か月ずらして引く] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid, ac05_12_activation_month_is_over_45_hours, ac05_14_cumulative_findings_and_count_only_on_activation_months
+[36: 履歴が足りないときに UnknownHistory を付けない] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_7_unknown_history_is_not_zero, ac05_findings_are_in_code_table_order, ac05_9_official_vectors_match_every_expectation
+[36: 協定年の初月から始まる2年目以降も ΣO を不明にする] 検出 ← 赤になった試験: ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_15_mid_year_start_uses_lower_bounds, ac05_8_year_reset
+[36: ΣO が不明（下限値）の年は、確実な年の違反も出さない] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_15_mid_year_start_uses_lower_bounds
+[36: months の分の -1 を許す] 検出 ← 赤になった試験: ac05_minutes_ranges
+[36: 履歴の T の44640分ちょうどを拒否する] 検出 ← 赤になった試験: ac05_7_unknown_history_is_not_zero, ac05_minutes_ranges
+[36: 協定の限度の最大ちょうどを範囲外にする] 検出 ← 赤になった試験: ac05_6_splitting_t_keeps_the_sums, ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 協定の限度の0を範囲外にする] 検出 ← 赤になった試験: ac05_6_splitting_t_keeps_the_sums, ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 協定年の起算月の12を範囲外にする] 検出 ← 赤になった試験: ac05_6_splitting_t_keeps_the_sums, ac05_8_year_start_resets_the_running_totals, ac05_matches_a_naive_reading_of_the_spec
+[36: months が空のとき、履歴の日に29日を許す] 検出 ← 赤になった試験: ac05_months_and_history_must_be_consistent
+[36: 履歴の日が協定月の初日の日より前でも許す] 検出 ← 赤になった試験: history_day_must_equal_the_agreement_month_start_day
+[36: 区分の結果の O から60時間超を除く（months_from_periods）] 検出 ← 赤になった試験: ac05_1_over60_minutes_stay_in_overtime_and_out_of_holiday
+[36: 区分の結果の H に60時間超を足す（from_period）] 検出 ← 赤になった試験: ac05_1_over60_minutes_stay_in_overtime_and_out_of_holiday
+[36: months の日がそろっていなくても許す] 検出 ← 赤になった試験: ac05_months_and_history_must_be_consistent
+[36: 特別条項の月の上限の最大を6000にする] 検出 ← 赤になった試験: ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 特別条項の年の上限の最大を43201にする] 検出 ← 赤になった試験: ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[36: 年360時間を21601分にする] 検出 ← 赤になった試験: ac05_10_agreement_limits_over_the_legal_maximum_are_invalid, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_3_general_annual_limits
+[36: 特別条項で発動月にも GeneralMonthlyLimitExceeded を付ける] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_12_activation_month_is_over_45_hours, ac05_14_cumulative_findings_and_count_only_on_activation_months, ac05_15_mid_year_start_uses_lower_bounds
+[36: OwnEmployerOnly を付けない] 検出 ← 赤になった試験: ac05_13_own_employer_only_notice_is_always_there, ac05_9_official_vectors_match_every_expectation
+
+== 生き残り ==
+なし
+[終了コード 0、1206秒]

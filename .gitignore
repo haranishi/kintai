@@ -1,0 +1,43 @@
+target/
+**/*.rs.bk
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+
+# 勤怠の実データ(従業員の氏名・打刻・給与は個人情報)をうっかりコミットしないための網。
+# 試験に使うサンプルは tests/fixtures/synthetic/ に置く合成データだけにする。
+*.csv
+*.CSV
+*.tsv
+*.xlsx
+*.xls
+*.pdf
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+/data/
+!tests/fixtures/synthetic/**
+!**/tests/fixtures/synthetic/**
+# 公的データ(法令の条文、内閣府の祝日CSV)は公開してよい。出所は docs/legal/sources に書く。
+!docs/legal/sources/**
+
+# 依存ライブラリの取得先と、ビルド出力(Codexをオフラインで動かすための作業用。コミットしない)
+/.cargo-home
+/.cargo-target
+/.cargo-target-*
+/tools/difftest-out/
+__pycache__/
+*.pyc
+
+# 調査の取得物(公的資料のPDFなど。再取得できる)
+/.agent-harness/runs/*/research/downloads/
+
+# 作業ログと作業メモ。取得した資料の抜き出しを長く含むので公開しない。
+/.agent-harness/runs/*/log-*.txt
+/.agent-harness/runs/*/research/log-*.txt
+/.agent-harness/runs/*/research/notes_*.md
+/.agent-harness/runs/*/research/out-*.md

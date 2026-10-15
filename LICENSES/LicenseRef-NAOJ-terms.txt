@@ -1,0 +1,15 @@
+国立天文台（National Astronomical Observatory of Japan）が公開するデータ（春分・秋分の日付）の利用条件の要約です。
+条件の正本は、国立天文台のサイトにあります。2026-10-15に確認しました。
+
+1. 春分・秋分の予想日付（docs/legal/sources/equinox-naoj-forecast-*.csv）
+   国立天文台ウェブサイト利用規程「著作物利用について」（https://www.nao.ac.jp/terms/copyright.html）に従う。
+   クレジット（「国立天文台」など）の表示が条件で、表示のない利用は認められない。
+   プログラム、ソースコードを利用する場合は、国立天文台の事前の許諾が要る。
+   このリポジトリが使うのは、日付の数値だけで、国立天文台のプログラムやソースコードは使っていない。
+   予想表は参考値で、将来の観測結果と一致するとは限らない。
+
+2. 春分・秋分の公式の日付（docs/legal/sources/equinox-official-*.csv）
+   出典は暦要項（https://eco.mtk.nao.ac.jp/koyomi/yoko/）。暦計算室のサイト利用規定
+   （https://eco.mtk.nao.ac.jp/koyomi/site/）に従う。各ページの内容は自由に利用でき、届出は要らない。
+
+クレジット: 国立天文台

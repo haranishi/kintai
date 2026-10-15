@@ -1,0 +1,7 @@
+# Seeds for failure cases proptest has generated in the past. It is
+# automatically read and these particular cases re-run before any
+# novel cases are generated.
+#
+# It is recommended to check this file in to source control so that
+# everyone who runs the test benefits from these saved cases.
+cc 4bdde12279a50d55cd5c2dcd7369480c5db0766f7817894cbd640e7d8c35f385 # shrinks to case = Object {"agreement": Object {"kind": String("none"), "year_start_month": Number(1)}, "history": Array [], "months": Array [], "schema": String("kintai.case36.v1")}, place = "/agreement", value = Bool(true), add_unknown = true

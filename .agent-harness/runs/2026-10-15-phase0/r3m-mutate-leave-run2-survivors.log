@@ -1,0 +1,8 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[年休: 5日の期間に期間の最後の日の取得を入れない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_6_taking_on_the_last_day_of_the_window_counts
+[年休: as_of 当日の取得を数えない] 検出 ← 赤になった試験: ac06_matches_a_naive_reading_of_the_spec, ac06_10_balance_is_checked_for_a_record_on_as_of, ac06_10_explicit_grant_on_as_of_is_shown, ac06_10_taking_on_as_of_is_counted
+[年休: as_of 当日の明示の付与を出さない] 検出 ← 赤になった試験: ac06_10_explicit_grant_on_as_of_is_shown
+
+== 生き残り ==
+なし
+[終了コード 0、66秒]

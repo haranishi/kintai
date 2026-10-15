@@ -1,0 +1,194 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-jp-labor",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "祝日: 春分の定数を0.0001下げる（2088年が変わる）",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "const VERNAL_BASE: i64 = 20_843_100;",
+      "replace": "const VERNAL_BASE: i64 = 20_843_000;"
+    },
+    {
+      "label": "祝日: 秋分の定数を0.015下げる（2074年が変わる大きさ）",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "const AUTUMNAL_BASE: i64 = 23_248_800;",
+      "replace": "const AUTUMNAL_BASE: i64 = 23_233_700;"
+    },
+    {
+      "label": "祝日: 秋分の定数を0.01上げる（2045年が変わる大きさ）",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "const AUTUMNAL_BASE: i64 = 23_248_800;",
+      "replace": "const AUTUMNAL_BASE: i64 = 23_258_800;"
+    },
+    {
+      "label": "祝日: 年の増分を変える",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "const EQUINOX_DRIFT: i64 = 242_194;",
+      "replace": "const EQUINOX_DRIFT: i64 = 242_190;"
+    },
+    {
+      "label": "祝日: 4年ごとの補正を5年ごとにする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "- EQUINOX_SCALE * years.div_euclid(4);",
+      "replace": "- EQUINOX_SCALE * years.div_euclid(5);"
+    },
+    {
+      "label": "祝日: 土曜の祝日を振り替える",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "if date.weekday() != Weekday::Sunday {",
+      "replace": "if date.weekday() != Weekday::Saturday {"
+    },
+    {
+      "label": "祝日: 国民の休日で自身が祝日かを見ない",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "if !set.contains(&middle) && set.contains(&after) {",
+      "replace": "if set.contains(&after) {"
+    },
+    {
+      "label": "祝日: 振替休日を再帰して国民の休日を数える",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "    for &date in &set {\n        let Ok(middle)",
+      "replace": "    let set: BTreeSet<Date> = set.iter().copied().chain(derived.keys().copied()).collect();\n    for &date in &set {\n        let Ok(middle)"
+    },
+    {
+      "label": "祝日: 2028年を公式にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "pub const OFFICIAL_LAST_YEAR: i32 = 2027;",
+      "replace": "pub const OFFICIAL_LAST_YEAR: i32 = 2028;"
+    },
+    {
+      "label": "祝日: 2050年に未検証の注意を付ける",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "&& year > EQUINOX_VERIFIED_LAST_YEAR",
+      "replace": "&& year >= EQUINOX_VERIFIED_LAST_YEAR"
+    },
+    {
+      "label": "祝日: 第n月曜を1週ずらす",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "+ 7 * n.saturating_sub(1);",
+      "replace": "+ 7 * n;"
+    },
+    {
+      "label": "祝日: 2021年の山の日を通常の日にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "2021 => (ymd(7, 22)?, ymd(7, 23)?, ymd(8, 8)?),",
+      "replace": "2021 => (ymd(7, 22)?, ymd(7, 23)?, ymd(8, 11)?),"
+    },
+    {
+      "label": "祝日: 振替休日を探すとき2日ずつ進める",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "            candidate = day.checked_add_days(1);",
+      "replace": "            candidate = day.checked_add_days(2);"
+    },
+    {
+      "label": "祝日: 国民の休日の翌日を2日後で見る",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "let Ok(after) = middle.checked_add_days(1) else {",
+      "replace": "let Ok(after) = middle.checked_add_days(2) else {"
+    },
+    {
+      "label": "祝日: 近似式の起点を1979年にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "let years = i64::from(year) - 1980;",
+      "replace": "let years = i64::from(year) - 1979;"
+    },
+    {
+      "label": "祝日: 近似式の値を四捨五入する（切り捨てない）",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "u32::try_from(fixed.div_euclid(EQUINOX_SCALE)).ok()",
+      "replace": "u32::try_from((fixed + EQUINOX_SCALE / 2).div_euclid(EQUINOX_SCALE)).ok()"
+    },
+    {
+      "label": "祝日: 規則の年の範囲から2099年を外す",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "if !(OFFICIAL_FIRST_YEAR..=ESTIMATED_LAST_YEAR).contains(&year) {",
+      "replace": "if !(OFFICIAL_FIRST_YEAR..ESTIMATED_LAST_YEAR).contains(&year) {",
+      "count": 2
+    },
+    {
+      "label": "祝日: 2099年を OutOfRange にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "} else if (OFFICIAL_LAST_YEAR + 1..=ESTIMATED_LAST_YEAR).contains(&year) {",
+      "replace": "} else if (OFFICIAL_LAST_YEAR + 1..ESTIMATED_LAST_YEAR).contains(&year) {"
+    },
+    {
+      "label": "祝日: 2020年を公式の表の年にしない",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "if (OFFICIAL_FIRST_YEAR..=OFFICIAL_LAST_YEAR).contains(&year) {",
+      "replace": "if (OFFICIAL_FIRST_YEAR + 1..=OFFICIAL_LAST_YEAR).contains(&year) {"
+    },
+    {
+      "label": "祝日: 2019年を公式の表の年にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "pub const OFFICIAL_FIRST_YEAR: i32 = 2020;",
+      "replace": "pub const OFFICIAL_FIRST_YEAR: i32 = 2019;"
+    },
+    {
+      "label": "祝日: 2100年を推定の年にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "pub const ESTIMATED_LAST_YEAR: i32 = 2099;",
+      "replace": "pub const ESTIMATED_LAST_YEAR: i32 = 2100;"
+    },
+    {
+      "label": "祝日: 公式の表の年に、翌年以降の行も入れる",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": ".filter(|row| row.year == year)",
+      "replace": ".filter(|row| row.year >= year)"
+    },
+    {
+      "label": "祝日: 振替休日の種別を国民の休日にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "derived.entry(day).or_insert(HolidayKind::Substitute);",
+      "replace": "derived.entry(day).or_insert(HolidayKind::Citizens);"
+    },
+    {
+      "label": "祝日: 国民の休日の種別を振替休日にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "derived.entry(middle).or_insert(HolidayKind::Citizens);",
+      "replace": "derived.entry(middle).or_insert(HolidayKind::Substitute);"
+    },
+    {
+      "label": "祝日: 第n月曜でなく第n日曜にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "let offset = Weekday::Monday.days_since(first.weekday())",
+      "replace": "let offset = Weekday::Sunday.days_since(first.weekday())"
+    },
+    {
+      "label": "祝日: 成人の日を1月第1月曜にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "(\"成人の日\", nth_monday(year, 1, 2)?),",
+      "replace": "(\"成人の日\", nth_monday(year, 1, 1)?),"
+    },
+    {
+      "label": "祝日: 敬老の日を9月第4月曜にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "(\"敬老の日\", nth_monday(year, 9, 3)?),",
+      "replace": "(\"敬老の日\", nth_monday(year, 9, 4)?),"
+    },
+    {
+      "label": "祝日: 海の日を7月第2月曜にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "nth_monday(year, 7, 3)?,",
+      "replace": "nth_monday(year, 7, 2)?,"
+    },
+    {
+      "label": "祝日: スポーツの日を10月第1月曜にする",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "nth_monday(year, 10, 2)?,",
+      "replace": "nth_monday(year, 10, 1)?,"
+    },
+    {
+      "label": "祝日: 2051年に未検証の注意を付けない",
+      "file": "crates/kintai-jp-labor/src/holidays.rs",
+      "find": "pub const EQUINOX_VERIFIED_LAST_YEAR: i32 = 2050;",
+      "replace": "pub const EQUINOX_VERIFIED_LAST_YEAR: i32 = 2051;"
+    }
+  ]
+}

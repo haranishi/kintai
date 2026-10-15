@@ -1,0 +1,20 @@
+[package]
+name = "kintai-core"
+description = "日付・分・区間など、勤怠の計算に使う入出力を持たない部品。"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+publish.workspace = true
+license = "MIT OR Apache-2.0"
+
+[lints]
+workspace = true
+
+[dependencies]
+
+
+[dev-dependencies]
+chrono = { version = "0.4", default-features = false, features = ["std"] }
+proptest = "1"

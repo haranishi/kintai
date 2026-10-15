@@ -1,0 +1,43 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[打刻: 24時間ちょうどを LongShift にしない] 検出 ← 赤になった試験: ac01_2_long_shift_at_24_hours
+[打刻: 終了側を切り上げない（切り捨てる）] 検出 ← 赤になった試験: ac01_2_long_shift_at_24_hours, ac01_4_break_shorter_than_a_minute_disappears, ac01_4_clipping_keeps_breaks_inside, ac01_4_floor_and_ceil
+[打刻: 同時刻を3件以上でだけ異常にする] 検出 ← 赤になった試験: ac01_2_same_timestamp
+[打刻: 1か月の勤務を1000件ちょうどで拒否する] 検出 ← 赤になった試験: ac10_6_at_most_1000_shifts_per_month
+[打刻: reject で秒が1のときを見逃す] 検出 ← 赤になった試験: ac01_5_reject_nonzero_seconds
+[打刻: 切った終わりに接する休憩を残す] 検出 ← 赤になった試験: ac01_4_clipping_keeps_breaks_inside
+[打刻: 休憩中の out を OutWithoutIn にする] 検出 ← 赤になった試験: ac01_2_transitions_outside_the_table
+[打刻: 従業員IDの64文字ちょうどを拒否する] 検出 ← 赤になった試験: ac08_7_employee_id_format, ac08_7_employee_id_in_csv
+[打刻: 従業員IDに = を許す] 検出 ← 赤になった試験: ac08_7_employee_id_format, ac08_7_employee_id_in_csv
+[打刻: 60秒を許す] 検出 ← 赤になった試験: ac01_4_floor_and_ceil, ac01_punch_time_notation
+[休憩: 480分ちょうどに60分を求める] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_required_minutes_at_the_boundaries, ac01_6_shortage_at_360_361_480_481
+[休憩: 360分ちょうどに45分を求める] 検出 ← 赤になった試験: ac01_6_required_minutes_at_the_boundaries, ac01_6_shortage_at_360_361_480_481
+[休憩: 勤務の間の空きを数えない] 検出 ← 赤になった試験: ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_matches_a_recount
+[休憩: 足りている日も警告にする] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_at_360_361_480_481, ac01_6_shortage_matches_a_recount
+[打刻: 切り上げを2分にする] 検出 ← 赤になった試験: ac01_4_floor_and_ceil, ac01_4_start_side_floors_and_end_side_ceils, ac01_6_from_punches
+[打刻: in を切り上げる（切り捨てない）] 検出 ← 赤になった試験: ac01_4_clipping_keeps_breaks_inside, ac01_4_shifts_ending_and_starting_in_one_minute, ac01_4_start_side_floors_and_end_side_ceils, ac01_4_worker_favorable_never_loses_work
+[打刻: break_start を切り捨てる（切り上げない）] 検出 ← 赤になった試験: ac01_4_break_shorter_than_a_minute_disappears, ac01_4_start_side_floors_and_end_side_ceils, ac01_4_worker_favorable_never_loses_work, ac01_6_from_punches
+[打刻: break_end を切り上げる（切り捨てない）] 検出 ← 赤になった試験: ac01_4_break_shorter_than_a_minute_disappears, ac01_4_start_side_floors_and_end_side_ceils, ac01_4_worker_favorable_never_loses_work, ac01_6_from_punches
+[打刻: out を切り捨てる（切り上げない）] 検出 ← 赤になった試験: ac01_2_long_shift_at_24_hours, ac01_4_clipping_keeps_breaks_inside, ac01_4_start_side_floors_and_end_side_ceils, ac01_4_worker_favorable_never_loses_work
+[打刻: 勤務外の break_end を異常にしない] 検出 ← 赤になった試験: ac01_2_anomaly_points_at_the_punch, ac01_2_lists_every_anomaly_in_time_order, ac01_2_transitions_outside_the_table
+[打刻: 勤務外の out を異常にしない] 検出 ← 赤になった試験: ac01_2_anomaly_points_at_the_punch, ac01_2_lists_every_anomaly_in_time_order, ac01_2_transitions_outside_the_table, ac01_3_anomalous_employee_gets_no_shifts
+[打刻: 勤務外の break_start を異常にしない] 検出 ← 赤になった試験: ac01_2_transitions_outside_the_table
+[打刻: 重なった in を異常にしない] 検出 ← 赤になった試験: ac01_2_lists_every_anomaly_in_time_order, ac01_2_transitions_outside_the_table
+[打刻: 勤務中の break_end を異常にしない] 検出 ← 赤になった試験: ac01_2_transitions_outside_the_table
+[打刻: 休憩中の break_start を異常にせず、休憩を始め直す] 検出 ← 赤になった試験: ac01_2_transitions_outside_the_table
+[打刻: 勤務中のまま終わる打刻を異常にしない] 検出 ← 赤になった試験: ac01_2_anomaly_points_at_the_punch, ac01_2_lists_every_anomaly_in_time_order, ac01_2_open_shift_at_the_end, ac01_2_transitions_outside_the_table
+[打刻: 秒の違う同じ1分の打刻を同時刻にする] 検出 ← 赤になった試験: ac01_2_same_timestamp, ac01_4_break_shorter_than_a_minute_disappears, ac01_4_clipping_keeps_breaks_inside, ac01_4_shifts_ending_and_starting_in_one_minute
+[打刻: 同時刻の番号を最も大きい番号にする] 検出 ← 赤になった試験: ac01_2_same_timestamp
+[打刻: 異常を時刻の順に並べない] 検出 ← 赤になった試験: ac10_5_arbitrary_punches_do_not_panic
+[打刻: 1か月の勤務の数を月が替わっても戻さない] 検出 ← 赤になった試験: ac10_6_at_most_1000_shifts_per_month
+[打刻: 入力の範囲の外の時点を許す] 検出 ← 赤になった試験: ac01_4_floor_and_ceil
+[打刻: 秒の区切りに : 以外を許す] 検出 ← 赤になった試験: ac01_punch_time_notation
+[打刻: 秒の方針を逆に当てる（worker_favorable で秒を拒否する）] 検出 ← 赤になった試験: ac01_2_anomaly_points_at_the_punch, ac01_2_long_shift_at_24_hours, ac01_2_same_timestamp, ac01_4_break_shorter_than_a_minute_disappears
+[休憩: 勤務の内側の休憩を数えない] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_from_punches, ac01_6_shortage_matches_a_recount
+[休憩: 同じ労働日の勤務を合わせない] 検出 ← 赤になった試験: ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_matches_a_recount
+[休憩: 実労働に休憩を含める] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_from_punches, ac01_6_shortage_matches_a_recount
+[休憩: 不足の分に実際の休憩を引かない] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_from_punches, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_matches_a_recount
+[休憩: 8時間超に60分と45分を足して求める] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_from_punches, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_night_shift_belongs_to_the_start_day
+
+== 生き残り ==
+なし
+[終了コード 0、1550秒]

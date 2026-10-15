@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: セキュリティの報告（非公開）
+    url: https://github.com/haranishi/kintai/security/advisories/new
+    about: 計算結果を黙って変える入力や、個人情報が漏れる経路は、公開のIssueに書かず、こちらから知らせてください。

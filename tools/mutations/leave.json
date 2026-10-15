@@ -1,0 +1,277 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-jp-labor",
+    "--no-fail-fast"
+  ],
+  "timeout_sec": 900,
+  "mutations": [
+    {
+      "label": "年休: 失効日の当日を失効にしない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "let expired = as_of >= draft.expires;",
+      "replace": "let expired = as_of > draft.expires;"
+    },
+    {
+      "label": "年休: 失効日の当日の取得を許す",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "self.grant_date <= date && date < self.expires",
+      "replace": "self.grant_date <= date && date <= self.expires"
+    },
+    {
+      "label": "年休: 付与日の当日を使えなくする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "self.grant_date <= date && date < self.expires",
+      "replace": "self.grant_date < date && date < self.expires"
+    },
+    {
+      "label": "年休: 付与日の当日のロットを飛ばす",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "if need == 0 || draft.grant_date > record.date {",
+      "replace": "if need == 0 || draft.grant_date >= record.date {"
+    },
+    {
+      "label": "年休: 10日ちょうどの付与を5日取得義務の対象外にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "let status = if draft.granted_halves < FIVE_DAY_GRANT_MIN_HALVES {",
+      "replace": "let status = if draft.granted_halves <= FIVE_DAY_GRANT_MIN_HALVES {"
+    },
+    {
+      "label": "年休: 5日ちょうどの取得を未達にする（>= を > に）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "} else if taken_halves >= FIVE_DAY_TAKEN_HALVES {",
+      "replace": "} else if taken_halves > FIVE_DAY_TAKEN_HALVES {"
+    },
+    {
+      "label": "年休: 5日の期間の最後の日に NotMet にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "} else if as_of > draft.window_end {",
+      "replace": "} else if as_of >= draft.window_end {"
+    },
+    {
+      "label": "年休: 応当日があるとき前日にしない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "        if self.day <= last {\n            CalendarDate {",
+      "replace": "        if self.day < last {\n            CalendarDate {"
+    },
+    {
+      "label": "年休: 半日を2半日にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "            LeaveUnit::Half => Some(1),",
+      "replace": "            LeaveUnit::Half => Some(2),"
+    },
+    {
+      "label": "年休: below の年も付与する",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "            Attendance::Below => {}\n",
+      "replace": "            Attendance::Below => drafts.push(Draft::new(date, row.halves(k))?),\n"
+    },
+    {
+      "label": "年休: below の年で勤続年数を戻す",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "drafts.push(Draft::new(date, row.halves(k))?);",
+      "replace": "drafts.push(Draft::new(date, row.halves(u32::try_from(drafts.len()).unwrap_or(0)))?);"
+    },
+    {
+      "label": "年休: unknown に注意を付けない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "unconfirmed |= attendance == Attendance::Unknown;",
+      "replace": "unconfirmed |= false;"
+    },
+    {
+      "label": "年休: as_of 当日の付与を出さない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "        if date > input.as_of {\n            break;",
+      "replace": "        if date >= input.as_of {\n            break;"
+    },
+    {
+      "label": "年休: 対応外の判定に as_of 当日を入れない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "(Some(as_of), Some(date)) => date <= as_of,",
+      "replace": "(Some(as_of), Some(date)) => date < as_of,"
+    },
+    {
+      "label": "年休: 分割付与を10日ちょうどでも見る",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "*halves < FIVE_DAY_GRANT_MIN_HALVES\n",
+      "replace": "*halves <= FIVE_DAY_GRANT_MIN_HALVES\n"
+    },
+    {
+      "label": "年休: 分割付与で次の初日ちょうども分割にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".is_some_and(|limit| *next < limit)",
+      "replace": ".is_some_and(|limit| *next <= limit)"
+    },
+    {
+      "label": "年休: 週1800分ちょうどを比例付与にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "|| self.weekly_minutes >= NORMAL_WEEKLY_MINUTES_MIN",
+      "replace": "|| self.weekly_minutes > NORMAL_WEEKLY_MINUTES_MIN"
+    },
+    {
+      "label": "年休: 年217日を比例付与にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "if annual >= NORMAL_ANNUAL_DAYS_MIN {",
+      "replace": "if annual > NORMAL_ANNUAL_DAYS_MIN {"
+    },
+    {
+      "label": "年休: 年間の日数より週の日数を優先する",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "        if let Some(annual) = self.annual_days {",
+      "replace": "        if let Some(annual) = self.annual_days.filter(|_| self.weekly_days == 0) {"
+    },
+    {
+      "label": "年休: 付与表の1セルを変える（週3日の3年6か月）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "pub const THREE_DAYS_GRANT_DAYS: [u32; 7] = [5, 6, 6, 8, 9, 10, 11];",
+      "replace": "pub const THREE_DAYS_GRANT_DAYS: [u32; 7] = [5, 6, 7, 8, 9, 10, 11];"
+    },
+    {
+      "label": "年休: 消化を新しいロットから",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "for (draft, used) in drafts.iter().zip(used.iter_mut()).skip(first_active) {",
+      "replace": "for (draft, used) in drafts.iter().zip(used.iter_mut()).skip(first_active).rev() {"
+    },
+    {
+      "label": "年休: 明示の付与の半日の上限を201にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "pub const GRANT_HALVES_RANGE: RangeInclusive<i64> = 1..=200;",
+      "replace": "pub const GRANT_HALVES_RANGE: RangeInclusive<i64> = 1..=201;"
+    },
+    {
+      "label": "年休: 失効を23か月にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "pub const EXPIRY_MONTHS: u32 = 24;",
+      "replace": "pub const EXPIRY_MONTHS: u32 = 23;"
+    },
+    {
+      "label": "年休: 次の初日を期間の終わりの当日にする（翌日にしない）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "        self.period_last_day(months)?.next()",
+      "replace": "        self.period_last_day(months)"
+    },
+    {
+      "label": "年休: 応当日がない月の期間の終わりを末日の前日にする（翌月1日の規則が崩れる）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "                day: last,\n",
+      "replace": "                day: last - 1,\n"
+    },
+    {
+      "label": "年休: 全日を1半日にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "            LeaveUnit::Full => Some(2),",
+      "replace": "            LeaveUnit::Full => Some(1),"
+    },
+    {
+      "label": "年休: 5日の期間に付与日の当日の取得を入れない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".partition_point(|(_, record)| record.date < draft.grant_date);",
+      "replace": ".partition_point(|(_, record)| record.date <= draft.grant_date);"
+    },
+    {
+      "label": "年休: 5日の期間に期間の最後の日の取得を入れない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".partition_point(|(_, record)| record.date <= draft.window_end);",
+      "replace": ".partition_point(|(_, record)| record.date < draft.window_end);"
+    },
+    {
+      "label": "年休: as_of 当日の取得を数えない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".filter(|(_, record)| record.date <= input.as_of)",
+      "replace": ".filter(|(_, record)| record.date < input.as_of)"
+    },
+    {
+      "label": "年休: as_of 当日の明示の付与を出さない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".filter(|grant| grant.date <= as_of)",
+      "replace": ".filter(|grant| grant.date < as_of)"
+    },
+    {
+      "label": "年休: 5日の期間を1日長くする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "    period_last_day(grant_date, FIVE_DAY_WINDOW_MONTHS)",
+      "replace": "    next_period_first_day(grant_date, FIVE_DAY_WINDOW_MONTHS)"
+    },
+    {
+      "label": "年休: 付与日を前回の付与日から12か月ずつ数える（g0 から数えない）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "    next_period_first_day(first_grant_date(hire_date)?, months)",
+      "replace": "    let _ = months;\n    (0..k).try_fold(first_grant_date(hire_date)?, |date, _| {\n        next_period_first_day(date, GRANT_INTERVAL_MONTHS)\n    })"
+    },
+    {
+      "label": "年休: 6年6か月以後を6年目の日数で止めない（5年6か月で止める）",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "let step = usize::try_from(k).map_or(6, |k| k.min(6));",
+      "replace": "let step = usize::try_from(k).map_or(5, |k| k.min(5));"
+    },
+    {
+      "label": "年休: 所定労働の項目の最大ちょうどを範囲外にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".filter(|value| *value <= max)",
+      "replace": ".filter(|value| *value < max)"
+    },
+    {
+      "label": "年休: 週5日ちょうどを比例付与にする",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "if self.weekly_days >= NORMAL_WEEKLY_DAYS_MIN",
+      "replace": "if self.weekly_days > NORMAL_WEEKLY_DAYS_MIN"
+    },
+    {
+      "label": "年休: 年間の日数の区分の上端を含めない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": ".is_some_and(|(low, high)| (low..=high).contains(&annual))",
+      "replace": ".is_some_and(|(low, high)| (low..high).contains(&annual))"
+    },
+    {
+      "label": "年休: 1日の取得を、足りるロットでも2つのロットに分ける",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "let take = (draft.granted_halves - *used).min(need);",
+      "replace": "let take = (draft.granted_halves - *used).min(need).min(1);"
+    },
+    {
+      "label": "年休: 半日の不足を見逃す",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "        if need > 0 {\n            return Err(LeaveError::InsufficientBalance",
+      "replace": "        if need > 1 {\n            return Err(LeaveError::InsufficientBalance"
+    },
+    {
+      "label": "年休: 失効した分に、使った分も入れる",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "expired_halves: if expired { unused } else { 0 },",
+      "replace": "expired_halves: if expired { draft.granted_halves } else { 0 },"
+    },
+    {
+      "label": "年休: あと何日を、取得を引かずに出す",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "(FIVE_DAY_TAKEN_HALVES - taken_halves).max(0)",
+      "replace": "FIVE_DAY_TAKEN_HALVES"
+    },
+    {
+      "label": "年休: 対応外の表の外を時間単位より先に見る",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "    let in_scope = |date: Option<CalendarDate>| match (as_of, date) {",
+      "replace": "    terms.grant_row()?;\n    let in_scope = |date: Option<CalendarDate>| match (as_of, date) {"
+    },
+    {
+      "label": "年休: 分割付与の判定で付与日を新しい順に並べる",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "dated.sort_by_key(|(date, _)| *date);",
+      "replace": "dated.sort_by_key(|(date, _)| std::cmp::Reverse(*date));"
+    },
+    {
+      "label": "年休: 書式の誤りのある付与日を飛ばして分割付与を判定する",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "            return false;\n        };\n        dated.push",
+      "replace": "            continue;\n        };\n        dated.push"
+    },
+    {
+      "label": "年休: 0000年の日付を書式の誤りにしない",
+      "file": "crates/kintai-jp-labor/src/leave.rs",
+      "find": "(year >= 1 && (1..=last).contains(&date.day)).then_some(date)",
+      "replace": "(year >= 0 && (1..=last).contains(&date.day)).then_some(date)"
+    }
+  ]
+}

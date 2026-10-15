@@ -1,0 +1,45 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[punch: 24時間ちょうどを LongShift にしない] 検出 ← 赤になった試験: ac01_2_long_shift_at_24_hours
+[punch: 終了側を切り上げない（切り捨てる）] 検出 ← 赤になった試験: ac01_2_long_shift_at_24_hours, ac01_4_break_shorter_than_a_minute_disappears, ac01_4_clipping_keeps_breaks_inside, ac01_4_floor_and_ceil
+[punch: 同時刻を3件以上でだけ異常にする] 検出 ← 赤になった試験: ac01_2_same_timestamp
+[punch: 1か月の勤務を1000件ちょうどで拒否する] 検出 ← 赤になった試験: ac10_6_at_most_1000_shifts_per_month
+[punch: reject で秒が1のときを見逃す] 検出 ← 赤になった試験: ac01_5_reject_nonzero_seconds
+[punch: 切った終わりに接する休憩を残す] 検出 ← 赤になった試験: ac01_4_clipping_keeps_breaks_inside
+[punch: 休憩中の out を OutWithoutIn にする] 検出 ← 赤になった試験: ac01_2_transitions_outside_the_table
+[punch: 従業員IDの64文字ちょうどを拒否する] 検出 ← 赤になった試験: ac08_7_employee_id_format, ac08_7_employee_id_in_csv
+[punch: 従業員IDに = を許す] 生き残り ← 試験が赤くならなかった
+[punch: 60秒を許す] 検出 ← 赤になった試験: ac01_4_floor_and_ceil, ac01_punch_time_notation
+[import: 4096バイトちょうどの行を拒否する] 検出 ← 赤になった試験: ac10_6_line_length_limit
+[import: 10万1人目を受け付ける] 検出 ← 赤になった試験: ac10_6_at_most_100000_employees
+[import: 256MiB ちょうどのファイルを拒否する] 生き残り ← 試験が赤くならなかった
+[import: total_minutes の 44640 を拒否する] 検出 ← 赤になった試験: history_csv
+[import: BOM を取り除かない] 検出 ← 赤になった試験: ac01_8_header_errors, ac01_8_unreadable_bytes, ac01_8_utf8_with_bom_and_crlf, ac01_8_valid_csv_round_trips
+[import: 途中の空の行を許す] 検出 ← 赤になった試験: malformed_rows
+[import: 改行でない CR を許す] 検出 ← 赤になった試験: malformed_rows
+[import: 値の足りない行を許す] 検出 ← 赤になった試験: malformed_rows
+[import: 囲まない値の中の引用符を許す] 検出 ← 赤になった試験: malformed_rows
+[import: 範囲外の日付を書式の誤りにする] 検出 ← 赤になった試験: history_csv, leaves_csv, value_errors_point_at_line_and_column, ac10_6_date_range
+[import: BOM がないとき Shift_JIS に切り替えない] 検出 ← 赤になった試験: ac01_8_shift_jis_japanese_value_is_read_then_rejected, ac01_8_unreadable_bytes
+[breaks: 480分ちょうどに60分を求める] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_required_minutes_at_the_boundaries, ac01_6_shortage_at_360_361_480_481
+[breaks: 360分ちょうどに45分を求める] 検出 ← 赤になった試験: ac01_6_required_minutes_at_the_boundaries, ac01_6_shortage_at_360_361_480_481
+[breaks: 勤務の間の空きを数えない] 検出 ← 赤になった試験: ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_matches_a_recount
+[breaks: 足りている日も警告にする] 検出 ← 赤になった試験: ac01_6_eight_hours_and_one_minute, ac01_6_gap_between_shifts_of_the_same_labor_day, ac01_6_shortage_at_360_361_480_481, ac01_6_shortage_matches_a_recount
+[report: 30分ちょうどを切り捨てる] 検出 ← 赤になった試験: ac08_3_rounding_is_within_half_an_hour, ac08_3_monthly_rounding_keeps_minutes_and_over60, ac08_3_round_to_hours_at_29_and_30
+[report: 起算日を早い方にする] 検出 ← 赤になった試験: ac08_5_later_of_completion_and_wage_due
+[report: 初日を算入する] 検出 ← 赤になった試験: ac08_5_civil_code_period_edges, ac08_5_later_of_completion_and_wage_due, ac08_5_status_record_counts_from_completion
+[report: 応当日の当日まで延ばす] 検出 ← 赤になった試験: ac08_5_civil_code_period_edges, ac08_5_later_of_completion_and_wage_due, ac08_5_status_record_counts_from_completion
+[report: 労働時間の状況の記録の本則を5年にする] 検出 ← 赤になった試験: ac08_5_retention_kinds, ac08_5_status_record_counts_from_completion
+[report: 期間の外の日を数える] 検出 ← 赤になった試験: ac08_1_ledger_is_the_sum_of_days, ac08_1_labor_day_decides_the_period, ac08_1_ledger_fields_from_classification, ac08_2_overtime_excludes_legal_holiday_work
+[report: 休日の丸めに延長の分を使う] 検出 ← 赤になった試験: ac08_1_ledger_is_the_sum_of_days, ac08_1_official_sixty_hour_month, ac08_3_monthly_rounding_keeps_minutes_and_over60
+[report: 丸めの値の前方一致を許す] 検出 ← 赤になった試験: ac08_4_no_daily_rounding_value
+[explain: 2023-04-01 当日に率を出さない] 検出 ← 赤になった試験: over60_rate_is_shown_from_april_2023
+[explain: 60時間超＋深夜を70%にする] 検出 ← 赤になった試験: over60_rate_is_shown_from_april_2023, premium_floor_table
+[explain: 法定休日＋深夜を50%にする] 検出 ← 赤になった試験: crossing_into_the_legal_holiday_with_use_default, official_example_2_legal_holiday, premium_floor_table
+[explain: 深夜の始まりを21時にする] 検出 ← 赤になった試験: crossing_into_the_legal_holiday_with_use_default, night_within_is_25_percent, official_example_1_overtime_into_night, official_example_2_legal_holiday
+[explain: 所定外法定内を所定内に含める] 検出 ← 赤になった試験: official_example_1_overtime_into_night, explanation_matches_the_classification
+[explain: 休憩をはさむ区間をつなぐ] 検出 ← 赤になった試験: official_example_1_overtime_into_night, official_example_2_legal_holiday, official_sixty_hour_example_on_the_27th, explanation_matches_the_classification
+
+== 生き残り ==
+punch: 従業員IDに = を許す
+import: 256MiB ちょうどのファイルを拒否する
+mutate exit=1

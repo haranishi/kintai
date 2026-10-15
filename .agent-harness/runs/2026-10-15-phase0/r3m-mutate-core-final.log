@@ -1,0 +1,42 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[core: 区間の重なりで、端が接するのも重なりにする] 検出 ← 赤になった試験: ac02_3_overlap_matches_minute_sets, ac02_3_touching_and_one_minute_overlap
+[core: うるう年の400年の規則を壊す] 検出 ← 赤になった試験: ac02_1_every_input_date_matches_chrono, ac02_1_every_representable_date_matches_chrono, ac02_1_leap_years_and_month_lengths, ac02_5_every_date_round_trips
+[core: 月の期間で、起算日当日を前の期間にする（kintai-core の試験だけで流すこと。jp-labor の months_from_periods が止まらなくなる）] 検出 ← 赤になった試験: ac02_7_month_period_contains_every_date, ac02_7_month_period_start_day_1, ac02_7_month_period_start_day_16
+[core: 1970-01-01 の曜日を金曜にする] 検出 ← 赤になった試験: ac02_1_every_input_date_matches_chrono, ac02_1_every_representable_date_matches_chrono, ac02_1_weekday_offsets, ac02_7_week_first_day
+[core: 0:00 での分割を2日おきにする] 検出 ← 赤になった試験: ac02_4_split_examples, ac02_4_split_pieces_fit_one_day_and_sum_up
+[core: 24:00 を Hour24 として拒否しない] 検出 ← 赤になった試験: ac01_punch_time_notation, ac02_2_instant_edges, ac02_5_invalid_instants_are_rejected
+[core: 入力の日付の範囲（2000〜2099年）を検査しない] 検出 ← 赤になった試験: ac02_6_input_out_of_range_is_rejected, ac02_5_every_date_round_trips, ac02_6_out_of_range_instants_are_rejected
+[core: うるう年の100年の規則を外す] 検出 ← 赤になった試験: ac02_1_every_representable_date_matches_chrono, ac02_1_leap_years_and_month_lengths, ac02_6_results_can_reach_2200
+[core: うるう年の2月を28日にする] 検出 ← 赤になった試験: ac02_1_every_input_date_matches_chrono, ac02_1_every_representable_date_matches_chrono, ac02_1_leap_years_and_month_lengths, ac02_5_every_date_round_trips
+[core: 11月を31日にする] 検出 ← 赤になった試験: ac02_1_every_input_date_matches_chrono, ac02_1_every_representable_date_matches_chrono, ac02_1_leap_years_and_month_lengths
+[core: 年月日から日数への式で、日を1つずらす] 検出 ← 赤になった試験: calendar::tests::epoch_and_known_days, ac01_1_in_break_out_makes_one_shift, ac01_1_several_shifts_in_any_input_order, ac01_4_break_shorter_than_a_minute_disappears
+[core: 日数から年月日への式で、日を1つずらす] 検出 ← 赤になった試験: calendar::tests::epoch_and_known_days, ac01_1_in_break_out_makes_one_shift, ac01_1_several_shifts_in_any_input_order, ac01_4_break_shorter_than_a_minute_disappears
+[core: 月末の日を暦にない日にする] 検出 ← 赤になった試験: ac01_2_open_shift_at_the_end, ac01_4_floor_and_ceil, ac01_punch_time_notation, ac10_6_at_most_1000_shifts_per_month
+[core: 型の最後の日（2200-12-31）を範囲外にする] 検出 ← 赤になった試験: ac02_1_add_days_matches_chrono_for_every_date, ac02_1_every_representable_date_matches_chrono, ac02_6_results_can_reach_2200, ac02_5_every_date_round_trips
+[core: 型の最初の日（1900-01-01）を範囲外にする] 検出 ← 赤になった試験: ac02_1_every_representable_date_matches_chrono, ac02_1_ordering_and_display_are_deterministic, ac02_1_weekday_offsets, ac02_6_results_can_reach_2200
+[core: 入力の最初の日（2000-01-01）を範囲外にする] 検出 ← 赤になった試験: ac01_punch_time_notation, ac02_1_every_input_date_matches_chrono, ac02_1_ordering_and_display_are_deterministic, ac02_1_weekday_offsets
+[core: 入力の最後の日（2099-12-31）を範囲外にする] 検出 ← 赤になった試験: ac01_4_floor_and_ceil, ac01_punch_time_notation, ac02_6_input_out_of_range_is_rejected, ac02_4_split_examples
+[core: 日の加算を1日多くする] 検出 ← 赤になった試験: ac02_1_add_days_matches_chrono_for_every_date, ac02_6_input_out_of_range_is_rejected, ac02_6_results_can_reach_2200
+[core: 日付の差を1日多くする] 検出 ← 赤になった試験: ac02_1_add_days_matches_chrono_for_every_date, ac02_1_ordering_and_display_are_deterministic, ac02_7_month_period_start_day_16
+[core: 日付の区切りに - 以外を許す] 検出 ← 赤になった試験: ac01_punch_time_notation, ac02_5_invalid_dates_are_rejected
+[core: 60分を許す] 検出 ← 赤になった試験: ac01_punch_time_notation, ac02_2_instant_edges, ac02_5_invalid_instants_are_rejected
+[core: その日の1440分目を許す] 検出 ← 赤になった試験: ac02_2_instant_edges
+[core: 時点の型の最後の分を範囲外にする] 検出 ← 赤になった試験: ac02_6_instant_type_edges_are_inside_the_range
+[core: 入力の最後の時点を 2100-01-01T00:00 にする] 検出 ← 赤になった試験: ac02_2_instant_edges, ac02_6_out_of_range_instants_are_rejected
+[core: 時点の区切りに空白を許さない] 検出 ← 赤になった試験: ac01_1_employees_are_separate_and_sorted_by_id, ac01_1_in_break_out_makes_one_shift, ac01_2_anomaly_points_at_the_punch, ac01_2_lists_every_anomaly_in_time_order
+[core: 長さ0の区間を許す] 検出 ← 赤になった試験: ac01_4_break_shorter_than_a_minute_disappears, ac02_3_empty_interval_is_rejected
+[core: 区間の終わりの時点を区間に含める] 検出 ← 赤になった試験: ac01_4_worker_favorable_never_loses_work, ac01_5_whole_minutes_are_kept_as_is, ac02_3_touching_and_one_minute_overlap
+[core: 端が接するだけの区間の交差を返す] 検出 ← 赤になった試験: ac02_3_touching_and_one_minute_overlap
+[core: 週の起算日を1日前にする] 検出 ← 赤になった試験: ac02_7_week_before_range, ac02_7_week_first_day, ac02_7_week_first_day_for_every_date
+[core: 週の起算日からの日数を1つずらす] 検出 ← 赤になった試験: ac02_1_weekday_offsets, ac02_7_week_before_range, ac02_7_week_first_day, ac02_7_week_first_day_for_every_date
+[core: 週に8日目を含める] 検出 ← 赤になった試験: ac02_7_week_first_day
+[core: 月の起算日に29日を許す] 検出 ← 赤になった試験: ac02_7_month_start_day_range
+[core: 1月の起算日前の日の期間を、前の年でなく同じ年の12月にする] 検出 ← 赤になった試験: ac02_7_month_period_at_range_edges, ac02_7_month_period_contains_every_date, ac02_7_month_period_start_day_16
+[core: 12月の期間の次の初日を、翌年の2月にする] 検出 ← 赤になった試験: ac02_7_month_period_at_range_edges, ac02_7_month_period_start_day_1, ac02_7_month_period_start_day_16
+[core: 月の期間に初日を含めない] 検出 ← 赤になった試験: ac02_7_month_period_contains_every_date, ac02_7_month_period_start_day_16
+[core: 月の期間の初日を起算日の翌日にする] 検出 ← 赤になった試験: ac02_7_month_period_at_range_edges, ac02_7_month_period_contains_every_date, ac02_7_month_period_start_day_1, ac02_7_month_period_start_day_16
+[core: 月の期間に次の期間の初日を含める] 検出 ← 赤になった試験: ac02_7_month_period_start_day_16
+
+== 生き残り ==
+なし
+[終了コード 0、293秒]

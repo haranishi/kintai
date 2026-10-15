@@ -1,0 +1,114 @@
+######## 1回目（5.02 8.80 11.96）
+== 測定の環境
+日時: 2026-10-15 07:22 JST
+OS: Darwin 27.0.0 arm64
+機械: Apple M4 Pro / 14 コア / 48 GiB
+Rust: rustc 1.99.0 (b940084d7 2026-09-28)
+プロファイル: release（ワークスペースに [profile.release] がないので Cargo の既定。opt-level=3、lto=false、codegen-units=16、debug=false）
+
+== 起動を測るための kintai の release ビルド
+
+== 区分の計算・36協定の年間判定・起動（AC-10.1・10.2）
+kintai の速さの測定（docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、各項目は慣らし1回のあと7回（起動は200回）
+- 区分の計算（検査済みの勤務 → classify）
+    目標 100.000 ms、最良 6.697 ms、中央値 6.804 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 区分の計算（AC-10.1。勤務の検査 ShiftSet::new → classify）
+    目標 100.000 ms、最良 7.216 ms、中央値 7.378 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 36協定の年間判定（AC-10.2。Agreement::validate → judge）
+    目標 50.000 ms、最良 0.974 ms、中央値 0.979 ms → 目標以内
+    1000人×12か月＋履歴5か月、指摘6907件
+- 起動（kintai --version。nfr.md の表）
+    目標 50.000 ms、最良 1.552 ms、中央値 1.937 ms → 目標以内
+    200回、出力「kintai 0.0.1 (unknown)」
+判定: すべて目標以内（中央値で判定）
+
+== 打刻CSVの取込（AC-10.3）
+打刻CSVの取込（AC-10.3。docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、慣らし1回のあと7回
+  行数: 1000000（33250027 バイト、UTF-8・LF）、打刻1000000件
+- 取込（read_limited → read_punches）: 目標 3000.000 ms、最良 117.461 ms、中央値 122.174 ms → 目標以内
+- 参考 打刻の対（pair、worker_favorable）: 最良 59.419 ms、中央値 60.239 ms（1000 人）
+判定: 目標以内（中央値で判定）
+
+すべて目標以内でした。
+[終了コード 0]
+
+######## 2回目（5.02 8.73 11.92）
+== 測定の環境
+日時: 2026-10-15 07:22 JST
+OS: Darwin 27.0.0 arm64
+機械: Apple M4 Pro / 14 コア / 48 GiB
+Rust: rustc 1.99.0 (b940084d7 2026-09-28)
+プロファイル: release（ワークスペースに [profile.release] がないので Cargo の既定。opt-level=3、lto=false、codegen-units=16、debug=false）
+
+== 起動を測るための kintai の release ビルド
+
+== 区分の計算・36協定の年間判定・起動（AC-10.1・10.2）
+kintai の速さの測定（docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、各項目は慣らし1回のあと7回（起動は200回）
+- 区分の計算（検査済みの勤務 → classify）
+    目標 100.000 ms、最良 6.500 ms、中央値 6.588 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 区分の計算（AC-10.1。勤務の検査 ShiftSet::new → classify）
+    目標 100.000 ms、最良 7.049 ms、中央値 7.305 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 36協定の年間判定（AC-10.2。Agreement::validate → judge）
+    目標 50.000 ms、最良 0.941 ms、中央値 0.967 ms → 目標以内
+    1000人×12か月＋履歴5か月、指摘6907件
+- 起動（kintai --version。nfr.md の表）
+    目標 50.000 ms、最良 1.430 ms、中央値 1.791 ms → 目標以内
+    200回、出力「kintai 0.0.1 (unknown)」
+判定: すべて目標以内（中央値で判定）
+
+== 打刻CSVの取込（AC-10.3）
+打刻CSVの取込（AC-10.3。docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、慣らし1回のあと7回
+  行数: 1000000（33250027 バイト、UTF-8・LF）、打刻1000000件
+- 取込（read_limited → read_punches）: 目標 3000.000 ms、最良 114.790 ms、中央値 116.810 ms → 目標以内
+- 参考 打刻の対（pair、worker_favorable）: 最良 55.609 ms、中央値 57.235 ms（1000 人）
+判定: 目標以内（中央値で判定）
+
+すべて目標以内でした。
+[終了コード 0]
+
+######## 3回目（5.02 8.73 11.92）
+== 測定の環境
+日時: 2026-10-15 07:22 JST
+OS: Darwin 27.0.0 arm64
+機械: Apple M4 Pro / 14 コア / 48 GiB
+Rust: rustc 1.99.0 (b940084d7 2026-09-28)
+プロファイル: release（ワークスペースに [profile.release] がないので Cargo の既定。opt-level=3、lto=false、codegen-units=16、debug=false）
+
+== 起動を測るための kintai の release ビルド
+
+== 区分の計算・36協定の年間判定・起動（AC-10.1・10.2）
+kintai の速さの測定（docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、各項目は慣らし1回のあと7回（起動は200回）
+- 区分の計算（検査済みの勤務 → classify）
+    目標 100.000 ms、最良 6.510 ms、中央値 6.581 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 区分の計算（AC-10.1。勤務の検査 ShiftSet::new → classify）
+    目標 100.000 ms、最良 6.873 ms、中央値 6.886 ms → 目標以内
+    1000人×31日、勤務27457件、指紋22493173
+- 36協定の年間判定（AC-10.2。Agreement::validate → judge）
+    目標 50.000 ms、最良 0.933 ms、中央値 0.935 ms → 目標以内
+    1000人×12か月＋履歴5か月、指摘6907件
+- 起動（kintai --version。nfr.md の表）
+    目標 50.000 ms、最良 1.281 ms、中央値 1.602 ms → 目標以内
+    200回、出力「kintai 0.0.1 (unknown)」
+判定: すべて目標以内（中央値で判定）
+
+== 打刻CSVの取込（AC-10.3）
+打刻CSVの取込（AC-10.3。docs/spec/nfr.md。合成データ）
+  macos・aarch64、release ビルド、慣らし1回のあと7回
+  行数: 1000000（33250027 バイト、UTF-8・LF）、打刻1000000件
+- 取込（read_limited → read_punches）: 目標 3000.000 ms、最良 114.169 ms、中央値 117.787 ms → 目標以内
+- 参考 打刻の対（pair、worker_favorable）: 最良 52.004 ms、中央値 56.976 ms（1000 人）
+判定: 目標以内（中央値で判定）
+
+すべて目標以内でした。
+[終了コード 0]
+

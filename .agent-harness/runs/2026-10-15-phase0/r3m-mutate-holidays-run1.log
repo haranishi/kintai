@@ -1,0 +1,35 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[祝日: 春分の定数を0.0001下げる（2088年が変わる）] 検出 ← 赤になった試験: ac07_3_equinox_formula_is_exact_for_every_year
+[祝日: 秋分の定数を0.015下げる（2074年が変わる大きさ）] 検出 ← 赤になった試験: ac07_3_equinox_formula_is_exact_for_every_year
+[祝日: 秋分の定数を0.01上げる（2045年が変わる大きさ）] 検出 ← 赤になった試験: ac07_3_equinox_formula_is_exact_for_every_year, ac07_3_equinoxes_match_the_naoj_forecast_62
+[祝日: 年の増分を変える] 検出 ← 赤になった試験: ac07_3_equinox_formula_is_exact_for_every_year
+[祝日: 4年ごとの補正を5年ごとにする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_3_equinox_formula_is_exact_for_every_year, ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_3_equinoxes_match_the_official_16
+[祝日: 土曜の祝日を振り替える] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_5_article_3_does_not_recurse, ac07_5_generated_years_are_consistent
+[祝日: 国民の休日で自身が祝日かを見ない] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_4_status_by_year, ac07_5_article_3_does_not_recurse
+[祝日: 振替休日を再帰して国民の休日を数える] 検出 ← 赤になった試験: ac07_5_article_3_does_not_recurse
+[祝日: 2028年を公式にする] 検出 ← 赤になった試験: ac07_4_status_by_year
+[祝日: 2050年に未検証の注意を付ける] 検出 ← 赤になった試験: ac07_4_status_by_year
+[祝日: 第n月曜を1週ずらす] 検出 ← 赤になった試験: ac07_2_olympic_years, ac07_2_rules_reproduce_all_143_official_rows, ac07_4_status_by_year, ac07_holidays_follow_article_2_and_the_law_record
+[祝日: 2021年の山の日を通常の日にする] 検出 ← 赤になった試験: ac07_2_olympic_years, ac07_2_rules_reproduce_all_143_official_rows
+[祝日: 振替休日を探すとき2日ずつ進める] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows
+[祝日: 国民の休日の翌日を2日後で見る] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_5_article_3_does_not_recurse
+[祝日: 近似式の起点を1979年にする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_3_equinox_formula_is_exact_for_every_year, ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_3_equinoxes_match_the_official_16
+[祝日: 近似式の値を四捨五入する（切り捨てない）] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_3_equinox_formula_is_exact_for_every_year, ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_3_equinoxes_match_the_official_16
+[祝日: 規則の年の範囲から2099年を外す] 検出 ← 赤になった試験: ac07_3_equinox_formula_is_exact_for_every_year, ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_4_status_by_year, ac07_5_generated_years_are_consistent
+[祝日: 2099年を OutOfRange にする] 検出 ← 赤になった試験: ac07_4_status_by_year
+[祝日: 2020年を公式の表の年にしない] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_4_status_by_year
+[祝日: 2019年を公式の表の年にする] 検出 ← 赤になった試験: ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_4_status_by_year
+[祝日: 2100年を推定の年にする] 検出 ← 赤になった試験: ac07_3_equinoxes_match_the_naoj_forecast_62, ac07_4_status_by_year
+[祝日: 公式の表の年に、翌年以降の行も入れる] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows
+[祝日: 振替休日の種別を国民の休日にする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_5_article_3_does_not_recurse, ac07_5_generated_years_are_consistent
+[祝日: 国民の休日の種別を振替休日にする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_5_article_3_does_not_recurse, ac07_5_generated_years_are_consistent
+[祝日: 第n月曜でなく第n日曜にする] 検出 ← 赤になった試験: ac07_2_olympic_years, ac07_2_rules_reproduce_all_143_official_rows, ac07_4_status_by_year, ac07_5_generated_years_are_consistent
+[祝日: 成人の日を1月第1月曜にする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_4_status_by_year, ac07_holidays_follow_article_2_and_the_law_record
+[祝日: 敬老の日を9月第4月曜にする] 検出 ← 赤になった試験: ac07_2_rules_reproduce_all_143_official_rows, ac07_holidays_follow_article_2_and_the_law_record
+[祝日: 海の日を7月第2月曜にする] 検出 ← 赤になった試験: ac07_2_olympic_years, ac07_2_rules_reproduce_all_143_official_rows, ac07_holidays_follow_article_2_and_the_law_record
+[祝日: スポーツの日を10月第1月曜にする] 検出 ← 赤になった試験: ac07_2_olympic_years, ac07_2_rules_reproduce_all_143_official_rows, ac07_holidays_follow_article_2_and_the_law_record
+[祝日: 2051年に未検証の注意を付けない] 検出 ← 赤になった試験: ac07_4_status_by_year
+
+== 生き残り ==
+なし
+[終了コード 0、613秒]

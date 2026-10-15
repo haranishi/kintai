@@ -1,0 +1,31 @@
+[基準] 変更なし: 終了コード=0（0であること）
+[L2-M01 36: 特別条項の月の上限ちょうどを超過にする] 検出 ← 赤になった試験: ac05_matches_a_naive_reading_of_the_spec, ac05_4_special_clause_limits, ac05_5_hundred_hours_boundary
+[L2-M02 36: 特別条項の月の上限の最大を6000にする] 検出 ← 赤になった試験: ac09_5_agreement_limits_out_of_range, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[L2-M03 36: 特別条項の年の上限の最大を43201にする] 検出 ← 赤になった試験: ac09_5_agreement_limits_out_of_range, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[L2-M04 36: 協定の年限度の最大を21601にする] 検出 ← 赤になった試験: ac09_5_agreement_limits_out_of_range, ac05_10_agreement_limits_over_the_legal_maximum_are_invalid
+[L2-M05 36: 直近の合計を5か月までにする] 検出 ← 赤になった試験: ac09_5_vectors_through_the_binary, ac12_3_clean_data_exits_0, ac12_3_fail_on_violation_exits_1, ac12_3_warning_only_exits_1
+[L2-M06 36: 履歴の月を1か月ずらす] 検出 ← 赤になった試験: ac09_5_vectors_through_the_binary, ac09_7_output_is_one_deterministic_line, ac12_3_clean_data_exits_0, ac12_3_fail_on_violation_exits_1
+[L2-M07 36: months が空のとき履歴の日を29〜31も許す] 検出 ← 赤になった試験: ac09_5_empty_months, ac05_months_and_history_must_be_consistent
+[L2-M08 年休: 年48日を表の外にしない（47日を週1日の行に）] 検出 ← 赤になった試験: ac09_7_unsupported_order, ac06_matches_a_naive_reading_of_the_spec, ac06_9_unsupported_in_order, ac06_12_annual_days_take_priority_over_weekly_days
+[L2-M09 年休: 5日の期間を13か月にする] 検出 ← 赤になった試験: ac09_6_vectors_through_the_binary, ac09_7_output_is_one_deterministic_line, ac06_2_hire_2023_08_29, ac06_6_five_day_obligation
+[L2-M10 年休: 取得を日付順に並べない] 検出 ← 赤になった試験: ac09_7_output_is_one_deterministic_line, ac06_adding_a_record_never_lowers_window_sums, ac06_matches_a_naive_reading_of_the_spec, ac06_10_register_rows
+[L2-M11 打刻: 1か月の勤務の数を年を見ずに数える] 検出 ← 赤になった試験: l2_m11_shift_count_is_per_year_and_month
+[L2-M12 打刻: 始業を切り上げる] 検出 ← 赤になった試験: ac12_2_report_json_has_the_ledger_items, employees_without_punches_get_zero_rows, punch_anomaly_refuses_only_that_employee, ac01_4_clipping_keeps_breaks_inside
+[L2-M13 打刻: 休憩の開始を切り捨てる] 検出 ← 赤になった試験: ac01_4_break_shorter_than_a_minute_disappears, ac01_4_start_side_floors_and_end_side_ceils, ac01_4_worker_favorable_never_loses_work, ac01_6_from_punches
+[L2-M14 取込: 行の長さに CR を含める] 検出 ← 赤になった試験: ac10_6_line_length_limit
+[L2-M15 方針: 行の長さに CR を含める] 検出 ← 赤になった試験: policy_file::tests::ac10_6_line_length_boundary
+[L2-M16 説明: 法定内の深夜の割増を0%にする] 検出 ← 赤になった試験: national_holiday_is_not_a_legal_holiday, crossing_into_the_legal_holiday_with_use_default, night_within_is_25_percent, premium_floor_table
+[L2-M17 説明: 時間外の深夜を25%にする] 検出 ← 赤になった試験: ac12_5_explain_json_has_segments_with_premium_and_basis, ac12_5_explain_text, official_example_1_overtime_into_night, premium_floor_table
+[L2-M18 説明: 法定休日を25%にする] 検出 ← 赤になった試験: legal_holiday_work_is_35_percent, official_example_2_legal_holiday, premium_floor_table
+[L2-M19 集計: 週の記録を週の初日だけで期間に入れる] 検出 ← 赤になった試験: week_record_spanning_the_period_start_is_reported, ac03_15_incomplete_week_record_is_in_the_report_of_each_month_it_touches
+[L2-M20 check: 週の記録を週の初日だけで期間に入れる] 検出 ← 赤になった試験: use_default_lists_ambiguities_in_the_range
+[L2-M21 check: 休憩の不足の期間の終わりを含める] 検出 ← 赤になった試験: break_shortage_on_the_next_period_start_is_not_counted
+[L2-M22 report: data_from の既定を使わない] 検出 ← 赤になった試験: ac12_2_report_json_has_the_ledger_items, employees_without_punches_get_zero_rows
+[L2-M23 check: data_from の既定を使わない（区分だけ）] 検出 ← 赤になった試験: data_from_avoids_the_incomplete_week_in_check, use_default_lists_ambiguities_in_the_range
+[L2-M24 explain: data_from の既定を使わない] 検出 ← 赤になった試験: data_from_avoids_the_incomplete_week_in_explain
+[L2-M25 36: 一般条項で発動月の判定を協定の月限度にする] 検出 ← 赤になった試験: ac09_5_vectors_through_the_binary, ac05_matches_a_naive_reading_of_the_spec, ac05_12_activation_month_is_over_45_hours, ac05_3_general_monthly_limits
+[L2-M26 年休: 失効したロットの未使用分を残数に入れる] 検出 ← 赤になった試験: ac09_6_vectors_through_the_binary, ac09_6_cases_end_with_a_defined_code, ac12_7_demo_without_out_uses_a_new_temporary_folder, ac12_7_demo_writes_only_to_out_and_shows_every_command
+
+== 生き残り ==
+なし
+exit=0
