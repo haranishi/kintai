@@ -5,7 +5,7 @@ kintai（勤怠）を手元で動かし、合成データの出力を読むま�
 ## 用意するもの
 
 - Rust 1.88以上（[rustup](https://rustup.rs/)）
-- Windows、macOS、Linuxのどれか。手元で動かして確かめたのはmacOSだけです。CIの設定にはLinuxも入れてあります（まだ流していません）。LinuxとWindowsで試した結果は、Issueで教えてください
+- Windows、macOS、Linuxのどれか。手元で動かして確かめたのはmacOSです。CIは、LinuxとmacOSで全試験を流して通っています（2026-10-15）。Windowsでは試していません。Windowsで試した結果は、Issueで教えてください
 
 ## 1. 組み立てる
 

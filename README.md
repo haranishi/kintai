@@ -1,5 +1,7 @@
 # kintai（勤怠）
 
+[![ci](https://github.com/haranishi/kintai/actions/workflows/ci.yml/badge.svg)](https://github.com/haranishi/kintai/actions/workflows/ci.yml)
+
 打刻のCSVから、日本の労働基準法にそって「法定内・時間外・法定休日・深夜・月60時間超」を分け、36協定の上限と年次有給休暇まで計算する、Rust製のOSSです。計算は手元で完結し、外へ通信しません。
 
 > **参考値です。** 条文と通達の読みに基づく計算で、社会保険労務士の確認は受けていません。出力には毎回 `review_status: "unreviewed"` が付きます。労働基準法を満たしていることの証明ではありません。→ [免責](DISCLAIMER.md)、[確認してほしい点](docs/legal/professional-review.md)
