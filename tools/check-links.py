@@ -37,6 +37,12 @@ def tracked_or_new() -> list[Path]:
     ]
 
 
+def is_git_ignored(path: Path) -> bool:
+    """git の管理下で、.gitignore に除外されているファイルか。手元にあってもリポジトリには入らないので、リンク先にできない。"""
+    run = subprocess.run(["git", "check-ignore", "-q", str(path)], cwd=ROOT, capture_output=True)
+    return run.returncode == 0
+
+
 def is_private_note(path: Path) -> bool:
     """公開しない作業メモ(.gitignore の `research/out-*.md` と `research/notes_*.md`)。git が無い間も、検査から外す。"""
     return path.parent.name == "research" and (path.name.startswith("out-") or path.name.startswith("notes_"))
@@ -66,6 +72,8 @@ def main() -> int:
                 dest = (path.parent / target.split("#")[0]).resolve()
                 if not dest.exists():
                     problems.append(f"{rel}:{no}: リンク切れ {target}")
+                elif is_git_ignored(dest):
+                    problems.append(f"{rel}:{no}: 公開されないファイルへのリンク {target}")
         is_dev_doc = (
             rel in {"README.md", "CONTRIBUTING.md"} or rel.startswith("docs/")
         ) and not rel.startswith("docs/images/")
