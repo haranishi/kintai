@@ -15,6 +15,8 @@
 | 保存期限の目安 | `kintai retention` | [月次の集計](spec/report.md) |
 | 国民の祝日 | `kintai explain` | [祝日](spec/holidays.md) |
 | 合成データでの一通りの実演 | `kintai demo` | [コマンド](spec/cli.md) |
+| オフラインの月次確認画面（HTML） | `kintai review` | [画面の使い方](review.md) |
+| 範囲を固定した読み取り専用MCP | `kintai mcp` | [MCPの使い方](mcp.md) |
 
 `report` `leave` `explain` は、人が読む形（既定）とJSONを選べ、`report` はCSVも選べます。`check` と `retention` は、この版では人が読む形だけです（[出力の形](spec/cli-output.md)）。ケースのJSON（`kintai case`）は、別の実装との突き合わせに使う、入力と出力の唯一の約束です（[区分](spec/case-format.md)、[36協定・年休](spec/case-format-36-leave.md)）。
 
@@ -38,7 +40,7 @@
 
 | 段階 | 内容 |
 |---|---|
-| Phase 1 | 保存（追記のみのSQLite）、ローカルのサーバー、画面。ユーザーストーリーは [phase1](phase1/stories.md) |
+| Phase 1 | 保存（追記のみのSQLite）、サーバー、打刻・承認の画面。ユーザーストーリーは [phase1](phase1/stories.md) |
 | Phase 2 | 割増の金額、給与の仕訳をkamokuへ渡す、変形労働時間制とフレックス |
 | Phase 3 | 既存のチャット（Zulip、Slackなど）への接続 |
 | Phase 4 | 部品の共通化 |

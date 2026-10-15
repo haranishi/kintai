@@ -16,9 +16,11 @@ mod explain;
 mod failure;
 mod inputs;
 mod leave;
+mod mcp;
 mod policy_file;
 mod report;
 mod retention;
+mod review;
 mod strict_json;
 mod text;
 
@@ -62,6 +64,10 @@ const HELP: &str = "kintai: 日本の労働基準法に基づく勤怠の計算�
       ケースのJSON（kintai.case.v1・kintai.case36.v1・kintai.caseleave.v1）を計算して、結果のJSONを1行で出す
   kintai demo [--out DIR]
       合成データを DIR（省略時は新しい一時フォルダ）に書き、上の各コマンドの出力を一通り出す
+  kintai review --policy P --punches C --month YYYY-MM --out FILE [--data-from D] [--employee ID]
+      月次の集計を、ブラウザで開けるHTMLに保存する（既存ファイルは上書きしない）
+  kintai mcp --policy P --punches C --month YYYY-MM [--data-from D] [--employee ID]
+      指定した範囲の集計を読み取り専用MCP（stdio）で公開する
   kintai --version     版と git の短いハッシュ
   kintai --help        この説明
 
@@ -161,6 +167,10 @@ fn run(args: Vec<OsString>) -> Outcome {
         "retention" => retention::RetentionArgs::parse(Args::new(args))
             .and_then(|parsed| retention::run(&parsed)),
         "demo" => demo::DemoArgs::parse(Args::new(args)).and_then(|parsed| demo::run(&parsed)),
+        "review" => {
+            review::ReviewArgs::parse(Args::new(args)).and_then(|parsed| review::run(&parsed))
+        }
+        "mcp" => mcp::parse(Args::new(args)).and_then(|parsed| mcp::run(&parsed)),
         _ => Err(Failure::invalid("知らないコマンドです（kintai --help）")),
     };
     Outcome::from_result(result)

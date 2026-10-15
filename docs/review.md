@@ -1,0 +1,53 @@
+# 月次の集計をブラウザで確認する
+
+Rustで計算した月次の結果を、1つのHTMLファイルとして保存します。
+ブラウザでは、検索・理由の確認・JSONの保存ができます。通信とサーバーは不要です。
+打刻・承認の画面は、今後のPhase 1で扱います。
+
+## まず1人分を開く
+
+リポジトリのルートで実行します。入力は架空の従業員です。
+
+```sh
+cargo run --locked -p kintai-cli -- review \
+  --policy tests/fixtures/synthetic/policy.toml \
+  --punches tests/fixtures/synthetic/punches.csv \
+  --month 2026-10 --employee E001 --out /tmp/kintai-review.html
+```
+
+保存したHTMLをブラウザで開きます。同じ保存先がある場合は上書きしません。
+別の名前を指定してください。`--employee` を省くと全員分が入ります。
+合成データのE005は、勤務が休日と週の境界をまたぐため集計不可になります。
+この場合もHTMLは作られ、CLIの終了コードは4です。
+
+## 確認する順番
+
+1. 対象の期間と、集計できた人数を確認する。合計は集計できた人だけの値です。
+2. 「確認が必要」を選び、各行を開いて理由を読む。休憩は自動で控除しません。
+3. 元の入力を直し、CLIからレポートを再作成する。HTMLは作成時点の控えです。
+4. 必要ならJSONを保存する。検索条件に関係なく、ファイルに含まれる全員分が入ります。
+
+時間は丸め前の分です。深夜は他の区分と重なるため、足し合わせないでください。
+36協定の上限と年休は、それぞれ `kintai check` と `kintai leave` で確認します。
+JSONの形式は[出力の仕様](spec/cli-output.md)と同じです。
+
+## ファイルの扱い
+
+HTMLと書き出したJSONには勤怠情報が含まれます。公開サイトに置かず、
+必要な人だけが読める場所に保存してください。UnixではHTMLを0600で作成します。
+元のCSVや方針ファイルのパスはHTMLに含めません。
+結果は専門家の確認前の参考値です（[免責](../DISCLAIMER.md)）。
+
+## 開発時の確認
+
+```sh
+cargo build -p kintai-cli --locked
+npm ci --ignore-scripts
+npx playwright install chromium
+npm run test:browser
+```
+
+Nodeはブラウザの試験にだけ必要です。利用者はRustで作ったHTMLを開くだけです。
+ビルド先を変更した場合は `KINTAI_BIN` に実行ファイルの絶対パスを渡します。
+試験は合成データで、幅390・768・1440px、キーボード、ダーク表示、検索、
+ページ送り、空状態、書き出しを実際のChromiumで確かめます。

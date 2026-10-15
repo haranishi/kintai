@@ -1,0 +1,40 @@
+name: deep-tests
+on:
+  schedule:
+    - cron: '0 18 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: deep-tests-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  mutations:
+    name: Mutation suite (${{ matrix.suite }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        suite: [core, punch, r1-classify, limits36, leave, holidays, import, report, cli-review, review-mcp, spec-trace]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: cargo xtask mutate tools/mutations/${{ matrix.suite }}.json
+  differential:
+    name: Extended differential (seed ${{ matrix.seed }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [7, 101, 2026]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: python3 tools/oracle/selftest.py
+      - run: cargo build -p kintai-cli --release --locked
+      - run: python3 tools/difftest.py --cases 5000 --seed ${{ matrix.seed }} --bin target/release/kintai

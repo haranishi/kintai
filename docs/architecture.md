@@ -6,13 +6,13 @@
 
 ```mermaid
 flowchart LR
-  CLI["kintai-cli<br/>report / check / leave / explain / retention / case / demo"] --> IMP["kintai-import<br/>打刻CSVの取込"]
+  CLI["kintai-cli<br/>report / check / leave / explain / retention / case / demo / review / mcp"] --> IMP["kintai-import<br/>打刻CSVの取込"]
   CLI --> JP["kintai-jp-labor<br/>法令の表と規則"]
   IMP --> CORE["kintai-core<br/>日付・分・区間"]
   JP --> CORE
 ```
 
-`kintai-core` と `kintai-jp-labor` は、ファイルも通信も持たない純粋な計算です。入出力は `kintai-import` と `kintai-cli` に閉じ込めます。勤怠サービスを自作したい開発者が、法令の読みの部分だけを借りられるようにするためです。保存とサーバーは Phase 1 で、この外側に足します。
+`kintai-core` と `kintai-jp-labor` は、ファイルも通信も持たない純粋な計算です。入出力は `kintai-import` と `kintai-cli` に閉じ込めます。勤怠サービスを自作したい開発者が、法令の読みの部分だけを借りられるようにするためです。reviewは同じJSONをHTMLに埋め込み、mcpは同じJSONの控えを起動時に作ります。計算の規則をブラウザや連携先に複製しません。保存と打刻用サーバーは Phase 1 で、この外側に足します。
 
 ## 日付と時刻は自前の小さな型にする
 

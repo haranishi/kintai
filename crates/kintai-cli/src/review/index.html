@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>月次の確認 | kintai</title>
+  <style>/* KINTAI_STYLES */</style>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <aside class="sidebar" aria-label="レポートの案内">
+    <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">k</span>kintai<span class="brand-ja">勤怠</span></a>
+    <p class="sidebar-caption">月次レポート</p>
+    <nav aria-label="ページ内"><a href="#overview">概要</a><a href="#employees">従業員の集計</a><a href="#checks">確認すること</a><a href="#export">書き出し</a></nav>
+    <div class="local-note"><span class="local-dot" aria-hidden="true"></span>この端末で表示<p>計算結果の控えです。<br>更新時は再作成してください。</p></div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header id="overview"><div><p class="eyebrow">ATTENDANCE / MONTHLY REVIEW</p><h1>月次の確認</h1><p id="period" class="muted"></p></div><span class="badge warning">参考値 · 専門家確認前</span></header>
+    <noscript><p class="notice">表示には JavaScript が必要です。元の JSON はファイル内に保持されています。CLI の report でも確認できます。</p></noscript>
+    <section class="notice" aria-label="集計の状態"><span class="notice-icon" aria-hidden="true">!</span><div><h2 id="status-title">集計結果を読み込んでいます</h2><p id="status-description"></p></div><a href="#checks">確認箇所へ <span aria-hidden="true">↓</span></a></section>
+    <section aria-labelledby="summary-title"><div class="section-top"><h2 id="summary-title">今月の概要</h2><p id="totals-scope" class="muted"></p></div><div class="metrics" id="metrics"></div><p class="footnote">時間は丸め前の分を表示します。深夜は労働時間・時間外・休日と重なる区分です。36協定の上限判定は <code>kintai check</code> で確認してください。</p></section>
+    <section class="panel" id="employees" aria-labelledby="employees-title"><div class="panel-heading"><div><p class="eyebrow">EMPLOYEES</p><h2 id="employees-title">従業員の集計</h2></div><span id="employee-count" class="count"></span></div>
+      <div class="filters"><div class="search-field"><label for="search">従業員IDで検索</label><input type="search" id="search" placeholder="例: E001" autocomplete="off" spellcheck="false"></div><fieldset><legend>表示する状態</legend><div class="segments"><button type="button" data-filter="all" aria-pressed="true">すべて</button><button type="button" data-filter="attention" aria-pressed="false">確認が必要</button><button type="button" data-filter="calculated" aria-pressed="false">集計済み</button></div></fieldset></div>
+      <p id="result-count" class="filter-result" role="status" aria-live="polite"></p><div id="employee-list"></div>
+      <div id="empty" class="empty" hidden><h3>該当する従業員はいません</h3><p>検索するIDか、表示する状態を変えてください。</p><button type="button" id="reset">条件をリセット</button></div>
+      <div class="pagination" id="pagination" hidden><button type="button" id="previous">前へ</button><span id="page-label"></span><button type="button" id="next">次へ</button></div>
+    </section>
+    <section class="panel" id="checks" aria-labelledby="checks-title"><div class="panel-heading"><div><p class="eyebrow">REVIEW CHECKLIST</p><h2 id="checks-title">確認すること</h2></div><span id="check-count" class="count"></span></div><div id="check-list"></div></section>
+    <section class="panel export" id="export" aria-labelledby="export-title"><div><p class="eyebrow">EXPORT</p><h2 id="export-title">計算結果を手元に保存</h2><p>元のJSONには、集計できない記録と根拠の確認日も含まれます。給与の金額や会計仕訳は含みません。</p><p id="export-status" class="footnote"></p></div><div class="export-actions"><button type="button" class="primary" id="download">JSONを書き出す <span aria-hidden="true">↓</span></button><button type="button" id="print">表示範囲を印刷</button></div></section>
+    <footer><strong>kintai</strong><p id="metadata"></p><p>このファイルには勤怠情報が含まれます。公開・共有する前に、閲覧者と対象範囲を確認してください。</p></footer>
+  </main>
+  <script type="application/json" id="report-data">KINTAI_REPORT_JSON</script>
+  <script>/* KINTAI_SCRIPT */</script>
+</body>
+</html>

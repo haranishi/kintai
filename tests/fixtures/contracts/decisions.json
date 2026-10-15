@@ -1,0 +1,14 @@
+{
+  "schema": "kintai.regressions.v1",
+  "provenance": "Public project requirements; independently constructed synthetic examples, no conversation transcripts or real employee data",
+  "cases": [
+    {"id":"worker-favorable-seconds","requirement":"Keep the agreed worker-favorable second handling; do not round each workday down","spec":"docs/spec/punch.md","args":["--employee","E001"],"exit":0,"expected":{"/employees/0/ledger/0/work_minutes":9152,"/review_status":"unreviewed"}},
+    {"id":"partial-refusal","requirement":"An ambiguous holiday/week boundary must not become a successful zero-hour record","spec":"docs/spec/report.md","args":["--employee","E005"],"exit":4,"expected":{"/employees/0/ledger":[],"/employees/0/refused/code":"AmbiguousBoundary"}},
+    {"id":"night-overlaps-work","requirement":"Night minutes remain a separate overlapping classification","spec":"docs/spec/classify.md","args":["--employee","E002"],"exit":0,"expected":{"/employees/0/ledger/0/work_minutes":8160,"/employees/0/ledger/0/night_minutes":6120}},
+    {"id":"sixty-hour-boundary","requirement":"Preserve month overtime and the subset above sixty hours independently","spec":"docs/spec/over60.md","args":["--employee","E004"],"exit":0,"expected":{"/employees/0/ledger/0/overtime_minutes":3960,"/employees/0/ledger/0/over60_minutes":360}},
+    {"id":"no-automatic-break-deduction","requirement":"Missing breaks are reported and never silently deducted","spec":"docs/spec/report.md","args":["--employee","E003"],"exit":0,"expected":{"/employees/0/break_shortages/0/work_minutes":540,"/employees/0/break_shortages/0/break_minutes":0,"/employees/0/break_shortages/0/shortage_minutes":60}},
+    {"id":"monthly-rounding-only","requirement":"Original minutes remain available alongside explicitly rounded monthly hours","spec":"docs/spec/report.md","args":["--employee","E001"],"exit":0,"expected":{"/employees/0/ledger/0/overtime_minutes":270,"/employees/0/ledger/0/rounded/overtime":5,"/rounding":"monthly_30min"}},
+    {"id":"incomplete-week-not-zero","requirement":"Do not assume missing week history means zero work","spec":"docs/spec/classify.md","args":["--employee","E004","--data-from","2026-10-01"],"exit":4,"expected":{"/employees/0/ledger":[],"/employees/0/refused/code":"AmbiguousBoundary"}},
+    {"id":"unknown-employee-redacted","requirement":"Reject an employee outside the configured workplace without echoing the identifier","spec":"docs/spec/validation.md","args":["--employee","PRIVATE_INPUT_SENTINEL"],"exit":2,"expected":{"/error/code":"InvalidInput"},"no_echo":"PRIVATE_INPUT_SENTINEL"}
+  ]
+}

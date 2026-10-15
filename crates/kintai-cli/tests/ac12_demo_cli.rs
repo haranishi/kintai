@@ -1,6 +1,6 @@
 //! `kintai demo`（AC-12.7・AC-10.8）の試験。
 //!
-//! `--out` を省いた場合の一時フォルダは、環境変数 `TMPDIR` を試験用のフォルダに向けて確かめる
+//! `--out` を省いた場合は、Unixの `TMPDIR` とWindowsの `TEMP`・`TMP` を試験用のフォルダに向ける
 //! （試験が、作業場所の外に書かないように）。
 
 mod common;
@@ -103,7 +103,9 @@ fn ac10_8_demo_creates_private_folder_and_files() {
 #[test]
 fn ac12_7_demo_without_out_uses_a_new_temporary_folder() {
     let tmp = temp_dir("demo-tmp");
-    let run = kintai_env(&["demo"], &[("TMPDIR", tmp.to_str().unwrap())]);
+    let location = tmp.to_str().unwrap();
+    let temporary_environment = [("TMPDIR", location), ("TEMP", location), ("TMP", location)];
+    let run = kintai_env(&["demo"], &temporary_environment);
     assert_eq!(run.exit, 0, "{run:?}");
     let created = names(&tmp);
     assert_eq!(created.len(), 1, "{created:?}");
@@ -120,7 +122,7 @@ fn ac12_7_demo_without_out_uses_a_new_temporary_folder() {
         );
     }
     // 2回目は別のフォルダ（上書きしない）。
-    let again = kintai_env(&["demo"], &[("TMPDIR", tmp.to_str().unwrap())]);
+    let again = kintai_env(&["demo"], &temporary_environment);
     assert_eq!(again.exit, 0);
     assert_eq!(names(&tmp).len(), 2);
 }
