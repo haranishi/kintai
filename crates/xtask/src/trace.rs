@@ -45,6 +45,42 @@ fn condition(line: &str) -> Option<(&str, &str)> {
     }
     Some((ac, kind))
 }
+fn test_references(root: &Path) -> Result<BTreeMap<String, Vec<String>>> {
+    let mut places: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for (folder, extension) in [("crates", "rs"), ("tools", "py"), ("web-tests", "cjs")] {
+        for path in walk(&root.join(folder), &["node_modules", "target", ".git"])? {
+            if path.extension().is_none_or(|s| s != extension) {
+                continue;
+            }
+            let text = fs::read_to_string(&path)?;
+            // A production-code comment is not evidence of a regression test.
+            let unit_start = lines(&text)
+                .iter()
+                .position(|line| line.trim() == "#[cfg(test)]");
+            let executable = path
+                .strip_prefix(root)?
+                .components()
+                .any(|part| matches!(part.as_os_str().to_str(), Some("tests" | "examples")));
+            for (number, line) in lines(&text).into_iter().enumerate() {
+                if folder == "crates"
+                    && !executable
+                    && unit_start.is_none_or(|start| number < start)
+                {
+                    continue;
+                }
+                for ac in reference(line).into_iter().collect::<BTreeSet<_>>() {
+                    places.entry(ac.to_owned()).or_default().push(format!(
+                        "{}:{}",
+                        path.strip_prefix(root)?.display(),
+                        number.saturating_add(1)
+                    ));
+                }
+            }
+        }
+    }
+    Ok(places)
+}
+
 pub(super) fn run(root: &Path, strict: bool) -> Result<i32> {
     let mut found = Vec::new();
     let spec = root.join("docs/spec");
@@ -64,34 +100,17 @@ pub(super) fn run(root: &Path, strict: bool) -> Result<i32> {
             }
         }
     }
-    let mut places: BTreeMap<String, Vec<String>> = BTreeMap::new();
-    for (folder, extension) in [("crates", "rs"), ("tools", "py")] {
-        for path in walk(&root.join(folder), &["node_modules", "target", ".git"])? {
-            if path.extension().is_none_or(|s| s != extension) {
-                continue;
-            }
-            let text = fs::read(path.clone())?;
-            for (number, line) in lines(&String::from_utf8_lossy(&text))
-                .into_iter()
-                .enumerate()
-            {
-                for ac in reference(line).into_iter().collect::<BTreeSet<_>>() {
-                    places.entry(ac.to_owned()).or_default().push(format!(
-                        "{}:{}",
-                        path.strip_prefix(root)?.display(),
-                        number.saturating_add(1)
-                    ));
-                }
-            }
-        }
-    }
+    let places = test_references(root)?;
     let width = found
         .iter()
         .filter(|(_, k)| k != "manual")
         .map(|(ac, _)| ac.len())
         .max()
         .unwrap_or(8);
-    println!("{:<width$}  種類  参照  内訳（crates/tools）  例", "条件");
+    println!(
+        "{:<width$}  種類  参照  内訳（crates/tools/web）  例",
+        "条件"
+    );
     let mut missing = Vec::new();
     for (ac, kind) in &found {
         if kind == "manual" {
@@ -100,15 +119,22 @@ pub(super) fn run(root: &Path, strict: bool) -> Result<i32> {
         let refs = places.get(ac).map_or(&[][..], Vec::as_slice);
         let example = refs.first().map_or("（なし）", String::as_str);
         let split = format!(
-            "{}/{}",
+            "{}/{}/{}",
             refs.iter().filter(|s| s.starts_with("crates/")).count(),
-            refs.iter().filter(|s| s.starts_with("tools/")).count()
+            refs.iter().filter(|s| s.starts_with("tools/")).count(),
+            refs.iter().filter(|s| s.starts_with("web-tests/")).count()
         );
         println!(
             "{ac:<width$}  {kind:<4}  {:>4}  {split:<20}  {example}",
             refs.len()
         );
-        if refs.is_empty() && matches!(kind.as_str(), "rust" | "python") {
+        let prefix = match kind.as_str() {
+            "rust" => Some("crates/"),
+            "python" => Some("tools/"),
+            "e2e" => Some("web-tests/"),
+            _ => None,
+        };
+        if prefix.is_some_and(|prefix| !refs.iter().any(|place| place.starts_with(prefix))) {
             missing.push(ac.as_str());
         }
     }

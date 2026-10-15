@@ -149,17 +149,17 @@ fn trace_missing_and_prefix() {
         ),
     );
     f.write(
-        "crates/a/src/lib.rs",
+        "crates/a/tests/contract.rs",
         &format!("// {ac}12.10 {ac}12.10\n// {ac}99.1\n"),
     );
     f.write("tools/a.py", &format!("# {ac}12.10\n"));
     // 番号の前方一致を避け、同じ行の重複は一度だけ数える。manualは対象外にする。
     let expected = format!(
         concat!(
-            "条件        種類  参照  内訳（crates/tools）  例\n",
-            "{ac}12.1   rust     0  0/0                   （なし）\n",
-            "{ac}12.10  python     2  1/1                   crates/a/src/lib.rs:1\n",
-            "{ac}12.3   other     0  0/0                   （なし）\n",
+            "条件        種類  参照  内訳（crates/tools/web）  例\n",
+            "{ac}12.1   rust     0  0/0/0                 （なし）\n",
+            "{ac}12.10  python     2  1/1/0                 crates/a/tests/contract.rs:1\n",
+            "{ac}12.3   other     0  0/0/0                 （なし）\n",
             "\n条件 4件（manual 1件は対象外）。参照の無い条件: 1件\n",
             "  {ac}12.1\n",
             "仕様に無い番号への参照: {ac}99.1\n",
@@ -169,6 +169,28 @@ fn trace_missing_and_prefix() {
     assert_eq!(rust(&f.0, &["check-spec-trace"]), (expected.clone(), 0));
     // strictだけが未参照条件を終了コードに反映する。
     assert_eq!(rust(&f.0, &["check-spec-trace", "--strict"]), (expected, 1));
+}
+#[test]
+fn trace_ignores_production_comments_and_requires_browser_references() {
+    let f = Fixture::new();
+    let ac = "AC-";
+    f.write(
+        "docs/spec/browser.md",
+        &format!("- {ac}14.1 [rust]\n- {ac}14.2 [e2e]\n"),
+    );
+    f.write("crates/a/src/lib.rs", &format!("// {ac}14.1\n"));
+    f.write(
+        "web-tests/review.spec.cjs",
+        "// no requirement covered yet\n",
+    );
+    assert_eq!(rust(&f.0, &["check-spec-trace", "--strict"]).1, 1);
+    f.write(
+        "crates/a/src/lib.rs",
+        &format!("// production\n#[cfg(test)]\nmod tests {{ // {ac}14.1 {ac}14.2\n}}\n"),
+    );
+    assert_eq!(rust(&f.0, &["check-spec-trace", "--strict"]).1, 1);
+    f.write("web-tests/review.spec.cjs", &format!("// {ac}14.2\n"));
+    assert_eq!(rust(&f.0, &["check-spec-trace", "--strict"]).1, 0);
 }
 #[test]
 fn mutation_outcomes_and_cleanup() {

@@ -160,7 +160,7 @@ pub(super) fn check_all(root: &Path, quick: bool) -> i32 {
     });
     if root.join("docs/spec").is_dir() {
         step(&mut failed, "仕様: 条件と試験の対応", || {
-            trace::run(root, false).is_ok_and(|c| c == 0)
+            trace::run(root, true).is_ok_and(|c| c == 0)
         });
     }
     differential(root, &mut failed);

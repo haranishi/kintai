@@ -2,11 +2,17 @@
 
 [![ci](https://github.com/haranishi/kintai/actions/workflows/ci.yml/badge.svg)](https://github.com/haranishi/kintai/actions/workflows/ci.yml)
 
+[English quickstart](docs/en/quickstart.md) · [月次画面](docs/review.md) · [MCP](docs/mcp.md) · [試験とCI](docs/testing.md)
+
 打刻のCSVから、日本の労働基準法にそって「法定内・時間外・法定休日・深夜・月60時間超」を分け、36協定の上限と年次有給休暇まで計算する、Rust製のOSSです。計算は手元で完結し、外へ通信しません。
 
 > **参考値です。** 条文と通達の読みに基づく計算で、社会保険労務士の確認は受けていません。出力には毎回 `review_status: "unreviewed"` が付きます。労働基準法を満たしていることの証明ではありません。→ [免責](DISCLAIMER.md)、[確認してほしい点](docs/legal/professional-review.md)
 
-状態: Phase 0（計算の部品とコマンドライン）。画面とサーバーはまだありません（[ロードマップ](docs/roadmap.md)）。
+状態: Phase 0の計算とCLIに、オフラインの月次確認画面と読み取り専用MCPを追加しました。打刻・承認・保存はPhase 1です（[ロードマップ](docs/roadmap.md)）。
+
+![合成データ5人分の月次確認画面。集計できた人数、時間数、確認する記録を表示](docs/images/monthly-review.png)
+
+*画面は架空の5人のデータです。集計不可の人は、合計に含めません。*
 
 ## できること
 
@@ -26,6 +32,16 @@ cargo build --release
 ```
 
 使い方は[はじめかた](docs/getting-started.md)、機能の一覧は[機能](docs/features.md)。
+
+ブラウザで試す場合:
+
+```sh
+./target/release/kintai review --policy tests/fixtures/synthetic/policy.toml \
+  --punches tests/fixtures/synthetic/punches.csv --month 2026-10 \
+  --employee E001 --out /tmp/kintai-review.html
+```
+
+保存したHTMLを開きます。通信とサーバーは不要です。ファイルがある場合は別の名前を指定してください。
 
 ## 守っていること
 

@@ -1,0 +1,27 @@
+[
+  {
+    "mutation": "HTML: allow a script terminator",
+    "detected": true,
+    "exit": 101
+  },
+  {
+    "mutation": "HTML: overwrite an existing report",
+    "detected": true,
+    "exit": 101
+  },
+  {
+    "mutation": "MCP: use tools before initialized notification",
+    "detected": true,
+    "exit": 101
+  },
+  {
+    "mutation": "MCP: ignore the employee selector",
+    "detected": true,
+    "exit": 101
+  },
+  {
+    "mutation": "MCP: accept unexpected file or month arguments",
+    "detected": true,
+    "exit": 101
+  }
+]

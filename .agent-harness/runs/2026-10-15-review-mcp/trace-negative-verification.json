@@ -1,0 +1,12 @@
+[
+  {
+    "mutation": "Trace: count production comments as tests",
+    "detected": true,
+    "exit": 101
+  },
+  {
+    "mutation": "Trace: let Rust comments fulfill a browser requirement",
+    "detected": true,
+    "exit": 101
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "test_cmd": ["cargo", "test", "-q", "-p", "kintai-cli"],
+  "timeout_sec": 180,
+  "exclude": ["target", ".git", ".cargo-home", ".cargo-target", "node_modules", "test-results", "playwright-report", "tools/difftest-out", "__pycache__"],
+  "mutations": [
+    {"label":"HTML: allow a script terminator","file":"crates/kintai-cli/src/review.rs","find":".replace('<', \"\\\\u003c\")","replace":".replace('<', \"<\")"},
+    {"label":"HTML: overwrite an existing report","file":"crates/kintai-cli/src/review.rs","find":"options.write(true).create_new(true);","replace":"options.write(true).create(true).truncate(true);"},
+    {"label":"MCP: use tools before initialized notification","file":"crates/kintai-cli/src/mcp.rs","find":"if self.state != State::Ready {","replace":"if self.state == State::New {"},
+    {"label":"MCP: ignore the employee selector","file":"crates/kintai-cli/src/mcp/tools.rs","find":".find(|item| item[\"employee_id\"] == employee);","replace":".find(|item| item[\"employee_id\"] != employee);"},
+    {"label":"MCP: accept unexpected file or month arguments","file":"crates/kintai-cli/src/mcp/tools.rs","find":"if arguments.keys().any(|key| key != \"employee_id\") {","replace":"if false {"}
+  ]
+}

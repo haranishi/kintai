@@ -6,6 +6,7 @@
 
 - Rust 1.88以上
 - Python 3（別実装と、その差分試験だけ。標準ライブラリだけで動きます。本体の組み立てと、ふだんの点検には要りません）
+- Node 20以上（画面を変える場合のPlaywright試験のみ。計算と利用には不要）
 - あると良いもの: `cargo-deny`（依存の検査）、`uv`（ライセンス表示の検査 `reuse`）
 
 ## どこに何があるか
@@ -15,7 +16,7 @@
 | `crates/kintai-core` | 日付、分、区間。外部の依存を持たず、入出力もしない |
 | `crates/kintai-jp-labor` | 労働基準法にそった計算（区分、36協定、年休、祝日、月次、説明）。入出力を持たない |
 | `crates/kintai-import` | 打刻・休暇・履歴のCSVを読む（文字コード、列の対応、入力の上限） |
-| `crates/kintai-cli` | コマンド `kintai`。JSONとTOMLの読み書き、終了コード |
+| `crates/kintai-cli` | コマンド `kintai`。JSONとTOML、HTML月次画面、MCP stdio、終了コード |
 | `tools/oracle/` | 別実装（Python）。仕様だけから、1分ずつ数えて書いた |
 | `tools/` | 点検の道具（差分試験、変異試験、リンク、仕様と試験の対応） |
 | `docs/spec/` | 仕様。受け入れ条件（`AC-nn.n`）が試験との対応 |
@@ -41,6 +42,8 @@ cargo xtask check-all        # 書式、clippy、試験、文書、依存、仕�
 ```
 
 `cargo xtask check-all --quick` は、依存の検査と最小のRustの確認を省きます。個別に流すなら、`cargo test -p kintai-jp-labor` のように対象を指定します。どの層が何を確かめているかは、[試験の地図](testing.md)にあります。
+
+画面を変更したら[ブラウザ試験](review.md)を、要望を試験にするときは[要件データの手順](spec/decision-regressions.md)を使います。PRでは仕様対応、範囲制限、変異の検査も動きます。
 
 ## 仕様を先に直す
 
