@@ -1,0 +1,59 @@
+[
+  {
+    "label": "Corpus: accept an empty requirement corpus",
+    "exit": 101,
+    "failed_tests": [
+      "ac16_1_public_decisions_replay_against_the_real_binary"
+    ]
+  },
+  {
+    "label": "Corpus: accept a case without assertions",
+    "exit": 101,
+    "failed_tests": [
+      "ac16_1_public_decisions_replay_against_the_real_binary"
+    ]
+  },
+  {
+    "label": "Corpus: reuse a regression ID",
+    "exit": 101,
+    "failed_tests": [
+      "ac16_1_public_decisions_replay_against_the_real_binary"
+    ]
+  },
+  {
+    "label": "Mutation gate: accept an empty selection",
+    "exit": 101,
+    "failed_tests": [
+      "empty_mutation_selection_fails_before_running_a_command"
+    ]
+  },
+  {
+    "label": "Mutation gate: count a timeout as an assertion failure",
+    "exit": 101,
+    "failed_tests": [
+      "mutation_outcomes_and_cleanup"
+    ]
+  },
+  {
+    "label": "Mutation gate: count unnamed process errors as assertions",
+    "exit": 101,
+    "failed_tests": [
+      "mutate::tests::failures"
+    ]
+  },
+  {
+    "label": "Build version: ignore Git metadata added after an archive build",
+    "exit": 101,
+    "failed_tests": [
+      "ac17_1_archive_to_checkout_and_packed_to_loose_refresh_the_revision"
+    ]
+  },
+  {
+    "label": "Build version: ignore a new worktree loose ref",
+    "exit": 101,
+    "failed_tests": [
+      "ac17_1_archive_to_checkout_and_packed_to_loose_refresh_the_revision",
+      "ac17_1_worktree_common_refs_detached_head_and_override_are_supported"
+    ]
+  }
+]

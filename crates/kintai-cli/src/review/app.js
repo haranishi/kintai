@@ -25,8 +25,13 @@
     MonthBoundary: "勤務が月の境界をまたいでいます。",
     IncompleteWeek: "週の初めから打刻がそろっているか確認してください。",
     OpenShift: "退勤の記録がありません。",
-    OrphanOut: "対応する出勤がありません。",
-    DoubleIn: "出勤が重複しています。",
+    OutWithoutIn: "対応する出勤がありません。出勤の記録と退勤の順序を確認してください。",
+    DuplicateIn: "出勤が重複しています。出勤・退勤の順序を確認してください。",
+    BreakStartWithoutIn: "勤務中でないときに休憩開始が記録されています。出勤と休憩の順序を確認してください。",
+    BreakEndWithoutStart: "対応する休憩開始がありません。休憩開始と終了の記録を確認してください。",
+    OutDuringBreak: "休憩を終了する前に退勤が記録されています。休憩終了の記録を確認してください。",
+    SameTimestamp: "同じ時刻に複数の打刻があり、順序が決まりません。元の打刻の時刻を確認してください。",
+    LongShift: "勤務が24時間以上に及んでいます。出勤・退勤の日付と打刻漏れを確認してください。",
   };
   const reason = (code) => reasons[code] || `記録の確認が必要です（${code}）。`;
   const issues = (employee) => {
@@ -34,7 +39,10 @@
     if (employee.refused) {
       messages.push(reason(employee.refused.code));
       if (employee.refused.dates.length) messages.push(`対象日: ${employee.refused.dates.join("、")}`);
-      for (const anomaly of employee.refused.anomalies) messages.push(`${anomaly.date} · ${anomaly.line}行目: ${reason(anomaly.kind)}`);
+      for (const anomaly of employee.refused.anomalies) {
+        const location = anomaly.line == null ? anomaly.date : `${anomaly.date} · ${anomaly.line}行目`;
+        messages.push(`${location}: ${reason(anomaly.kind)}`);
+      }
     }
     for (const item of employee.break_shortages) messages.push(`${item.date}: 記録された休憩${item.break_minutes}分、必要な休憩${item.required_minutes}分（${item.shortage_minutes}分不足）。自動では差し引いていません。`);
     for (const item of employee.ambiguities) messages.push(`${item.date}: ${reason(item.code)} 現在の方針に基づく仮の集計です。`);
@@ -126,12 +134,27 @@
   $("previous").addEventListener("click", () => { page--; render(); });
   $("next").addEventListener("click", () => { page++; render(); });
   render();
+  function openEmployee(employee) {
+    $("search").value = "";
+    filter = "all";
+    page = Math.floor(employees.indexOf(employee) / pageSize);
+    render();
+    const detail = Array.from($("employee-list").children).find((node) => node.dataset.employee === employee.employee_id);
+    detail.open = true;
+    const summary = detail.querySelector("summary");
+    summary.focus();
+    summary.scrollIntoView({ block:"center" });
+  }
   for (const employee of flagged.slice(0, 20)) {
     const item = el("div", undefined, "check-item");
     const [label, color] = status(employee);
     const body = el("div");
     body.append(el("h3", employee.employee_id), el("p", issues(employee).join(" ")));
-    item.append(el("span", label, `badge ${color}`), body);
+    const action = el("button", "記録を確認");
+    action.type = "button";
+    action.setAttribute("aria-label", `${employee.employee_id}の記録を確認`);
+    action.addEventListener("click", () => openEmployee(employee));
+    item.append(el("span", label, `badge ${color}`), body, action);
     $("check-list").append(item);
   }
   if (!flagged.length) $("check-list").append(el("p", "表示範囲に、確認が必要な記録はありません。", "check-clear"));

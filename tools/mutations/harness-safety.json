@@ -1,0 +1,14 @@
+{
+  "test_cmd": ["cargo", "test", "-q", "-p", "xtask", "-p", "kintai-cli", "--tests"],
+  "timeout_sec": 180,
+  "mutations": [
+    {"label":"Corpus: accept an empty requirement corpus","file":"tests/fixtures/contracts/decisions.json","find":"\"cases\": [","replace":"\"cases\": [], \"disabled_cases\": ["},
+    {"label":"Corpus: accept a case without assertions","file":"tests/fixtures/contracts/decisions.json","find":"\"expected\":{\"/employees/0/ledger/0/work_minutes\":9152,\"/review_status\":\"unreviewed\"}","replace":"\"expected\":{}"},
+    {"label":"Corpus: reuse a regression ID","file":"tests/fixtures/contracts/decisions.json","find":"\"id\":\"partial-refusal\"","replace":"\"id\":\"worker-favorable-seconds\""},
+    {"label":"Mutation gate: accept an empty selection","file":"crates/xtask/src/mutate.rs","find":"if selected.is_empty() {","replace":"if false {"},
+    {"label":"Mutation gate: count a timeout as an assertion failure","file":"crates/xtask/src/mutate.rs","find":"return Ok((124, \"timeout\", \"時間切れ\".to_owned()));","replace":"return Ok((124, \"test\", \"時間切れ\".to_owned()));"},
+    {"label":"Mutation gate: count unnamed process errors as assertions","file":"crates/xtask/src/mutate.rs","find":"if unique.is_empty() { \"process\" } else { \"test\" }","replace":"\"test\""},
+    {"label":"Build version: ignore Git metadata added after an archive build","file":"crates/kintai-cli/build.rs","find":"println!(\"cargo::rerun-if-changed={}\", dot_git.display());","replace":"let _ = &dot_git;"},
+    {"label":"Build version: ignore a new worktree loose ref","file":"crates/kintai-cli/build.rs","find":"println!(\"cargo::rerun-if-changed={}\", common.join(\"refs\").display());","replace":"let _ = &common;"}
+  ]
+}

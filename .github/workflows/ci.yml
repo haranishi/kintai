@@ -117,7 +117,7 @@ jobs:
           retention-days: 7
 
   mutation-smoke:
-    name: 月次画面とMCPの守りを外す試験
+    name: 月次画面・MCP・ハーネスの守りを外す試験
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -126,6 +126,7 @@ jobs:
           persist-credentials: false
       - run: cargo xtask mutate tools/mutations/review-mcp.json
       - run: cargo xtask mutate tools/mutations/spec-trace.json
+      - run: cargo xtask mutate tools/mutations/harness-safety.json
 
   secrets:
     name: 秘密情報と実データの走査

@@ -243,8 +243,24 @@ fn mutation_outcomes_and_cleanup() {
             "grep -q original value || exec sleep 2",
             "original",
             "changed",
-            0,
-            "[基準] 変更なし: 終了コード=0（0であること）\n[timeout] 検出 ← 赤になった試験: 時間切れ\n\n== 生き残り ==\nなし\n",
+            1,
+            "[基準] 変更なし: 終了コード=0（0であること）\n[timeout] 判定不能（timeout） ← 検出に数えない\n\n== 生き残り ==\ntimeout（判定不能: timeout）\n",
+        ),
+        (
+            "signal",
+            "grep -q original value || kill -TERM $$",
+            "original",
+            "changed",
+            1,
+            "[基準] 変更なし: 終了コード=0（0であること）\n[signal] 判定不能（signal） ← 検出に数えない\n\n== 生き残り ==\nsignal（判定不能: signal）\n",
+        ),
+        (
+            "process",
+            "grep -q original value || { echo 'runner unavailable'; exit 1; }",
+            "original",
+            "changed",
+            1,
+            "[基準] 変更なし: 終了コード=0（0であること）\n[process] 判定不能（process） ← 検出に数えない\n\n== 生き残り ==\nprocess（判定不能: process）\n",
         ),
     ];
     for (label, shell, find, replacement, code, expected) in cases {
@@ -264,7 +280,7 @@ fn mutation_outcomes_and_cleanup() {
     }
     f.write(
         "spec.json",
-        r#"{"test_cmd":["missing-command-xtask"],"mutations":[]}"#,
+        r#"{"test_cmd":["missing-command-xtask"],"mutations":[{"label":"spawn","file":"value","find":"original","replace":"changed"}]}"#,
     );
     assert!(
         xtask::run_with_temp_dir(
@@ -278,6 +294,38 @@ fn mutation_outcomes_and_cleanup() {
         .is_err()
     );
     assert!(fs::read_dir(&temp.0).unwrap().next().is_none());
+}
+
+/// AC-17.2: an empty suite or misspelled selector must not skip the gate.
+#[test]
+fn empty_mutation_selection_fails_before_running_a_command() {
+    let f = Fixture::new();
+    let temp = Fixture::new();
+    for (mutations, selector) in [
+        (serde_json::json!([]), vec![]),
+        (
+            serde_json::json!([{"label":"chosen", "file":"value", "find":"x", "replace":"y"}]),
+            vec!["--only", "misspelled"],
+        ),
+    ] {
+        // No command with this name exists: selection validation must precede spawning.
+        f.write(
+            "spec.json",
+            &serde_json::json!({"test_cmd":["missing-command-xtask"], "mutations":mutations})
+                .to_string(),
+        );
+        let spec = f.0.join("spec.json");
+        let mut args = vec!["mutate", spec.to_str().unwrap()];
+        args.extend(selector);
+        assert_eq!(
+            rust_env_with_temp(&f.0, &args, &[], &temp.0),
+            (
+                "適用する変異がありません。定義と --only を確認してください。\n".into(),
+                2
+            )
+        );
+        assert!(fs::read_dir(&temp.0).unwrap().next().is_none());
+    }
 }
 
 #[test]
@@ -377,12 +425,12 @@ fn pipelines_skip_optional_tools_and_use_metadata() {
 fn mutation_crlf_and_usage() {
     let f = Fixture::new();
     f.write("value", "original\r\n");
-    let spec = serde_json::json!({"test_cmd": ["sh", "-c", "grep -q original value"],
+    let spec = serde_json::json!({"test_cmd": ["sh", "-c", "grep -q original value || { echo 'test newline ... FAILED'; exit 1; }"],
         "mutations": [{"label":"newline", "file":"value", "find":"original\n", "replace":"changed\n"}]});
     f.write("spec.json", &spec.to_string());
     assert_eq!(
         rust(&f.0, &["mutate", f.0.join("spec.json").to_str().unwrap()]),
-        ("[基準] 変更なし: 終了コード=0（0であること）\n[newline] 検出 ← 赤になった試験: (名前を取れなかった)\n\n== 生き残り ==\nなし\n".into(), 0)
+        ("[基準] 変更なし: 終了コード=0（0であること）\n[newline] 検出 ← 赤になった試験: newline\n\n== 生き残り ==\nなし\n".into(), 0)
     );
     assert_eq!(
         fs::read_to_string(f.0.join("value")).unwrap(),
@@ -393,7 +441,7 @@ fn mutation_crlf_and_usage() {
     assert_eq!(rust(&f.0, &["mutate"]), (format!("{expected}\n"), 2));
     f.write(
         "spec.json",
-        r#"{"test_cmd":["sh","-c","kill -TERM $$"],"mutations":[]}"#,
+        r#"{"test_cmd":["sh","-c","kill -TERM $$"],"mutations":[{"label":"signal","file":"value","find":"original","replace":"changed"}]}"#,
     );
     // シグナルによる基準の終了コードを負数で表示する。
     assert_eq!(rust(&f.0, &["mutate", f.0.join("spec.json").to_str().unwrap()]),
