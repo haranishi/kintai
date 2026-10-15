@@ -71,7 +71,9 @@ impl DemoArgs {
 
 /// フォルダを作る（Unix系では0700）。
 fn create_private_dir(path: &Path) -> std::io::Result<()> {
-    let mut builder = fs::DirBuilder::new();
+    let builder = fs::DirBuilder::new();
+    #[cfg(unix)]
+    let mut builder = builder;
     #[cfg(unix)]
     {
         use std::os::unix::fs::DirBuilderExt;

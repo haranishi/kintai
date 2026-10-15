@@ -47,7 +47,10 @@ separately against CONTRIBUTING, the task contract and the new public specs.
 Cycle 1: actual report/transport tests passed; screenshots exposed an orphaned time
 unit on mobile. Cycle 2: grouped time units, fixed target sizes, made print scope
 explicit, added contrast coverage and strengthened reference-type enforcement.
-Cycle 3: final mechanical checks and CI. No labor calculation rules were changed.
+Cycle 3: final mechanical checks and CI. The first Windows run found an existing
+unused mutable DirBuilder (only Unix permission configuration needs mutation).
+Its binding is now mutable only on Unix; permission behavior is preserved.
+No labor calculation rules were changed.
 
 | UI criterion | Score / 2 | Observed evidence |
 |---|---:|---|
