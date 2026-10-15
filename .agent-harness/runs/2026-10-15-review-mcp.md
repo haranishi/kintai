@@ -50,6 +50,8 @@ explicit, added contrast coverage and strengthened reference-type enforcement.
 Cycle 3: final mechanical checks and CI. The first Windows run found an existing
 unused mutable DirBuilder (only Unix permission configuration needs mutation).
 Its binding is now mutable only on Unix; permission behavior is preserved.
+The next Windows run reached tests and exposed the Unix-only TMPDIR fixture.
+The test now supplies TEMP/TMP as well, preserving its isolation and assertions.
 No labor calculation rules were changed.
 
 | UI criterion | Score / 2 | Observed evidence |
