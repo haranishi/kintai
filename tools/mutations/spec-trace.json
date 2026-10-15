@@ -4,6 +4,7 @@
   "exclude": ["target", ".git", ".cargo-home", ".cargo-target", "node_modules", "test-results", "playwright-report", "tools/difftest-out", "__pycache__"],
   "mutations": [
     {"label":"Trace: count production comments as tests","file":"crates/xtask/src/trace.rs","find":"&& !executable","replace":"&& executable"},
-    {"label":"Trace: let Rust comments fulfill a browser requirement","file":"crates/xtask/src/trace.rs","find":"\"e2e\" => Some(\"web-tests/\"),","replace":"\"e2e\" => Some(\"crates/\"),"}
+    {"label":"Trace: let Rust comments fulfill a browser requirement","file":"crates/xtask/src/trace.rs","find":"\"e2e\" => Some(\"web-tests/\"),","replace":"\"e2e\" => Some(\"crates/\"),"},
+    {"label":"Trace: use non-portable reference separators","file":"crates/xtask/src/trace.rs","find":".join(\"/\")","replace":".join(\":\")"}
   ]
 }

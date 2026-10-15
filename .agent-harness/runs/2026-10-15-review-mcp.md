@@ -13,18 +13,18 @@ All demonstrations use the repository's synthetic workplace, never real records.
 - Eight public decisions are a replayable synthetic regression corpus.
 - Spec tracing counts Rust tests/benchmarks, Python and browser references by type;
   production comments cannot fulfill a condition. CI uses strict mode.
-- PR CI adds Windows, Chromium, three differential seeds and seven guard mutations.
-  Weekly/manual deep tests configure all 330 mutations and extended differential runs.
+- PR CI adds Windows, Chromium, three differential seeds and eight guard mutations.
+  Weekly/manual deep tests configure all 331 mutations and extended differential runs.
 - README has a synthetic screenshot, English onboarding and links to both adapters.
 
 ## Verification evidence
 
 - `cargo xtask check-all`: all gates passed, including MSRV 1.88, dependency
   advisories/licenses, rustdoc, differential comparison and REUSE.
-- Workspace tests: 465 including doctests; browser: 8. Browser retries: zero.
+- Workspace tests: 466 including doctests; browser: 8. Browser retries: zero.
 - Official MCP TypeScript SDK 1.31.0: initialization, discovery, scoped report
   and refusal of an out-of-scope employee passed with the real CLI subprocess.
-- Negative verification: all five adapter mutations and two tracing mutations caused
+- Negative verification: all five adapter mutations and three tracing mutations caused
   assertion failures, without compilation failures; all source files restored.
   [Adapter evidence](2026-10-15-review-mcp/adapter-negative-verification.json),
   [tracing evidence](2026-10-15-review-mcp/trace-negative-verification.json).
@@ -52,6 +52,7 @@ unused mutable DirBuilder (only Unix permission configuration needs mutation).
 Its binding is now mutable only on Unix; permission behavior is preserved.
 The next Windows run reached tests and exposed the Unix-only TMPDIR fixture.
 The test now supplies TEMP/TMP as well, preserving its isolation and assertions.
+Native reference paths are normalized across platforms and covered by an executable test.
 No labor calculation rules were changed.
 
 | UI criterion | Score / 2 | Observed evidence |
@@ -76,6 +77,6 @@ onboarding (requires CLI) and retry (regenerate file) each 1/2. This is not user
 No live punching, approvals, database or employee authentication: Phase 1 remains.
 No payroll amounts, `attendance-summary.v1` or `journal.v1` conversion: Phase 2 remains.
 MCP tests use real stdio JSON-RPC sessions; host-client UIs were not configured.
-The prior 323 labor mutations were not rerun locally in this task. The new seven
+The prior 323 labor mutations were not rerun locally in this task. The new eight
 were run; the weekly full suite is configured and not claimed as an executed result.
 Labor interpretation still needs professional review, as before.

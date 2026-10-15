@@ -53,6 +53,13 @@ fn test_references(root: &Path) -> Result<BTreeMap<String, Vec<String>>> {
                 continue;
             }
             let text = fs::read_to_string(&path)?;
+            // Reference prefixes use '/' on every host, including Windows.
+            let display = path
+                .strip_prefix(root)?
+                .components()
+                .map(|part| part.as_os_str().to_string_lossy())
+                .collect::<Vec<_>>()
+                .join("/");
             // A production-code comment is not evidence of a regression test.
             let unit_start = lines(&text)
                 .iter()
@@ -71,7 +78,7 @@ fn test_references(root: &Path) -> Result<BTreeMap<String, Vec<String>>> {
                 for ac in reference(line).into_iter().collect::<BTreeSet<_>>() {
                     places.entry(ac.to_owned()).or_default().push(format!(
                         "{}:{}",
-                        path.strip_prefix(root)?.display(),
+                        display,
                         number.saturating_add(1)
                     ));
                 }
@@ -173,5 +180,33 @@ mod tests {
             Some((a.as_str(), "rust"))
         );
         assert!(condition(&format!("-{a} [rust]")).is_none());
+    }
+
+    #[test]
+    fn typed_references_accept_native_platform_paths() {
+        let stamp = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir().join(format!(
+            "kintai-native-trace-{}-{stamp}",
+            std::process::id()
+        ));
+        fs::create_dir(&root).unwrap();
+        let marker = "AC-";
+        for (name, contents) in [
+            (
+                "docs/spec/native.md",
+                format!("- {marker}14.1 [rust]\n- {marker}14.2 [e2e]\n"),
+            ),
+            ("crates/a/tests/contract.rs", format!("// {marker}14.1\n")),
+            ("web-tests/review.spec.cjs", format!("// {marker}14.2\n")),
+        ] {
+            let path = root.join(name);
+            fs::create_dir_all(path.parent().unwrap()).unwrap();
+            fs::write(path, contents).unwrap();
+        }
+        assert_eq!(run(&root, true).unwrap(), 0);
+        fs::remove_dir_all(root).unwrap();
     }
 }

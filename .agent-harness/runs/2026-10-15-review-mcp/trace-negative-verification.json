@@ -8,5 +8,10 @@
     "mutation": "Trace: let Rust comments fulfill a browser requirement",
     "detected": true,
     "exit": 101
+  },
+  {
+    "mutation": "Trace: use non-portable reference separators",
+    "detected": true,
+    "exit": 101
   }
 ]
