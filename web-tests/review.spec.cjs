@@ -53,7 +53,8 @@ test.beforeAll(() => {
   const rows = patterns.flatMap((pattern, index) => pattern.map(([time, kind]) =>
     `E${String(index + 1).padStart(3,"0")},${time.includes("T") ? time : "2026-10-05T" + time},${kind}`));
   fs.writeFileSync(anomalyPunches, "employee_id,timestamp,kind\n" + rows.join("\n") + "\nE025,2026-10-05T17:00,out\n");
-  anomalies = generate("anomalies.html", [], anomalyPunches, anomalyPolicy);
+  // No earlier work in this synthetic month; this fixture tests punch anomalies.
+  anomalies = generate("anomalies.html", ["--data-from", "2026-09-27"], anomalyPunches, anomalyPolicy);
 });
 test.afterAll(() => fs.rmSync(directory, { recursive:true, force:true }));
 
@@ -212,4 +213,18 @@ test("text and status colors retain WCAG AA contrast in both appearances", async
     });
     expect(failures, colorScheme).toEqual([]);
   }
+});
+
+// AC-14.4: missing monthly history must not appear as a successfully calculated total.
+test("incomplete monthly history is refused with an actionable explanation", async ({ page }) => {
+  const punches = path.join(directory, "incomplete-month.csv");
+  fs.writeFileSync(punches, "employee_id,timestamp,kind\nE001,2026-10-19T09:00,in\nE001,2026-10-19T10:00,out\n");
+  const report = generate("incomplete-month.html", ["--employee", "E001", "--data-from", "2026-10-18"], punches);
+  await page.goto(report);
+  await expect(page.locator("#totals-scope")).toHaveText("集計できた 0人 / 全1人 の合計");
+  const employee = page.locator('[data-employee="E001"]');
+  await expect(employee.locator("summary")).toContainText("集計不可");
+  await expect(employee.locator("summary")).not.toContainText("0時間");
+  await employee.locator("summary").click();
+  await expect(employee.locator(".employee-detail")).toContainText("月の合計や月60時間超を確定できません");
 });

@@ -42,7 +42,7 @@
 
 ## 終了コード
 
-`report` と `explain` は、拒否があれば4。`check` は、`--fail-on-violation` で違反か警告があれば1、そうでなく拒否があれば4。`leave` と `retention` は0か2・3。`demo` は書けたら0。
+`report` と `explain` は、拒否があれば4。対象月の起算日より `data_from` が後なら、月初からの累計が不明なので `IncompleteMonth`（`dates` は月の起算日）で拒否し、台帳・日別の値・区間を出さない。既に打刻の異常や曖昧さで拒否した人は、その理由を保つ。月の不足は `ambiguity` にかかわらず拒否する。`check` は、`--fail-on-violation` で違反か警告があれば1、そうでなく拒否があれば4。`leave` と `retention` は0か2・3。`demo` は書けたら0。
 
 ## 受け入れ条件
 

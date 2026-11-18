@@ -7,6 +7,7 @@
 use std::collections::BTreeSet;
 
 use kintai_core::punch::AnomalyKind;
+use kintai_core::{Date, MonthPeriod};
 use kintai_jp_labor::breaks::BreakShortage;
 use kintai_jp_labor::{Ambiguity, Refusal};
 use serde::Serialize;
@@ -19,9 +20,9 @@ pub const PUNCH_ANOMALY: &str = "PunchAnomaly";
 /// 確定集計の拒否。
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct RefusedOut {
-    /// `AmbiguousBoundary` か `PunchAnomaly`。
+    /// `AmbiguousBoundary`、`PunchAnomaly`、`IncompleteMonth`。
     pub code: &'static str,
-    /// 記録のある日付（重複なし、昇順）。
+    /// 記録のある日付（重複なし、昇順）。`IncompleteMonth` は対象月の起算日。
     pub dates: Vec<String>,
     /// 打刻の異常（時刻の順）。曖昧さの拒否では空。
     pub anomalies: Vec<AnomalyOut>,
@@ -111,6 +112,21 @@ pub fn refused_anomalies(anomalies: &[AnomalyRecord]) -> RefusedOut {
     }
 }
 
+/// 月初からの打刻がそろっておらず、月の累計を確定できないときの拒否。
+#[must_use]
+pub fn refused_incomplete_month(
+    data_from: Option<Date>,
+    period: MonthPeriod,
+) -> Option<RefusedOut> {
+    data_from
+        .filter(|from| from.day_number() > period.first_day_number())
+        .map(|_| RefusedOut {
+            code: "IncompleteMonth",
+            dates: vec![period.to_string()],
+            anomalies: Vec::new(),
+        })
+}
+
 /// 打刻の異常の説明（人が読む出力）。
 #[must_use]
 pub const fn anomaly_label(kind: AnomalyKind) -> &'static str {
@@ -135,6 +151,12 @@ fn anomaly_kind(code: &str) -> Option<AnomalyKind> {
 /// 拒否の説明（人が読む出力の1行。従業員IDは呼ぶ側で前に付ける）。
 #[must_use]
 pub fn refusal_text(refused: &RefusedOut) -> String {
+    if refused.code == "IncompleteMonth" {
+        return format!(
+            "確定集計を拒否（IncompleteMonth。月の起算日: {}。月初からの打刻を追加するか、その日から勤務の有無を確認済みなら --data-from で指定してください）",
+            refused.dates.join("、")
+        );
+    }
     if refused.code == PUNCH_ANOMALY {
         let items: Vec<String> = refused
             .anomalies

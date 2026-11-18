@@ -20,6 +20,7 @@ use crate::case::EXIT_REFUSED;
 use crate::case36::json_line;
 use crate::common_out::{
     AmbiguityOut, BreakShortageOut, RefusedOut, refusal_text, refused_ambiguous, refused_anomalies,
+    refused_incomplete_month,
 };
 use crate::failure::Failure;
 use crate::inputs::{Punches, Work, YearMonth, period_last_day};
@@ -259,13 +260,20 @@ pub fn run(args: &ReportArgs) -> Result<CommandOutput, Failure> {
         .collect();
     let monthly = MonthlyReport::build(&valid, policy.rounding(), Some(period), &inputs)
         .map_err(|error| Failure::invalid(error.to_string()))?;
+    let mut rows = rows(&works, &monthly)?;
+    if let Some(refusal) = refused_incomplete_month(data_from, period) {
+        for row in rows.iter_mut().filter(|row| row.refused.is_none()) {
+            row.ledger = None;
+            row.refused = Some(refusal.clone());
+        }
+    }
     let computed = Computed {
         month: args.month,
         period_start: period.to_string(),
         period_end: period_last_day(period).map_or_else(String::new, |day| day.to_string()),
         data_from,
         rounding: policy.rounding(),
-        rows: rows(&works, &monthly)?,
+        rows,
     };
     let exit = if computed.rows.iter().any(|row| row.refused.is_some()) {
         EXIT_REFUSED

@@ -1,0 +1,28 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-cli",
+    "--test",
+    "incomplete_month"
+  ],
+  "timeout_sec": 180,
+  "exclude": [
+    "target",
+    ".git",
+    "node_modules",
+    "test-results",
+    "tools/difftest-out",
+    "__pycache__"
+  ],
+  "mutations": [
+    {
+      "label": "CLI: accept incomplete monthly coverage",
+      "file": "crates/kintai-cli/src/common_out.rs",
+      "find": ".filter(|from| from.day_number() > period.first_day_number())",
+      "replace": ".filter(|_| false)"
+    }
+  ]
+}
