@@ -178,8 +178,17 @@ fn run(args: Vec<OsString>) -> Outcome {
 
 fn main() -> ExitCode {
     let outcome = run(std::env::args_os().skip(1).collect());
-    // 書けなかったとき（パイプが閉じたなど）も、終了コードは計算の結果のままにする。
-    let _ = std::io::stdout().write_all(outcome.stdout.as_bytes());
+    let mut stdout = std::io::stdout().lock();
+    if stdout
+        .write_all(outcome.stdout.as_bytes())
+        .and_then(|()| stdout.flush())
+        .is_err()
+    {
+        let failure =
+            Failure::invalid("標準出力に結果を書き込めません。保存先やパイプを確認してください");
+        let _ = std::io::stderr().write_all(failure.to_json_line().as_bytes());
+        return ExitCode::from(failure.exit);
+    }
     let _ = std::io::stderr().write_all(outcome.stderr.as_bytes());
     ExitCode::from(outcome.exit)
 }

@@ -1,0 +1,28 @@
+{
+  "test_cmd": [
+    "cargo",
+    "test",
+    "-q",
+    "-p",
+    "kintai-cli",
+    "--test",
+    "output_failure"
+  ],
+  "timeout_sec": 180,
+  "exclude": [
+    "target",
+    ".git",
+    "node_modules",
+    "test-results",
+    "tools/difftest-out",
+    "__pycache__"
+  ],
+  "mutations": [
+    {
+      "label": "CLI: silently succeed after stdout rejects a report",
+      "file": "crates/kintai-cli/src/main.rs",
+      "find": "return ExitCode::from(failure.exit);",
+      "replace": "return ExitCode::from(outcome.exit);"
+    }
+  ]
+}
