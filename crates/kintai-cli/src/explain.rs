@@ -18,7 +18,9 @@ use serde::Serialize;
 use crate::args::{self, Args, Format, required};
 use crate::case::EXIT_REFUSED;
 use crate::case36::json_line;
-use crate::common_out::{RefusedOut, refusal_text, refused_ambiguous, refused_anomalies};
+use crate::common_out::{
+    RefusedOut, refusal_text, refused_ambiguous, refused_anomalies, refused_incomplete_month,
+};
 use crate::failure::Failure;
 use crate::inputs::{Punches, Work};
 use crate::policy_file::PolicyFile;
@@ -273,6 +275,10 @@ pub fn run(args: &ExplainArgs) -> Result<CommandOutput, Failure> {
         } => {
             if let Some(refusal) = &classification.refused {
                 explained.refused = Some(refused_ambiguous(refusal));
+            } else if let Some(refusal) =
+                refused_incomplete_month(data_from, args.date.month_period(valid.month_start_day()))
+            {
+                explained.refused = Some(refusal);
             } else {
                 explained.continued_from_previous_day = continues_into(&shifts, args.date);
                 explained.day = classification
